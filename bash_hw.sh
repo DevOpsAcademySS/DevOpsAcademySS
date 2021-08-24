@@ -20,8 +20,8 @@ task2() {
 
 task3() {
 	read -p "Type any phone number of Ukraine: " local number
-	reg032 = 
-	if [[ "$number" =~ ([+]3[ -]?8[ -]?)?0[ -]?3[ -]?2[ -]?[0-9][ -]?[0-9][ -]?[0-9][ -]?[0-9][ -]?[0-9][ -]?[0-9][ -]?[0-9]$ ]]; then
+	# reg032 = 
+	if [[ "$number" =~ "([+]3[ -]?8[ -]?)?0[ -]?3[ -]?2[ -]?[0-9][ -]?[0-9][ -]?[0-9][ -]?[0-9][ -]?[0-9][ -]?[0-9][ -]?[0-9]$" ]]; then
 		echo "032 is a phone code of Lviv and Lviv region"
 	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?3[ ()-]?3[ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9]$" ]]; then
 		echo "033 is a phone code of Luts`k and Volyn region"
