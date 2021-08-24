@@ -91,7 +91,7 @@ task7() {
 }
 
 task8() {
-	echo "List of files which were changed less than 10 hours ago ('grep' used) "
+	echo "List of files which were changed less than 10 hours ago ('grep' used): "
 	grep -l -d skip argparse * | find * -mmin -600
 	
 }
