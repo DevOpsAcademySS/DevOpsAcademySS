@@ -11,7 +11,7 @@ is a repository in which the team stores code from **practical tasks of DevOps A
 
 5. The team studies and communicates with mentors and experts every weekday at the [Link to **zoom conference**].
 
-6. Also, **useful materials and courses** for the Academy are available at the link of [DevOps-2021 course in Softserve Academy's Moodle]
+6. Also, **useful materials and courses** for the Academy are available at the link of [DevOps-2021 **course** in Softserve Academy's Moodle]
 
 
 
@@ -24,4 +24,4 @@ is a repository in which the team stores code from **practical tasks of DevOps A
 
 [Link to **zoom conference**]: <https://softserveinc.zoom.us/j/93500189579?pwd=emw1ZTMzUlJ6M2RKQytlanlXYmJ1Zz09>
 
-[DevOps-2021 course in Softserve Academy's Moodle]: <https://softserve.academy/course/view.php?id=214>
+[DevOps-2021 **course** in Softserve Academy's Moodle]: <https://softserve.academy/course/view.php?id=214>
