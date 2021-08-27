@@ -1,18 +1,18 @@
 ## DevOpsAcademySS
 is a repository in which the team stores code from **practical tasks of DevOps Academy.**
 
-1. Each task has its own **ticket** in the [Atlassian Jira Board] and its own branch marked with ticket link (IA-XXX).
+1. [Atlassian Jira Board] consists **tickets** each of which corresponds to the task in the Academy. Each performed task has its own branch marked with ticket link (IA-XXX).
 
-2. Manual Deploy **Geocitizen** is a task in which a team is assigned to deploy a project by identifying bugs. Work with it is located at the [Geocitizen GitHub **repository**].
+2. [Geocitizen GitHub **repository**] is where work with Manual Deploy **Geocitizen** task located. This is one in which a team is assigned to deploy a project by identifying bugs.
 
-3. All **Expected Deliverables** & Acceptance Criteria of Academy Internship plan are placed in the [**Project milestones** file].
+3. [**Project milestones** file] is where all **Expected Deliverables** & Acceptance Criteria of Academy Internship plan are placed.
 Estimation table is [here].
 
-4. In order to let team members simply communicate with each other, a [DevOps team **credentials**] table is created.
+4. [DevOps team **credentials**] table is created in order to let team members simply communicate with each other.
 
-5. The team studies and communicates with mentors and experts every weekday at the [Link to **zoom conference**].
+5. [Link to **zoom conference**] is where the team studies and communicates with mentors and experts every weekday.
 
-6. Also, **useful materials and courses** for the Academy are available at the link of [DevOps-2021 **course** in Softserve Academy's Moodle]
+6. [DevOps-2021 **course** in Softserve Academy's Moodle] is where more **useful materials and courses** for the Academy are available
 
 
 
