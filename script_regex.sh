@@ -19,7 +19,15 @@ else
     echo "---The entered value '$name' not matches the pattern"
 fi
 
-echo " Third task. Input the phone number. I have not complied yet."
+patern_phone_number="[+]?[ ]?[38]?[( \-]?0[( \-]?37[) \-]?2[)]?[ \-]?[0-9][ \-]?[0-9][ \-]?[0-9][ \-]?[0-9][ \-]?[0-9][0-9]"
+echo "Enter the phone number with code of Chernivtsy 0372, you can use different variations"
+read phone_number
+if [[ $phone_number =~ $patern_phone_number ]]; 
+then
+echo "---The entered value '$phone_number' matches the pattern"
+else
+echo "---The entered value '$phone_number' not matches the pattern"
+fi
 
 echo " Fourth task."
 grep "bash" /etc/passwd > pas.txt && cut -d: -f1 pas.txt
