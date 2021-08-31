@@ -1,10 +1,10 @@
 ## Issue: AI-84-denis-regex-in-linux-bash
 
 ### Please include a summary of the change and which issue is fixed: 
-Short description - Finish third task
+Short description - Finised eighth task and explanations for the task were corrected.
 
 ### Why is this important?: 
-Short summary - 2-nd commit of this task. So left to complete eighth task.
+Short summary - 3-rd commit of this task. I compleateed it.
 
 ### How was this change tested ?: 
-Short summary - Patern of third task work with code number of Chernivtsi with many variations.
+Short summary - I tested three times, it works.
