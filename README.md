@@ -1,32 +1,55 @@
-## DevOpsAcademySS
-is a repository in which the team stores code from **practical tasks of DevOps Academy.**
+# Python for DevOps
 
-1. [Atlassian Jira Board] consists **tickets** each of which corresponds to the task in the Academy. Each performed task has its own branch marked with ticket link (IA-XXX).
+---
 
-2. [Geocitizen GitHub **repository**] is where work with Manual Deploy **Geocitizen** task located. This is one in which a team is assigned to deploy a project by identifying bugs.
+## Module 1. Homework
 
-3. [**Project milestones** file] is where all **Expected Deliverables** & Acceptance Criteria of Academy Internship plan are placed.
-Estimation table is [here].
+> **Task:** _Create a program that generate folders._
+> **Input parameters:** _path, prefix, counts, mode_
+> **Example:** `python hw1.py /home usr 20 551`
+> **Result of example run:** _It creates 20 folders on the path /home with names usr1, usr2, etc. and permissions mode 551._
 
-4. [DevOps team **credentials**] table is created in order to let team members simply communicate with each other.
+## Module 2. Homework
 
-5. [Link to **zoom conference**] is where the team studies and communicates with mentors and experts every weekday.
+> **Task:** _There are a set of JSON-files that contains answers from the CI server. An example of such is attached **[hw2_example.json]**. Create a program that returns JSON-file which contains 'id', 'number', 'committer_name' and 'committer_email' from last of failed builds (in other words - with the highest value of 'number' and non-zero 'result')._
+> **Input parameters:** _path_to_files, path_to_result_
+> **Example:** `python hw2.py /home/usr/data_json /home/usr/result.json`
+> **Result of example run:** _it reads all files on the path /home/usr/data_json and writes on the file /home/usr/result.json the necessary information like this:_
+```json
+{"id": 22, "number": "34", "committer_name": "Some Commiter", "committer_email": "some.commiter@gmail.com"}
+```
 
-6. [DevOps-2021 **course** in Softserve Academy's Moodle] is where more **useful materials and courses** for the Academy are available
+## Module 3. Homework
 
+> **Task:** _Create a program that generate folders on a remote computer through a SSH connection._
+> **Input parameters:** _address, port, name, path, prefix, counts, mode_
+> **Example:** `python hw3.py 192.168.0.2 22 someuser /home usr 20 551`
+> **Result of example run:** _It runs ssh-connect to a remote host 192.168.0.2 using credentinal of 'someuser' and creates there 20 folders on the path /home with names usr1, usr2, etc. and permissions mode 551._
 
+## Module 4. Homework
 
+> **Task:** _There is some rpm-file. Create program that outputs header field rpm.RPMTAG_RELEASE of this file._
+> **Input parameters:** _path_
+> **Example:** `python hw4.py /home/usr/some_file.rpm`
+> **Result of example run:** _It reads header of the file /home/usr/some_file.rpm and print field like this:_
+```
+5.rel8.centos.
+```
 
-[Atlassian Jira Board]: <https://devopsacademy.atlassian.net/jira/software/projects/IA/boards/1>
+## Module 5. Homework
 
-[Geocitizen GitHub **repository**]: <https://github.com/DevOpsAcademySS/Geocitizen>
+> **Task:** _There is some SQLite database **[example.db]**. Create program that sets in database ports (ServerPorts.port_number) to 443 for all servers apache (ServerTypes.type_name is 'apache') in project 'Project3'._
+> **Input parameters:** _path_
+> **Example:** `python hw5.py /home/usr/example.db`
+> **Result of example run:** _It sets in database ports (ServerPorts.port_number) to 443 for all servers apache (ServerTypes.type_name is 'apache') in project 'Project3'._
 
-[**Project milestones** file]: <https://docs.google.com/document/d/1GlTHOB31Ge00lPWYHvw-MRHQydUPAx1gCyBVJ47P__I/edit?usp=drivesdk>
+## Module 6. Homework
 
-[here]: <https://docs.google.com/spreadsheets/d/1ScgksjDFEZ1OBospo5tm6N9SxzBHTB12wY4L2Igvdp0/edit?usp=sharing_eil_m&ts=6118dc49>
+> **Task:** _Write program that creates a Docker image that based on image **[centos7/hw]** (which need to import) and contains a simple Web applications is that displays in a browser "Homework6!”._
+> **Input parameters:** _tag_name_
+> **Example:** `python hw6.py homework:6`
+> **Result of example run:** _It creates new Docker image with name 'homework:6' and based on image 'centos7/hw'. The command: `docker run homework:6` starts the container. The connection to the address of one through the browser returns in browser string "Homework6!"._
 
-[DevOps team **credentials**]: <https://docs.google.com/spreadsheets/d/1cMczvIlUcScRl9QY_H2AYGGeCOuLtoYGA4HqhI5d86c/edit#gid=0>
-
-[Link to **zoom conference**]: <https://softserveinc.zoom.us/j/93500189579?pwd=emw1ZTMzUlJ6M2RKQytlanlXYmJ1Zz09>
-
-[DevOps-2021 **course** in Softserve Academy's Moodle]: <https://softserve.academy/course/view.php?id=214>
+[centos7/hw]:(https://softserve.academy/pluginfile.php/11894/mod_assign/intro/centos7_hw.tar)
+[example.db]:(https://softserve.academy/pluginfile.php/11889/mod_assign/intro/hw5_example.db)
+[hw2_example.json]:(https://softserve.academy/pluginfile.php/11775/mod_assign/intro/hw2_example.json)
