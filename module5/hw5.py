@@ -1,9 +1,8 @@
-import os
+import sys
 import sqlite3
 
-db = os.path.join(os.path.dirname(__file__), 'demo.db')
 
-conn = sqlite3.connect(db)
+conn = sqlite3.connect(sys.argv[1])
 sql_update = '''
         UPDATE ServerPorts SET port_number = 443 WHERE servers_id in 
         (SELECT Servers.id FROM Servers 
