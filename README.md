@@ -10,6 +10,7 @@
 6. **[Module 6. Homework](#m6hw)**
 
 #### [Assignment for regex](#afr) 
+#### [Data visualisaton](#dv) 
 
 ---
 
@@ -21,7 +22,7 @@
 
  **Task:** _Create a program that generate folders._
  
- **Program name:** _[hw1.py](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-141-andre-python-for-devops/Python%20for%20DevOps/HomeWork1/hw1.py)_
+ **Program name:** [_hw1.py_](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-141-andre-python-for-devops/Python%20for%20DevOps/HomeWork1/hw1.py)
  
  **Input parameters:** _path, prefix, counts, mode_
  
@@ -33,7 +34,7 @@
 
  **Task:** _There are a set of JSON-files that contains answers from the CI server. An example of such is attached **[hw2_example.json]**. Create a program that returns JSON-file which contains 'id', 'number', 'committer_name' and 'committer_email' from last of failed builds (in other words - with the highest value of 'number' and non-zero 'result')._
  
-  **Program name:** _[hw2.py](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-141-andre-python-for-devops/Python%20for%20DevOps/HomeWork2/hw2.py)_
+  **Program name:** [_hw2.py_](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-141-andre-python-for-devops/Python%20for%20DevOps/HomeWork2/hw2.py)
  
  **Input parameters:** _path_to_files, path_to_result_
  
@@ -48,7 +49,7 @@
 
  **Task:** _Create a program that generate folders on a remote computer through a SSH connection._
  
-   **Program name:** _[hw3.py](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-141-andre-python-for-devops/Python%20for%20DevOps/HomeWork3/hw3.py)_
+   **Program name:** [_hw3.py_](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-141-andre-python-for-devops/Python%20for%20DevOps/HomeWork3/hw3.py)
  
  **Input parameters:** _address, port, name, path, prefix, counts, mode_
  
@@ -60,7 +61,7 @@
 
  **Task:** _There is some rpm-file. Create program that outputs header field rpm.RPMTAG_RELEASE of this file._
  
-   **Program name:** _[hw4.py](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-141-andre-python-for-devops/Python%20for%20DevOps/HomeWork4/hw4.py)_
+   **Program name:** [_hw4.py_](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-141-andre-python-for-devops/Python%20for%20DevOps/HomeWork4/hw4.py)
  
  **Input parameters:** _path_
  
@@ -75,7 +76,7 @@
 
  **Task:** _There is some SQLite database **[example.db]**. Create program that sets in database ports (ServerPorts.port_number) to 443 for all servers apache (ServerTypes.type_name is 'apache') in project 'Project3'._
  
- **Program name:** _[hw5.py](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-141-andre-python-for-devops/Python%20for%20DevOps/HomeWork5/hw5.py)_
+ **Program name:** [_hw5.py_](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-141-andre-python-for-devops/Python%20for%20DevOps/HomeWork5/hw5.py)
  
  **Input parameters:** _path_
  
@@ -87,7 +88,7 @@
 
  **Task:** _Write program that creates a Docker image that based on image **[centos7/hw]** (which need to import) and contains a simple Web applications is that displays in a browser "Homework6!”._
  
-  **Program name:** _[hw6.py](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-141-andre-python-for-devops/Python%20for%20DevOps/HomeWork6/hw6.py)_
+  **Program name:** [_hw6.py_](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-141-andre-python-for-devops/Python%20for%20DevOps/HomeWork6/hw6.py)
  
  **Input parameters:** _tag_name_
  
@@ -120,10 +121,19 @@
 
 9. Put all these commands in a script file that will output the full output.
 
+---
+
+# Data visualisaton <a name="dv"></a>
+
+1. [_lifecycle_diagram_1.py_](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-117-andre-diagrams-as-code/Data%20visualisation/lifecycle_diagram_1.py)
+> ![diagrams_as_a_code_1.png](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-117-andre-diagrams-as-code/Data%20visualisation/diagrams_as_a_code_1.png)
+
+2. [_lifecycle_diagram_1.py_](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-117-andre-diagrams-as-code/Data%20visualisation/lifecycle_diagram_2.py)
+> ![diagrams_as_a_code_1.png](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-117-andre-diagrams-as-code/Data%20visualisation/diagrams_as_a_code_2.png)
+
 
 
 [centos7/hw]:<https://softserve.academy/pluginfile.php/11894/mod_assign/intro/centos7_hw.tar>
 [example.db]:<https://softserve.academy/pluginfile.php/11889/mod_assign/intro/hw5_example.db>
 [hw2_example.json]:<https://softserve.academy/pluginfile.php/11775/mod_assign/intro/hw2_example.json>
-
 
