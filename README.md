@@ -1,8 +1,8 @@
 # KOZAK MYKOLA
 ## Diagrams as Code
-### Diagram of Geocitizen overall
+### Diagram "Geocitizen overall"
 ![alt text](geocitizen.png?raw=true)
-### Diagram of Geocitizen infrastructure
+### Diagram "Geocitizen infrastructure"
 ![alt text](geocitizen_infrastructure.png)
-### Diagram of Geocitizen configuration
+### Diagram "Geocitizen configuration"
 ![alt text](geocitizen_configuration.png)
