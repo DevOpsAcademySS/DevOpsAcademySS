@@ -34,11 +34,12 @@ with Diagram("Diagrams as a Code 2", show=True, direction="LR"):
                 with Cluster('Aplications', 'TB'):
                     maven = Custom(
                         'Maven 3.6', './icons/Apache_Maven_logo.svg.png')
+                    nodenpm = Custom('npm', './icons/nodejs-npm.png')
                     geocitizen = Custom('Geocitizen', './icons/war.png')
                     github = Github('Geocitizen')
                     tomcat = Tomcat('Tomcat 9')
                     java = Java('Java 1.8')
-                    github - java - maven - geocitizen - tomcat
+                    github - java - nodenpm - maven - geocitizen - tomcat
                     tomcat >> geocitizen_website
 
         with Cluster('Master'):
