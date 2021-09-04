@@ -128,8 +128,8 @@
 1. [_lifecycle_diagram_1.py_](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-117-andre-diagrams-as-code/Data%20visualisation/lifecycle_diagram_1.py)
 > ![diagrams_as_a_code_1.png](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-117-andre-diagrams-as-code/Data%20visualisation/diagrams_as_a_code_1.png)
 
-2. [_lifecycle_diagram_1.py_](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-117-andre-diagrams-as-code/Data%20visualisation/lifecycle_diagram_2.py)
-> ![diagrams_as_a_code_1.png](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-117-andre-diagrams-as-code/Data%20visualisation/diagrams_as_a_code_2.png)
+2. [_lifecycle_diagram_2.py_](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-117-andre-diagrams-as-code/Data%20visualisation/lifecycle_diagram_2.py)
+> ![diagrams_as_a_code_2.png](https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-117-andre-diagrams-as-code/Data%20visualisation/diagrams_as_a_code_2.png)
 
 
 
