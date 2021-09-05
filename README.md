@@ -10,4 +10,4 @@
 
 ### Diagram "Geocitizen configuration"
 ![](geocitizen_configuration.png)
-<p align=center ><a href="geocitizen_configuration.py">Source code</a></p>
+<p align=center ><a href="diagram_configur.py">Source code</a></p>
