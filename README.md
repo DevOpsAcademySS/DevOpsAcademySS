@@ -1,9 +1,11 @@
 # KOZAK MYKOLA
 ## Diagrams as Code
 ### Diagram "Geocitizen overall"
-![alt text](geocitizen.png?raw=true)
-code: [a relative link](diagram.py)
+![](geocitizen.png?raw=true)
+*[Source code](diagram.py)*
 ### Diagram "Geocitizen infrastructure"
-![alt text](geocitizen_infrastructure.png)
+![](geocitizen_infrastructure.png)
+*[Source code](diagram_infrastr.py)*
 ### Diagram "Geocitizen configuration"
-![alt text](geocitizen_configuration.png)
+![](geocitizen_configuration.png)
+*[Source code](geocitizen_configuration.png)*
