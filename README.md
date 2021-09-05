@@ -6,7 +6,8 @@
 
 ### Diagram "Geocitizen infrastructure"
 ![](geocitizen_infrastructure.png)
-*[Source code](diagram_infrastr.py)*
+<p align=center ><a href="diagram_infrastr.py">Source code</a></p>
+
 ### Diagram "Geocitizen configuration"
 ![](geocitizen_configuration.png)
-*[Source code](geocitizen_configuration.png)*
+<p align=center ><a href="geocitizen_configuration.png">Source code</a></p>
