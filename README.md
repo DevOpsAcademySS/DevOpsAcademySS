@@ -3,6 +3,7 @@
 ### Diagram "Geocitizen overall"
 ![](geocitizen.png?raw=true)
 <p align=center ><a href="diagram.py">Source code</a></p>
+
 ### Diagram "Geocitizen infrastructure"
 ![](geocitizen_infrastructure.png)
 *[Source code](diagram_infrastr.py)*
