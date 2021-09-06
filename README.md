@@ -36,3 +36,15 @@ python hw3.py 192.168.0.2 22 someuser /home usr 20 551
 ```
 **Result of example run:** it runs ssh-connect to a remote host 192.168.0.2 using credentinal of 'someuser' and creates there 20 folders on the path /home with names usr1, usr2, etc. and permissions mode 551
 
+## Module 4. Packaging
+**Task:** There is some rpm-file. Create program that outputs header field rpm.RPMTAG_RELEASE of this file.
+
+**Program name:** hw4.py
+
+**Input parameters:** path
+
+How to run:
+```
+python hw4.py /home/usr/some_file.rpm
+```
+**Result of example run:** It reads header of the file /home/usr/some_file.rpm and print field
