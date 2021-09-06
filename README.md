@@ -3,7 +3,7 @@ KOZAK MYKOLA
 
 **Result**: [bash_scripts.sh](bash/bash_scripts.sh)
 
-**Tasks:**
+**Task:**
 Записати найкоротші регулярні вирази, які будуть відповідати:
 
 1) усім формам вашого прізвища; 
