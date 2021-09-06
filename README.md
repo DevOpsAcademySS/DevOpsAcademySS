@@ -6,7 +6,7 @@
 
 How to run:
 ```
-python hw1.py /home usr 20 551
+python3 hw1.py /home usr 20 551
 ```
 **Result of run:** It creates 20 folders on the path */home* with names usr1, usr2, etc. and permissions mode 551
 ## Module 2. Text
@@ -18,7 +18,7 @@ python hw1.py /home usr 20 551
 
 How to run:
 ```
-python hw2.py /home/usr/data_json /home/usr/result.json
+python3 hw2.py /home/usr/data_json /home/usr/result.json
 ```
 **Result of example run:** it reads all files on the path */home/usr/data_json* and writes on the file */home/usr/result.json* the necessary information like this:
 
@@ -32,7 +32,7 @@ python hw2.py /home/usr/data_json /home/usr/result.json
 
 How to run:
 ```
-python hw3.py 192.168.0.2 22 someuser /home usr 20 551
+python3 hw3.py 192.168.0.2 22 someuser /home usr 20 551
 ```
 **Result of example run:** it runs ssh-connect to a remote host 192.168.0.2 using credentinal of 'someuser' and creates there 20 folders on the path /home with names usr1, usr2, etc. and permissions mode 551
 
@@ -45,6 +45,18 @@ python hw3.py 192.168.0.2 22 someuser /home usr 20 551
 
 How to run:
 ```
-python hw4.py /home/usr/some_file.rpm
+python3 hw4.py /home/usr/some_file.rpm
 ```
 **Result of example run:** It reads header of the file /home/usr/some_file.rpm and print field
+
+## Module 5. Databases
+**Task:** There is some SQLite database [example.db](https://softserve.academy/pluginfile.php/11889/mod_assign/intro/hw5_example.db). Create program that sets in database ports (ServerPorts.port_number) to 443 for all servers apache (ServerTypes.type_name is 'apache') in project 'Project3'.
+
+**Program name:** hw5.py
+
+**Input parameters:** path
+
+How to run:
+```
+python3 hw5.py /home/usr/example.db
+```
