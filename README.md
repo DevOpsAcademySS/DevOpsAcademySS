@@ -27,8 +27,6 @@ It runs ssh-connect to a remote host 192.168.0.2 using credentinal of 'someuser'
 ## hw4.py Packaging
 Program that outputs header field rpm.RPMTAG_RELEASE of this file
 
-Use python2.7
-
 How to run:
 ```
 python hw4.py /home/usr/some_file.rpm
@@ -40,4 +38,13 @@ Program that sets in database ports (ServerPorts.port_number) to 443 for all ser
 How to run:
 ```
 python hw5.py /home/usr/example.db
+```
+
+## hw6.py Docker
+Program that creates a Docker image and contains a apache is that displays in a browser "Homework6!”
+
+How to run:
+```
+python hw6.py homework:6
+
 ```
