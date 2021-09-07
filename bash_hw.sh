@@ -19,54 +19,11 @@ task2() {
 }
 
 task3() {
+	regex='^0([3][2-8])|([4][1345678])|([5][123467])|([6][12])([0-9]{7})$'
 	read -p "Type any phone number of Ukraine: " local number
-	# reg032 = 
 	if [[ "$number" =~ "([+]3[ -]?8[ -]?)?0[ -]?3[ -]?2[ -]?[0-9][ -]?[0-9][ -]?[0-9][ -]?[0-9][ -]?[0-9][ -]?[0-9][ -]?[0-9]$" ]]; then
-		echo "032 is a phone code of Lviv and Lviv region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?3[ ()-]?3[ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9]$" ]]; then
-		echo "033 is a phone code of Luts`k and Volyn region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?3[ ()-]?4[ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9]$" ]]; then
-		echo "034 is a phone code of Ivano-Frankivs`k and Ivano-Frankivs`k region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?3[ ()-]?5[ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9]$" ]]; then
-		echo "035 is a phone code of Ternopil and Ternopil region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?3[ ()-]?6[ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9][ ()-]?[0-9]$" ]]; then
-		echo "036 is a phone code of Rivne and Rivne region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?3[ ()-]?7[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d$" ]]; then
-		echo "037 is a phone code of Chernivtsi and Chernivtsi region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?3[ ()-]?8[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d$" ]]; then
-		echo "038 is a phone code of Khmelnytskyi and Khmelnytskyi region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?4[ ()-]?1[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d$" ]]; then
-		echo "041 is a phone code of Zhytomyr and Zhytomyr region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?4[ ()-]?3[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d$" ]]; then
-		echo "043 is a phone code of Vinnytsya and Vinnytsya region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?4[ ()-]?4[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d$" ]]; then
-		echo "044 is a phone code of Kyiv and Kyiv region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?4[ ()-]?5[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d$" ]]; then
-		echo "045 is a phone code of Kyiv region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?4[ ()-]?6[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d$" ]]; then
-		echo "046 is a phone code of Chernihiv and Chernihiv region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?4[ ()-]?7[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d$" ]]; then
-		echo "047 is a phone code of Cherkasy and Cherkasy region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?4[ ()-]?8[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d$" ]]; then
-		echo "048 is a phone code of Odesa and Odesa region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?5[ ()-]?1[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d$" ]]; then
-		echo "051 is a phone code of Mykolaiv and Mykolaiv region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?5[ ()-]?2[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d$" ]]; then
-		echo "052 is a phone code of Kropyvnyts`kyi and Kirovograd region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?5[ ()-]?3[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d$" ]]; then
-		echo "053 is a phone code of Poltava and Poltava region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?5[ ()-]?4[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d$" ]]; then
-		echo "054 is a phone code of Sumy and Sumy region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?5[ ()-]?6[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d$" ]]; then
-		echo "056 is a phone code of Dnipro and Sicheslav region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?5[ ()-]?7[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d$" ]]; then
-		echo "057 is a phone code of Kharkiv and Kharkiv region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?6[ ()-]?1[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d$" ]]; then
-		echo "061 is a phone code of Zaporizhzhya and Zaporizhzhya region"
-	elif [[ "$number" =~ "^([+]3[ ()-]?8[ ()-]?)?0[ ()-]?6[ ()-]?2[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d[ ()-]?\d$" ]]; then
-		echo "062 is a phone code of Donetsk region"
-	else
-		echo "smth gone wrong :( "
+	    echo "Success! $number"
+	else echo "Fail!"
 	fi
 }
 
