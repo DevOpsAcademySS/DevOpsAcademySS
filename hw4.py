@@ -1,7 +1,4 @@
-import os, rpm
+import rpmfile, sys
 
-
-rpm_file = os.open("file.rpm", os.O_RDONLY)
-ts = rpm.TransactionSet()
-package = ts.hdrFromFdno(rpm_file)
-print(package[rpm.RPMTAG_RELEASE])
+rpm_file = sys.argv[1]
+print(rpmfile.open(rpm_file).headers['release'])
