@@ -46,5 +46,4 @@ Program that creates a Docker image and contains a apache is that displays in a 
 How to run:
 ```
 python hw6.py homework:6
-
 ```
