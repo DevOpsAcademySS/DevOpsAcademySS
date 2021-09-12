@@ -1,0 +1,48 @@
+---
+
+- name: Deploy a web application
+  hosts: targets
+  become: yes
+  vars:
+    db_user: postgres
+    db_name: ss_demo_1
+    db_password: postgres
+
+
+  tasks:
+
+    - name: Install dependencies for PostgreSQL
+      apt:
+        name: ['bash', 'openssl', 'libssl-dev', 'libssl-doc', "sudo"]
+        update_cache: true
+        state: latest
+
+    - name: Install PostgreSQL
+      apt:
+        name: ['postgresql', 'postgresql-contrib', 'libpq-dev', 'python3-psycopg2']
+        update_cache: true
+        state: present
+
+    - name: start postgresql
+      service: name=postgresql state=started enabled=yes
+
+    - name: Create the database specified in vars
+      become_user: postgres
+      postgresql_db: name={{ db_name }} template='template0' state=present
+
+    - name: Ensure user has access to the new database
+      become_user: postgres
+      postgresql_user: db={{ db_name }} name={{ db_user }} password={{ db_password }} priv=ALL state=present
+
+    - name: Allow md5 connection for the db user
+      become_user: postgres
+      postgresql_pg_hba:
+        dest="/etc/postgresql/9.5/main/pg_hba.conf" contype=host databases=all method=md5 users=all create=true
+
+#    - name: edit files
+#      shell: echo "listen_addresses='*'" >> /etc/postgresql/9.5/main/postgresql.conf
+
+    - name: Start service postgresql, if not running
+      service:
+        name: postgresql
+        state: started
