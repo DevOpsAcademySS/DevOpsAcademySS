@@ -37,12 +37,10 @@
     - name: Allow md5 connection for the db user
       become_user: postgres
       postgresql_pg_hba:
-        dest="/etc/postgresql/9.5/main/pg_hba.conf" contype=host databases=all method=md5 users=all create=true
+        dest="/etc/postgresql/10/main/pg_hba.conf" contype=host databases=all method=md5 users=all create=true source=31.42.170.25/24
 
-#    - name: edit files
-#      shell: echo "listen_addresses='*'" >> /etc/postgresql/9.5/main/postgresql.conf
+    - name: Replace a localhost entry with our own
+      lineinfile: path=/etc/postgresql/10/main/postgresql.conf regexp="#listen_addresses = 'localhost'" line=listen_addresses='*'
 
-    - name: Start service postgresql, if not running
-      service:
-        name: postgresql
-        state: started
+    - name: restart service postgresql
+      service: name=postgresql state=restarted
