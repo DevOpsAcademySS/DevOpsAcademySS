@@ -1,5 +1,0 @@
-[targets]
-PostgreSQL1  ansible_host=172.17.0.3
-PostgreSQL2  ansible_host=172.17.0.4
-PostgreSQL4  ansible_host=172.17.0.5
-
