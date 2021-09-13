@@ -1,0 +1,166 @@
+---
+# tasks file for tomcat
+
+- name: Install the latest version of java
+  yum:
+    name: java-1.8.0-openjdk-devel
+    state: latest
+
+- name: Create group
+  group:
+    name: tomcat
+    state: present
+
+- name: Create user
+  user:
+    name: tomcat
+    group: tomcat
+    home: /opt/tomcat
+    shell: /bin/false
+
+- name: Unarchive file
+  unarchive:
+    src: https://www-eu.apache.org/dist/tomcat/tomcat-9/v9.0.52/bin/apache-tomcat-9.0.52.tar.gz
+    dest: /opt/tomcat/
+    remote_src: True
+
+- name: Change  file permission
+  file:
+    path: /opt/tomcat
+    owner: tomcat
+    group: tomcat
+    recurse: yes
+
+#- name: lookup files with a certain pattern
+#  find:
+#    paths: /opt/tomcat/apache-tomcat-9.0.52/bin/
+#    file_type: file
+#    patterns: "*.sh"
+#  register: filelist
+#
+#- name: change permissions
+#  file:
+#    path: /opt/tomcat/apache-tomcat-9.0.52/bin/
+#    state: file
+#    mode: "+x"
+#  with_items: "{{ filelist.files }}"
+
+
+- name: Change permissions
+  shell: "sudo sh -c 'chmod +x /opt/tomcat/apache-tomcat-9.0.52/bin/*.sh'"
+
+- name: Copying file
+  copy:
+    src: tomcat.service
+    dest: /etc/systemd/system/
+
+- name: Force systemd to reread configs
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Start service tomcat
+  ansible.builtin.systemd:
+    name: tomcat
+    state: started
+    enabled: yes
+
+- name: comment
+  lineinfile:
+    path: "{{ item }}"
+    state: absent
+    regexp: '  <Valve className="org.apache.catalina.valves.RemoteAddrValve"'
+  with_items:
+    - /opt/tomcat/apache-tomcat-9.0.52/webapps/manager/META-INF/context.xml
+    - /opt/tomcat/apache-tomcat-9.0.52/webapps/host-manager/META-INF/context.xml
+
+- name: comment
+  lineinfile:
+    path: "{{ item }}"
+    state: absent
+    regexp: '         allow'
+  with_items:
+    - /opt/tomcat/apache-tomcat-9.0.52/webapps/manager/META-INF/context.xml
+    - /opt/tomcat/apache-tomcat-9.0.52/webapps/host-manager/META-INF/context.xml
+
+
+
+- name: Start service tomcat
+  ansible.builtin.systemd:
+    name: tomcat
+    state: restarted
+    enabled: yes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#- name: Create temp directory
+#  file:
+#    path: '{{ tomcat_temp_download_path }}'
+#    state: directory
+#  delegate_to: "{{ item }}"
+#  loop:
+#    - localhost
+#    - "{{ inventory_hostname }}"
+#  changed_when: False
+#  when: >
+#    not is_installed.stat.exists and
+#    (( item == inventory_hostname ) or tomcat_remote_is_disconnected )
+#- name: Download apache-tomcat-{{ tomcat_version }}.tar.gz
+#  get_url:
+#    url: "{{ tomcat_downloadURL }}/tomcat/tomcat-{{ tomcat_version.split('.')[0] }}/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz"
+#    dest: '{{ tomcat_temp_download_path }}'
+#    timeout: 120
+#  delegate_to: "{{ 'localhost' if tomcat_remote_is_disconnected else inventory_hostname }}"
+#  when: not is_installed.stat.exists
+#
+#- name: apache-tomcat-{{ tomcat_version }}.tar.gz is transfered to the disconnected remote
+#  copy:
+#    src: "{{ tomcat_temp_download_path }}/apache-tomcat-{{ tomcat_version }}.tar.gz"
+#    dest: "{{ tomcat_temp_download_path }}"
+#  when: tomcat_remote_is_disconnected
+#
+#- name: Unarchive apache-tomcat-{{ tomcat_version }}.tar.gz at {{ tomcat_install_path }}
+#  unarchive:
+#    src: "{{ tomcat_temp_download_path }}/apache-tomcat-{{ tomcat_version }}.tar.gz"
+#    dest: "{{ tomcat_install_path }}"
+#    remote_src: True
+#    owner: "{% if tomcat_permissions_production %}root{% else %}{{ tomcat_user }}{% endif %}"
+#    group: "{{ tomcat_group }}"
+#    creates: "{{ tomcat_install_path }}/apache-tomcat-{{ tomcat_version }}"
+#  register: tomcat_installed
+#  when: not is_installed.stat.exists
+#
+#- name: Clean up temporary files
+#  file:
+#    path: '{{ tomcat_temp_download_path }}'
+#    state: absent
+#  changed_when: False
+#  when: not is_installed.stat.exists
