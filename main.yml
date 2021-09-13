@@ -1,0 +1,9 @@
+---
+- name: Deploy a web application
+  hosts: targets
+  become: yes
+
+  roles:
+    - tomcat
+#    - { role: postgresql, when: ansible_distribution == 'Ubuntu' }
+#    - { role: tomcat, when: ansible_distribution == 'CentOS' }
