@@ -54,6 +54,11 @@
     src: tomcat.service
     dest: /etc/systemd/system/
 
+- name: Copying  citizen.war
+  copy:
+    src: citizen.war
+    dest: /opt/tomcat/apache-tomcat-9.0.52/webapps/
+
 - name: Force systemd to reread configs
   ansible.builtin.systemd:
     daemon_reload: yes
@@ -81,8 +86,6 @@
   with_items:
     - /opt/tomcat/apache-tomcat-9.0.52/webapps/manager/META-INF/context.xml
     - /opt/tomcat/apache-tomcat-9.0.52/webapps/host-manager/META-INF/context.xml
-
-
 
 - name: Start service tomcat
   ansible.builtin.systemd:
