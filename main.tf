@@ -8,7 +8,7 @@ resource "aws_instance" "Ubuntu" {
   ami = "ami-0d382e80be7ffdae5"
   instance_type = "t2.micro"
   vpc_security_group_ids = [
-    aws_security_group.security_group.id]
+    aws_security_group.my_security_group.id]
   tags = {
     Name = "Ubuntu"
   }
@@ -19,14 +19,14 @@ resource "aws_instance" "CentOS" {
   ami = "ami-011996ff98de391d1"
   instance_type = "t2.micro"
   vpc_security_group_ids = [
-    aws_security_group.security_group.id]
+    aws_security_group.my_security_group.id]
   tags = {
     Name = "CentOS"
   }
   key_name = "samirus"
 }
 
-resource "aws_security_group" "security_group" {
+resource "aws_security_group" "my_security_group" {
   name = "security_group"
 
   dynamic "ingress" {
