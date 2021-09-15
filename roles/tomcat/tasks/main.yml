@@ -31,21 +31,6 @@
     group: tomcat
     recurse: yes
 
-#- name: lookup files with a certain pattern
-#  find:
-#    paths: /opt/tomcat/apache-tomcat-9.0.52/bin/
-#    file_type: file
-#    patterns: "*.sh"
-#  register: filelist
-#
-#- name: change permissions
-#  file:
-#    path: /opt/tomcat/apache-tomcat-9.0.52/bin/
-#    state: file
-#    mode: "+x"
-#  with_items: "{{ filelist.files }}"
-
-
 - name: Change permissions
   shell: "sudo sh -c 'chmod +x /opt/tomcat/apache-tomcat-9.0.52/bin/*.sh'"
 
