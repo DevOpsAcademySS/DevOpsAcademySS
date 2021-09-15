@@ -27,7 +27,7 @@ resource "aws_instance" "CentOS" {
 }
 
 resource "aws_security_group" "my_security_group" {
-  name = "security_group"
+  name = "my_security_group"
 
   dynamic "ingress" {
     for_each = [
