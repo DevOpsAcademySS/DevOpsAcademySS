@@ -28,27 +28,21 @@ resource "aws_instance" "CentOS" {
 
 resource "aws_security_group" "security_group" {
   name = "security_group"
-  ingress {
-    from_port = 5432
-    to_port = 5432
-    protocol = "tcp"
-    cidr_blocks = [
-      "0.0.0.0/0"]
+
+  dynamic "ingress" {
+    for_each = [
+      "5432",
+      "22",
+      "8080"]
+    content {
+      from_port = ingress.value
+      to_port = ingress.value
+      protocol = "tcp"
+      cidr_blocks = [
+        "0.0.0.0/0"]
+    }
   }
-    ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    cidr_blocks = [
-      "0.0.0.0/0"]
-  }
-  ingress {
-    from_port = 8080
-    to_port = 8080
-    protocol = "tcp"
-    cidr_blocks = [
-      "0.0.0.0/0"]
-  }
+
   egress {
     from_port = 0
     to_port = 0
