@@ -1,0 +1,18 @@
+pipeline {
+  agent any
+  environment {
+   ANSIBLE_PRIVATE_KEY=credentials('instances_private_key')
+  }
+  stages {
+    stage('Git Checkout'){
+        steps {
+            git branch: 'IA-180-samir-ansible', credentialsId: 'github2', url: 'https://github.com/DevOpsAcademySS/DevOpsAcademySS'
+        }
+    }
+    stage('Hello') {
+      steps {
+        sh 'ansible-playbook -i inventory --private-key=$ANSIBLE_PRIVATE_KEY main.yml'
+      }
+    }
+  }
+}
