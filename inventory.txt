@@ -1,0 +1,4 @@
+[DB]
+Ubuntu  ansible_host=13.56.227.197 allow_world_readable_tmpfiles=true
+[web_server]
+CentOS  ansible_host=54.193.81.174
