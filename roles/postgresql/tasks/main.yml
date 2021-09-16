@@ -27,7 +27,7 @@
 - name: Allow md5 connection for the db user
   become_user: postgres
   postgresql_pg_hba:
-    dest="/etc/postgresql/{{ postgresql_version }}/main/pg_hba.conf" contype=host databases=all method=md5 users=all create=true source={{ web_server_ip }}
+    dest="/etc/postgresql/{{ postgresql_version }}/main/pg_hba.conf" contype=host databases=all method=md5 users=all create=true source=0.0.0.0
 
 - name: Replace a localhost entry with our own
   lineinfile: path=/etc/postgresql/{{ postgresql_version }}/main/postgresql.conf regexp="#listen_addresses = 'localhost'" line=listen_addresses='*'
