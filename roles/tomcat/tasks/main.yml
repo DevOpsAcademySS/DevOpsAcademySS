@@ -20,9 +20,15 @@
 
 - name: Unarchive file
   unarchive:
-    src: https://www-eu.apache.org/dist/tomcat/tomcat-9/v9.0.52/bin/apache-tomcat-9.0.52.tar.gz
+    src: https://www-eu.apache.org/dist/tomcat/tomcat-9/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz
     dest: /opt/tomcat/
     remote_src: True
+
+- name: create a symbolic link
+  file:
+    src: /opt/tomcat/apache-tomcat-{{ tomcat_version }}
+    dest: /opt/tomcat/latest
+    state: link
 
 - name: Change  file permission
   file:
