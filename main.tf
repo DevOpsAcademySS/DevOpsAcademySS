@@ -1,4 +1,7 @@
 provider "aws" {
+  region = var.region
+  access_key = var.access_key
+  secret_key = var.secret_key
 }
 
 resource "aws_instance" "Ubuntu" {
@@ -49,17 +52,37 @@ resource "aws_security_group" "my_security_group" {
   }
 }
 
+//output "instance_ips" {
+//  value = aws_instance.Ubuntu.public_ip
+//}
+//
+//resource "local_file" "public_ip" {
+//  content = aws_instance.Ubuntu.public_ip
+//  filename = "public_ip.txt"
+//}
+//
+//data "template_file" "dev_hosts" {
+//  template = "${file("dev_hosts.cfg")}"
+//  vars = {
+//    api_public = "${aws_instance.Ubuntu.public_ip}"
+//  }
+//}
+//
+//resource "null_resource" "dev-hosts" {
+//  triggers = {
+//    template_rendered = "${data.template_file.dev_hosts.rendered}"
+//  }
+//  provisioner "local-exec" {
+//    command = "echo '${data.template_file.dev_hosts.rendered}' > dev_hosts"
+//  }
+//}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+resource "local_file" "hosts_cfg" {
+  content = templatefile("${path.module}/templates/inventory.tpl",
+    {
+      DB = aws_instance.Ubuntu.public_ip
+      web_server = aws_instance.CentOS.public_ip
+    }
+  )
+  filename = "inventory.txt"
+}
