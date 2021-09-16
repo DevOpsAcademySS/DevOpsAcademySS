@@ -38,7 +38,7 @@
     recurse: yes
 
 - name: Change permissions
-  shell: "sudo sh -c 'chmod +x /opt/tomcat/apache-tomcat-9.0.52/bin/*.sh'"
+  shell: "sudo sh -c 'chmod +x /opt/tomcat/latest/bin/*.sh'"
 
 - name: Copying file
   copy:
@@ -48,7 +48,7 @@
 - name: Copying  citizen.war
   copy:
     src: citizen.war
-    dest: /opt/tomcat/apache-tomcat-9.0.52/webapps/
+    dest: /opt/tomcat/latest/webapps/
 
 - name: Force systemd to reread configs
   ansible.builtin.systemd:
@@ -66,8 +66,8 @@
     state: absent
     regexp: '  <Valve className="org.apache.catalina.valves.RemoteAddrValve"'
   with_items:
-    - /opt/tomcat/apache-tomcat-9.0.52/webapps/manager/META-INF/context.xml
-    - /opt/tomcat/apache-tomcat-9.0.52/webapps/host-manager/META-INF/context.xml
+    - /opt/tomcat/latest/webapps/manager/META-INF/context.xml
+    - /opt/tomcat/latest/webapps/host-manager/META-INF/context.xml
 
 - name: comment
   lineinfile:
@@ -75,86 +75,11 @@
     state: absent
     regexp: '         allow'
   with_items:
-    - /opt/tomcat/apache-tomcat-9.0.52/webapps/manager/META-INF/context.xml
-    - /opt/tomcat/apache-tomcat-9.0.52/webapps/host-manager/META-INF/context.xml
+    - /opt/tomcat/latest/webapps/manager/META-INF/context.xml
+    - /opt/tomcat/latest/webapps/host-manager/META-INF/context.xml
 
-- name: Start service tomcat
+- name: Restart service tomcat
   ansible.builtin.systemd:
     name: tomcat
     state: restarted
     enabled: yes
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#- name: Create temp directory
-#  file:
-#    path: '{{ tomcat_temp_download_path }}'
-#    state: directory
-#  delegate_to: "{{ item }}"
-#  loop:
-#    - localhost
-#    - "{{ inventory_hostname }}"
-#  changed_when: False
-#  when: >
-#    not is_installed.stat.exists and
-#    (( item == inventory_hostname ) or tomcat_remote_is_disconnected )
-#- name: Download apache-tomcat-{{ tomcat_version }}.tar.gz
-#  get_url:
-#    url: "{{ tomcat_downloadURL }}/tomcat/tomcat-{{ tomcat_version.split('.')[0] }}/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz"
-#    dest: '{{ tomcat_temp_download_path }}'
-#    timeout: 120
-#  delegate_to: "{{ 'localhost' if tomcat_remote_is_disconnected else inventory_hostname }}"
-#  when: not is_installed.stat.exists
-#
-#- name: apache-tomcat-{{ tomcat_version }}.tar.gz is transfered to the disconnected remote
-#  copy:
-#    src: "{{ tomcat_temp_download_path }}/apache-tomcat-{{ tomcat_version }}.tar.gz"
-#    dest: "{{ tomcat_temp_download_path }}"
-#  when: tomcat_remote_is_disconnected
-#
-#- name: Unarchive apache-tomcat-{{ tomcat_version }}.tar.gz at {{ tomcat_install_path }}
-#  unarchive:
-#    src: "{{ tomcat_temp_download_path }}/apache-tomcat-{{ tomcat_version }}.tar.gz"
-#    dest: "{{ tomcat_install_path }}"
-#    remote_src: True
-#    owner: "{% if tomcat_permissions_production %}root{% else %}{{ tomcat_user }}{% endif %}"
-#    group: "{{ tomcat_group }}"
-#    creates: "{{ tomcat_install_path }}/apache-tomcat-{{ tomcat_version }}"
-#  register: tomcat_installed
-#  when: not is_installed.stat.exists
-#
-#- name: Clean up temporary files
-#  file:
-#    path: '{{ tomcat_temp_download_path }}'
-#    state: absent
-#  changed_when: False
-#  when: not is_installed.stat.exists
