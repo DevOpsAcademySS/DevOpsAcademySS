@@ -5,4 +5,4 @@ db_user: postgres
 db_name: ss_demo_1
 db_password: postgres
 postgresql_version: 12
-web_server_ip: 52.53.193.106
+web_server_ip: 54.193.81.174
