@@ -1,7 +1,7 @@
 [amazon_server]
-amazonlinux	ansible_host=13.51.85.127
+amazonlinux	ansible_host=13.53.41.2
 [ubuntu_server]
-ubuntulinux	ansible_host=13.51.196.249
+ubuntulinux	ansible_host=13.51.160.157
 [test_servers:children]
 amazon_server
 ubuntu_server
