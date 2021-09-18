@@ -1,0 +1,70 @@
+---
+# tasks file for amazon_serv_tomcat
+- name: Install Java
+  yum:
+    name: java-1.8.0-openjdk
+    state: present
+- name: Create tomcat group
+  group:
+    name: tomcat
+    state: present
+- name: Create tomcat user
+  user:
+    name: tomcat
+    shell: /bin/nologin
+    group: tomcat
+    home: /opt/tomcat
+- name: make /opt/tomcat directory
+  file:
+    path: /opt/tomcat
+    state: directory
+- name: download and unarchive tomcat binary 
+  unarchive:
+    remote_src: yes
+    src: https://downloads.apache.org/tomcat/tomcat-9/v9.0.53/bin/apache-tomcat-9.0.53.tar.gz
+    dest: /opt/tomcat
+    extra_opts:
+    - --strip-components=1
+- name: change ownership of /opt/tomcat
+  file:
+    path: /opt/tomcat
+    group: tomcat
+    state: directory
+    recurse: yes
+- name: add read access to /opt/tomcat
+  file:
+    path: /opt/tomcat/conf
+    mode: g+r
+    state: directory
+    recurse: yes
+- name: add execute perms to /opt/tomcat
+  file:
+    path: /opt/tomcat/conf
+    mode: g+x
+    state: directory
+- name: change owner
+  file:
+    path: "{{ item }}"
+    owner: tomcat
+    state: directory
+    recurse: yes
+  with_items: ["/opt/tomcat/logs","/opt/tomcat/work","/opt/tomcat/webapps","/opt/tomcat/temp"]
+- name: Copy tomcat.service file
+  copy:
+    src: tomcat.service
+    dest: /etc/systemd/system/tomcat.service
+    owner: root
+  notify: 
+  - Reload daemon
+  - Reload tomcat
+- name: start tomcat service
+  service:
+    name: tomcat
+    state: started
+    enabled: yes
+- name: Copy citizen.war
+  copy:
+    src: citizen.war
+    dest: /opt/tomcat/webapps/
+  notify:
+  - Reload tomcat
