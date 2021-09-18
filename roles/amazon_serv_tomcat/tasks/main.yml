@@ -68,3 +68,6 @@
     dest: /opt/tomcat/webapps/
   notify:
   - Reload tomcat
+- name: NOW YOU CAN CHECK IF TOMCAT IS WORKING
+  debug:
+    msg: "http://{{ ansible_ssh_host }}:8080"
