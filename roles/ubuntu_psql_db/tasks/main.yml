@@ -52,6 +52,6 @@
 - name: allow every host connect to database
   lineinfile:
     path: /etc/postgresql/11/main/postgresql.conf
-    search_string: "#listen_addresses = 'localhost'"
+    regexp: "^#listen_addresses = 'localhost'"
     line: listen_addresses='*'
   notify: Restart Postgres
