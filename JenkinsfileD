@@ -1,0 +1,32 @@
+pipeline{
+    agent {
+  label 'agent-ubuntu'
+}
+    tools {
+  terraform 'terraform-ubuntu'
+}
+    stages{
+        stage('Terraform Init'){
+            steps{
+                withAWS(credentials: 'aws-credential-geocitizen') {
+                    sh 'terraform init -no-color '
+                }    
+            }
+        }
+        stage('Terraform Destroy'){
+            steps{
+                withAWS(credentials: 'aws-credential-geocitizen') {
+                    sh 'terraform destroy --auto-approve -no-color'
+                }
+            }
+        }
+    }
+    post {
+        success { 
+            telegramSend('JOB $JOB_NAME FINISHED SUCCESFULL. INSTANCES HAVE BEEN DELETED')
+        }
+        failure { 
+            telegramSend('JOB $JOB_NAME FAILED. CHECK ERRORS')
+        }
+    }
+}
