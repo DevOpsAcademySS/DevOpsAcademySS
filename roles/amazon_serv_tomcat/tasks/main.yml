@@ -8,16 +8,16 @@
   group:
     name: tomcat
     state: present
+- name: make /opt/tomcat directory
+  file:
+    path: /opt/tomcat
+    state: directory
 - name: Create tomcat user
   user:
     name: tomcat
     shell: /bin/nologin
     group: tomcat
     home: /opt/tomcat
-- name: make /opt/tomcat directory
-  file:
-    path: /opt/tomcat
-    state: directory
 - name: download and unarchive tomcat binary 
   unarchive:
     remote_src: yes
@@ -62,12 +62,6 @@
     name: tomcat
     state: started
     enabled: yes
-- name: Copy citizen.war
-  copy:
-    src: citizen.war
-    dest: /opt/tomcat/webapps/
-  notify:
-  - Reload tomcat
 - name: NOW YOU CAN CHECK IF TOMCAT IS WORKING
   debug:
     msg: "http://{{ ansible_ssh_host }}:8080"
