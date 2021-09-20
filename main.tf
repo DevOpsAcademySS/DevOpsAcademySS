@@ -52,37 +52,24 @@ resource "aws_security_group" "my_security_group" {
   }
 }
 
-//output "instance_ips" {
-//  value = aws_instance.Ubuntu.public_ip
-//}
-//
-//resource "local_file" "public_ip" {
-//  content = aws_instance.Ubuntu.public_ip
-//  filename = "public_ip.txt"
-//}
-//
-//data "template_file" "dev_hosts" {
-//  template = "${file("dev_hosts.cfg")}"
-//  vars = {
-//    api_public = "${aws_instance.Ubuntu.public_ip}"
-//  }
-//}
-//
-//resource "null_resource" "dev-hosts" {
-//  triggers = {
-//    template_rendered = "${data.template_file.dev_hosts.rendered}"
-//  }
-//  provisioner "local-exec" {
-//    command = "echo '${data.template_file.dev_hosts.rendered}' > dev_hosts"
-//  }
-//}
 
-resource "local_file" "hosts_cfg" {
-  content = templatefile("${path.module}/templates/inventory.tpl",
-    {
-      DB = aws_instance.Ubuntu.public_ip
-      web_server = aws_instance.CentOS.public_ip
-    }
-  )
-  filename = "inventory.txt"
+data "template_file" "dev_hosts" {
+  template = "${file("${path.module}/templates/dev_hosts.cfg")}"
+  depends_on = [
+    aws_instance.Ubuntu,
+    aws_instance.CentOS,
+  ]
+  vars = {
+    api_ubuntu = "${aws_instance.Ubuntu.private_ip}"
+    api_centos = "${aws_instance.CentOS.private_ip}"
+  }
+}
+
+resource "null_resource" "dev-hosts" {
+  triggers = {
+    template_rendered = "${data.template_file.dev_hosts.rendered}"
+  }
+  provisioner "local-exec" {
+    command = "echo '${data.template_file.dev_hosts.rendered}' > inventory.txt"
+  }
 }
