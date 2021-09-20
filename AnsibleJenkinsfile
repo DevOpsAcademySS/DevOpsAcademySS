@@ -11,7 +11,7 @@ pipeline {
     }
     stage('Hello') {
       steps {
-        sh 'ansible-playbook -i inventory.txt --private-key=$ANSIBLE_PRIVATE_KEY main.yml'
+        sh 'ansible-playbook -i ../terraform/inventory.txt --private-key=$ANSIBLE_PRIVATE_KEY main.yml'
       }
     }
   }
