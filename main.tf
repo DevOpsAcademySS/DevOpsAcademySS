@@ -57,8 +57,8 @@ data "template_file" "dev_hosts" {
     aws_instance.CentOS,
   ]
   vars = {
-    api_ubuntu = "${aws_instance.Ubuntu.private_ip}"
-    api_centos = "${aws_instance.CentOS.private_ip}"
+    api_ubuntu = "${aws_instance.Ubuntu.public_ip}"
+    api_centos = "${aws_instance.CentOS.public_ip}"
   }
 }
 
