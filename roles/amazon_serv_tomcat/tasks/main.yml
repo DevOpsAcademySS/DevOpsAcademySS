@@ -8,16 +8,16 @@
   group:
     name: tomcat
     state: present
-- name: make /opt/tomcat directory
-  file:
-    path: /opt/tomcat
-    state: directory
 - name: Create tomcat user
   user:
     name: tomcat
     shell: /bin/nologin
     group: tomcat
     home: /opt/tomcat
+- name: make /opt/tomcat directory
+  file:
+    path: /opt/tomcat
+    state: directory
 - name: download and unarchive tomcat binary 
   unarchive:
     remote_src: yes
