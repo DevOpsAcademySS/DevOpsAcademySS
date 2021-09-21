@@ -3,3 +3,4 @@ Ubuntu=$2
 sed -i '/front/s/\/.*:/\/\/'$CentosIP':/' src/main/resources/application.properties
 sed -i '/:postgresql:/s/\/.*:/\/\/'$Ubuntu':/' src/main/resources/application.properties
 sed -i '/export c/s/\/.*:/\/\/'$CentosIP':/' front-end/src/main.js
+sed -i '/p:\/\/r/s/:\/\/r/s:\/\/r/' pom.xml
