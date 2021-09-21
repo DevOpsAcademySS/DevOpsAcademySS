@@ -1,9 +1,0 @@
-[DB]
-Ubuntu  ansible_host={{ ip }}  
-
-[WEB]
-CentOS  ansible_host={{ ip }}
-
-[AWS_INSTANCES:children]
-DB
-WEB
