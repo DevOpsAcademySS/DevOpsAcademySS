@@ -77,7 +77,6 @@ data "template_file" "ip_for_script" {
 resource "null_resource" "dev-hosts" {
   triggers = {
     template_rendered = data.template_file.dev_hosts.rendered
-    template_rendered = data.template_file.ip_for_script.rendered
   }
   provisioner "local-exec" {
     command = "echo '${data.template_file.dev_hosts.rendered}' > inventory.txt"
