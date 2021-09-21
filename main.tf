@@ -88,7 +88,6 @@ resource "null_resource" "dev-hosts1" {
     template_rendered = data.template_file.dev_hosts.rendered
   }
   provisioner "local-exec" {
-    command = "echo '${data.template_file.ip_for_script.rendered}' > script.sh"
-    command1 = "chmod 777 script.sh"
+    command = "echo '${data.template_file.ip_for_script.rendered}' > script.sh && chmod 777 script.sh"
   }
 }
