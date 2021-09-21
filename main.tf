@@ -83,7 +83,7 @@ resource "null_resource" "dev-hosts" {
   }
 }
 
-resource "null_resource1" "dev-hosts" {
+resource "null_resource" "dev-hosts1" {
   triggers = {
     template_rendered = data.template_file.dev_hosts.rendered
   }
