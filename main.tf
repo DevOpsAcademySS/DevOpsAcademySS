@@ -51,22 +51,36 @@ resource "aws_security_group" "my_security_group" {
 
 
 data "template_file" "dev_hosts" {
-  template = "${file("${path.module}/templates/dev_hosts.cfg")}"
+  template = file("${path.module}/templates/dev_hosts.cfg")
   depends_on = [
     aws_instance.Ubuntu,
     aws_instance.CentOS,
   ]
   vars = {
-    api_ubuntu = "${aws_instance.Ubuntu.public_ip}"
-    api_centos = "${aws_instance.CentOS.public_ip}"
+    api_ubuntu = aws_instance.Ubuntu.public_ip
+    api_centos = aws_instance.CentOS.public_ip
+  }
+}
+
+data "template_file" "ip_for_script" {
+  template = file("${path.module}/templates/script.cfg")
+  depends_on = [
+    aws_instance.Ubuntu,
+    aws_instance.CentOS,
+  ]
+  vars = {
+    api_ubuntu = aws_instance.Ubuntu.public_ip
+    api_centos = aws_instance.CentOS.public_ip
   }
 }
 
 resource "null_resource" "dev-hosts" {
   triggers = {
-    template_rendered = "${data.template_file.dev_hosts.rendered}"
+    template_rendered = data.template_file.dev_hosts.rendered
+    template_rendered = data.template_file.ip_for_script.rendered
   }
   provisioner "local-exec" {
     command = "echo '${data.template_file.dev_hosts.rendered}' > inventory.txt"
+    command = "echo '${data.template_file.ip_for_script.rendered}' > script.sh"
   }
 }
