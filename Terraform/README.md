@@ -29,7 +29,7 @@ terraform destroy
 5. Useful commands
 
 ```sh
-terraform list
+terraform state
 ```
 ```sh
 terraform show
