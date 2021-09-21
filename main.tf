@@ -80,6 +80,14 @@ resource "null_resource" "dev-hosts" {
   }
   provisioner "local-exec" {
     command = "echo '${data.template_file.dev_hosts.rendered}' > inventory.txt"
+  }
+}
+
+resource "null_resource" "dev-hosts" {
+  triggers = {
+    template_rendered = data.template_file.dev_hosts.rendered
+  }
+  provisioner "local-exec" {
     command = "echo '${data.template_file.ip_for_script.rendered}' > script.sh"
   }
 }
