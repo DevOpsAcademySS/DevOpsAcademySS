@@ -1,0 +1,8 @@
+---
+- name: Configure Servers
+  hosts: all
+  become: true
+
+  roles:
+      - { role: Ubuntu, when: ansible_distribution == 'Ubuntu' }
+      - { role: RedHat, when: ansible_distribution == 'RedHat' }

@@ -1,5 +1,4 @@
-*
-!.gitignore
-!main.tf
-!outputs.tf
-!security_group_rules.tf
+variables.tf
+.terraform/
+.terraform.*
+terraform.*

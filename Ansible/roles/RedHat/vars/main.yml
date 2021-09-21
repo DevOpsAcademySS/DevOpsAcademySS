@@ -1,0 +1,4 @@
+---
+# vars file for RedHat
+
+tomcat_version: 9.0.53

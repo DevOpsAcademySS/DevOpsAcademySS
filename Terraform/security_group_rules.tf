@@ -2,7 +2,7 @@ resource "aws_security_group" "redhat_security" {
   name        = "redhat_security"
   description = "Allow acces for Geocitizen"
   dynamic "ingress" {
-    for_each = var.ports
+    for_each = var.redhat_ports
     content {
       cidr_blocks      = ["0.0.0.0/0"]
       description      = "Allow all ingress ports"
@@ -18,7 +18,7 @@ resource "aws_security_group" "ubuntu_security" {
   name        = "ubuntu_security"
   description = "Allow PostgreSQL"
   dynamic "ingress" {
-    for_each = var.ports
+    for_each = var.ubuntu_ports
     content {
       cidr_blocks      = ["0.0.0.0/0"]
       description      = "Allow all ingress ports"
