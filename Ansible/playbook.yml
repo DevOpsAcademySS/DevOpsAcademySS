@@ -3,6 +3,6 @@
   hosts: all
   become: true
 
-  tasks:
-    - { role: Ubuntu, when: ansible_distribution == Ubuntu }
-    - { role: RedHat, when: ansible_distribution == RedHat }
+  roles:
+      - { role: Ubuntu, when: ansible_distribution == 'Ubuntu' }
+      - { role: RedHat, when: ansible_distribution == 'RedHat' }
