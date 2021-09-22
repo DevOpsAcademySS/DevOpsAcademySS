@@ -1,5 +1,3 @@
-# Ansible
-
 1. Check connection to servers
 ```
 ansible all -m ping
@@ -22,3 +20,7 @@ ansible-galaxy init ReadHat
 ```
 ansible-playbook playbook -e "db_ip=192.168.1.1 web_ip=192.168.1.2" 
 ```
+
+### Usefil links
+
+[kak-rabotat-s-ansible-prostaya-i-udobnaya-shpargalka](https://www.8host.com/blog/kak-rabotat-s-ansible-prostaya-i-udobnaya-shpargalka/)
