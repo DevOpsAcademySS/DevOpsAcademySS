@@ -27,7 +27,7 @@ resource "aws_instance" "ubuntu" {
 
 resource "aws_security_group" "allow_postgres" {
   name        = "allow_postgres"
-  description = "Allow port 5432 and 22 for DB and ssh inbound traffic"
+  description = "allow port 5432 and 22 for DB and ssh inbound traffic"
 
   ingress {
     description = "in 5432 port"
@@ -72,7 +72,7 @@ resource "aws_instance" "aml"{
 }
   resource "aws_security_group" "allow_tomcat" {
   name        = "allow_tomcat"
-  description = "Allow port 8080 and 22 for WS and ssh inbound traffic"
+  description = "allow port 8080 and 22 for WS and ssh inbound traffic"
 
   ingress {
     description = "in 5432 port"

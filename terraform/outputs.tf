@@ -1,5 +1,5 @@
 output "instance_id_dbs" {
-  description = "ID of the EC2 instance Ubuntu with DB"
+  description = "ID of the EC2 instance Ubuntu  with DB"
   value       = aws_instance.ubuntu.id
 }
 
