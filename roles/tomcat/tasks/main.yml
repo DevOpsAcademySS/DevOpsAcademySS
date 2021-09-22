@@ -24,13 +24,13 @@
     dest: /opt/tomcat/
     remote_src: True
 
-- name: create a symbolic link
+- name: Create a symbolic link
   file:
     src: /opt/tomcat/apache-tomcat-{{ tomcat_version }}
     dest: /opt/tomcat/latest
     state: link
 
-- name: Change  file permission
+- name: Change file permission
   file:
     path: /opt/tomcat
     owner: tomcat
@@ -45,7 +45,7 @@
     src: tomcat.service
     dest: /etc/systemd/system/
 
-- name: Copying  citizen.war
+- name: Copying citizen.war
   copy:
     src: citizen.war
     dest: /opt/tomcat/latest/webapps/
@@ -60,23 +60,20 @@
     state: started
     enabled: yes
 
-- name: comment
-  lineinfile:
-    path: "{{ item }}"
-    state: absent
-    regexp: '  <Valve className="org.apache.catalina.valves.RemoteAddrValve"'
-  with_items:
-    - /opt/tomcat/latest/webapps/manager/META-INF/context.xml
-    - /opt/tomcat/latest/webapps/host-manager/META-INF/context.xml
+- name: Copying context.xml in manager/META-INF
+  copy:
+    src: context.xml
+    dest: /opt/tomcat/latest/webapps/manager/META-INF/
 
-- name: comment
-  lineinfile:
-    path: "{{ item }}"
-    state: absent
-    regexp: '         allow'
-  with_items:
-    - /opt/tomcat/latest/webapps/manager/META-INF/context.xml
-    - /opt/tomcat/latest/webapps/host-manager/META-INF/context.xml
+- name: Copying context.xml in host-manager/META-INF
+  copy:
+    src: context.xml
+    dest: /opt/tomcat/latest/webapps/host-manager/META-INF/
+
+- name: Copying tomcat-users.xml
+  copy:
+    src: tomcat-users.xml
+    dest: /opt/tomcat/latest/conf/
 
 - name: Restart service tomcat
   ansible.builtin.systemd:
