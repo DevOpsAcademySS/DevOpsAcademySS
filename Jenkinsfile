@@ -30,8 +30,12 @@ pipeline{
         stage('Terraform output servers IPs'){
             steps{
                 withAWS(credentials: 'aws-credential-geocitizen') {
-                   amazonIP = sh """ terraform output amazon-server-public-ip | tr -d '"' """
-                   ubuntuIP = sh """ terraform output ubuntu-server-public-ip | tr -d '"' """
+                   sh """ terraform output amazon-server-public-ip | tr -d '"' > .amazonip """
+                   sh """ terraform output ubuntu-server-public-ip | tr -d '"' > ubuntuip """
+                }
+                 script {
+                    amazonIP = readFile('.amazonip').trim()
+                    ubuntuIP = readFile('.ubuntuip').trim()
                 }
             }
         }
