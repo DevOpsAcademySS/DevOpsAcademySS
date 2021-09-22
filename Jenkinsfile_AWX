@@ -1,0 +1,35 @@
+pipeline{
+     agent {
+  label 'agent-ubuntu'
+}
+parameters {
+        string(name: 'amazonIP', defaultValue: '0', description: 'IP for Amazon host')
+        string(name: 'ubuntuIP', defaultValue: '0', description: 'IP for Ubuntu host')
+}
+    stages{
+        stage('add IP for host'){
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'awx-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                sh '''
+                awx --conf.host http://35.195.149.189 --conf.username $USERNAME --conf.password $PASSWORD hosts modify amazonlinux --variables "{ansible_user: ec2-user, ansible_host: ${amazonIP}}"
+                awx --conf.host http://35.195.149.189 --conf.username $USERNAME --conf.password $PASSWORD hosts modify ubuntulinux --variables "{ansible_user: ubuntu, ansible_host: ${ubuntuIP}}"
+                '''
+                }
+            }
+        }
+        stage('start awx job'){
+            steps{
+                ansibleTower credential: 'aws-cred', inventory: 'geocitizene', jobTemplate: 'test', jobType: 'run', removeColor: true, throwExceptionWhenFail: true, towerCredentialsId: 'awx-cred', towerLogLevel: 'true', towerServer: 'DevOpsSS-AWX', extraVars: 'ansible_host: 13.48.42.100'
+            }
+        }   
+    }
+    
+    post {
+        success { 
+            telegramSend('JOB $JOB_NAME FINNISHED SUCCESFUL.')
+        }
+        failure { 
+            telegramSend('JOB $JOB_NAME FAILED.')
+        }
+    }
+}
