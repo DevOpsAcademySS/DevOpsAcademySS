@@ -21,7 +21,7 @@ parameters {
                         def job = jenkins.model.Jenkins.instance.getItemByFullName("geo-awx-job")
                         def result = job.getLastBuild().getResult().toString()
                         println (result)
-                        if ( result == "SUCCES") {
+                        if ( result == "SUCCESS") {
                             return true
                         }else if ( result == "FAILURE"){
                             println("geo-awx-job is not done yet!")
