@@ -62,32 +62,11 @@ data "template_file" "dev_hosts" {
   }
 }
 
-data "template_file" "ip_for_script" {
-  template = file("${path.module}/templates/script.cfg")
-  depends_on = [
-    aws_instance.Ubuntu,
-    aws_instance.CentOS,
-  ]
-  vars = {
-    api_ubuntu = aws_instance.Ubuntu.public_ip
-    api_centos = aws_instance.CentOS.public_ip
-  }
-}
-
 resource "null_resource" "dev-hosts" {
   triggers = {
     template_rendered = data.template_file.dev_hosts.rendered
   }
   provisioner "local-exec" {
     command = "echo '${data.template_file.dev_hosts.rendered}' > inventory.txt"
-  }
-}
-
-resource "null_resource" "dev-hosts1" {
-  triggers = {
-    template_rendered = data.template_file.dev_hosts.rendered
-  }
-  provisioner "local-exec" {
-    command = "echo '${data.template_file.ip_for_script.rendered}' > script.sh && chmod 777 script.sh"
   }
 }
