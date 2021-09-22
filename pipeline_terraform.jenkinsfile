@@ -14,14 +14,15 @@ pipeline {
             steps {
                 sh '''cd /var/lib/jenkins/terraform/
                     terraform apply --auto-approve
-                '''
-            }
-
-            post {
-                // If OK copy to ansible directory
-                success {
-                    sh '''scp -i ~/.ssh/geocitizen_ubuntu_db.pem /var/lib/jenkins/terraform/hosts.txt /var/lib/jenkins/ansible/
                     '''
+                }
+
+                post {
+                    // If OK copy to ansible directory
+                    success {
+                        sh '''scp -i ~/.ssh/geocitizen_ubuntu_db.pem /var/lib/jenkins/terraform/hosts.txt /var/lib/jenkins/ansible/
+                        '''
+                    }
                 }
             }
         }
