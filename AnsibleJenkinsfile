@@ -9,9 +9,10 @@ pipeline {
             git branch: 'IA-180-samir-ansible', credentialsId: 'github2', url: 'https://github.com/DevOpsAcademySS/DevOpsAcademySS'
         }
     }
-    stage('Hello') {
+    stage('Run playbook') {
       steps {
-        sh 'ansible-playbook -i ../terraform/inventory.txt --private-key=$ANSIBLE_PRIVATE_KEY main.yml'
+        sh 'cp ../maven/target/citizen.war /roles/tomcat/files/'
+        sh 'ansible-playbook --private-key=$ANSIBLE_PRIVATE_KEY main.yml'
       }
     }
   }
