@@ -9,7 +9,6 @@ parameters {
         string(name: 'amazonIP', defaultValue: '0', description: 'IP for Amazon host')
 }
     stages{
-        }
         stage('copy artifact'){
             steps{
                 copyArtifacts filter: 'target/citizen.war', fingerprintArtifacts: true, flatten: true, projectName: 'geo-build', selector: upstream(fallbackToLastSuccessful: true)
