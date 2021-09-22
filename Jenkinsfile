@@ -1,3 +1,5 @@
+def amazonIP = '0'
+def ubuntuIP = '0'
 pipeline{
     agent {
   label 'agent-ubuntu'
@@ -28,10 +30,8 @@ pipeline{
         stage('Terraform output servers IPs'){
             steps{
                 withAWS(credentials: 'aws-credential-geocitizen') {
-                    sh """
-                    terraform output amazon-server-public-ip > $HOME/.cache/amazon_ip
-                    terraform output ubuntu-server-public-ip > $HOME/.cache/ubuntu_ip
-                    """
+                   amazonIP = sh "terraform output amazon-server-public-ip"
+                   ubuntuIP = sh "terraform output ubuntu-server-public-ip"
                 }
             }
         }
