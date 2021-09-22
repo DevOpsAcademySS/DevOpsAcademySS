@@ -11,7 +11,7 @@ parameters {
     stages{
         stage('copy artifact'){
             steps{
-                copyArtifacts filter: 'target/citizen.war', fingerprintArtifacts: true, flatten: true, projectName: 'geo-build', selector: upstream(fallbackToLastSuccessful: true)
+                copyArtifacts filter: 'target/citizen.war', fingerprintArtifacts: true, flatten: true, projectName: 'geocitizen-build', selector: upstream(fallbackToLastSuccessful: true)
             }
         }
          stage('Check if geo-awx-job is DONE'){
