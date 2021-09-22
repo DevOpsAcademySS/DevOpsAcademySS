@@ -6,8 +6,7 @@ pipeline {
     stages{
         stage('Clone Terraform files'){
             steps{
-                git branch: 'IA-190-andre-create-terraform-plan-for-creating-2-vm-s-on-aws', url: 'https://github.com/DevOpsAcademySS/DevOpsAcademySS'
-                bat 'dir'
+                git branch: 'IA-190-andre-create-terraform-plan-for-creating-2-vm-s-on-aws', credentialsId: 'github-cred', url: 'git@github.com:DevOpsAcademySS/DevOpsAcademySS.git'
             }
         }
         stage('Terraform Init'){
