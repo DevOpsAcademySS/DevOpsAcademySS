@@ -5,17 +5,17 @@ pipeline {
         AWS_DEFAULT_REGION="eu-north-1"
         THE_BUTLER_SAYS_SO=credentials('terraform-on-aws-creds')
 
-    tools {
-        terraform 'terraform'
-    }
+        tools {
+            terraform 'terraform'
+        }
 
-    stages {
-        stage('Build') {
-            steps {
-                sh '''cd /var/lib/jenkins/terraform/
-                    terraform apply --auto-approve
-                    '''
-                }
+        stages {
+            stage('Build') {
+                steps {
+                    sh '''cd /var/lib/jenkins/terraform/
+                        terraform apply --auto-approve
+                        '''
+                    }
 
                 post {
                     // If OK copy to ansible directory
