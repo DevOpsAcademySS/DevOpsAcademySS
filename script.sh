@@ -1,4 +1,4 @@
-list_of_ip=$(grep -o "[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}" inventory.txt)
+list_of_ip=$(grep -o "[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}" ../terraform/inventory.txt)
 set -- $list_of_ip
 sed -i '/front/s/\/.*:/\/\/'$2':/' src/main/resources/application.properties
 sed -i '/:postgresql:/s/\/.*:/\/\/'$1':/' src/main/resources/application.properties
