@@ -1,0 +1,21 @@
+
+pipeline {
+  agent any
+  tools {
+    maven 'maven'
+  }
+  stages {
+    stage('Git Checkout'){
+        steps {
+            git branch: 'main', credentialsId: 'github2', url: 'https://github.com/DevOpsAcademySS/Geocitizen'
+        }
+    }
+    stage('Hello') {
+      steps {
+        sh 'cp ../terraform/script.sh .'
+        sh './script.sh'
+        sh 'mvn install'
+      }
+    }
+  }
+}
