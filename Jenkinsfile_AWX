@@ -1,7 +1,5 @@
 pipeline{
-     agent {
-  label 'agent-ubuntu'
-}
+     agent any
 parameters {
         string(name: 'amazonIP', defaultValue: '0', description: 'IP for Amazon host')
         string(name: 'ubuntuIP', defaultValue: '0', description: 'IP for Ubuntu host')

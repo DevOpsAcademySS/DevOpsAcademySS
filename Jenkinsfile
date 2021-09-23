@@ -1,7 +1,5 @@
 pipeline{
-    agent {
-  label 'agent-ubuntu'
-}
+    agent any
  environment {
         ANSIBLE_PRIVATE_KEY     = credentials('aws-credential-ansible')
 }
