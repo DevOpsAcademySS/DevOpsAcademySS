@@ -10,7 +10,7 @@ pipeline{
                 sh 'terraform init -no-color'
             }
         }
-        stage('Terraform Apply'){
+        stage('Terraform Destroy'){
             steps{
                 sh 'terraform destroy --auto-approve -no-color'
             }     
