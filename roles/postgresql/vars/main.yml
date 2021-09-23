@@ -4,4 +4,4 @@
 db_user: postgres
 db_name: ss_demo_1
 db_password: postgres
-postgresql_version: 12
+path: /etc/postgresql/12/main

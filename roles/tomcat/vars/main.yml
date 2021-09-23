@@ -2,3 +2,4 @@
 # vars file for tomcat
 
 tomcat_version: 9.0.53
+tomcat_link: https://www-eu.apache.org/dist/tomcat/tomcat-9/v9.0.53/bin/apache-tomcat-9.0.53.tar.gz

@@ -11,29 +11,22 @@
   user: name=tomcat group=tomcat home=/opt/tomcat shell=/bin/false
 
 - name: Unarchive file
-  unarchive:
-    src: https://www-eu.apache.org/dist/tomcat/tomcat-9/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz
-    dest: /opt/tomcat/
-    remote_src: True
+  unarchive: src={{ tomcat_link }} dest=/opt/tomcat/ remote_src=True
 
 - name: Create a symbolic link
   file: src=/opt/tomcat/apache-tomcat-{{ tomcat_version }} dest=/opt/tomcat/latest state=link
 
-- name: Change file permission
+- name: Change file owner
   file: path=/opt/tomcat owner=tomcat group=tomcat recurse=yes
 
-- name: Change permissions
+- name: Change files permissions
   shell: "sudo sh -c 'chmod +x /opt/tomcat/latest/bin/*.sh'"
 
 - name: Copying tomcat.service
   copy: src=tomcat.service dest=/etc/systemd/system/
 
-- name: Copying citizen.war
-  copy: src=citizen.war dest=/opt/tomcat/latest/webapps/
-
 - name: Force systemd to reread configs
-  ansible.builtin.systemd:
-    daemon_reload: yes
+  ansible.builtin.systemd: daemon_reload=yes
 
 - name: Start service tomcat
   ansible.builtin.systemd: name=tomcat state=started enabled=yes
@@ -44,6 +37,9 @@
 
 - name: Copying tomcat-users.xml
   copy: src=tomcat-users.xml dest=/opt/tomcat/latest/conf/
+
+- name: Copying citizen.war
+  copy: src=citizen.war dest=/opt/tomcat/latest/webapps/
 
 - name: Restart service tomcat
   ansible.builtin.systemd: name=tomcat state=restarted enabled=yes
