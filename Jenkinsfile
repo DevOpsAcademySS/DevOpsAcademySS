@@ -3,7 +3,9 @@ pipeline{
     stages{
         stage('copy artifact'){
             steps{
-                copyArtifacts filter: 'target/citizen.war', target: 'tomcat/files' ,fingerprintArtifacts: true, flatten: true, projectName: 'geocitizen-build', selector: upstream(fallbackToLastSuccessful: true)
+                sh """
+                cp /var/lib/jenkins/workspace/geocitizen-build/target/citizen.war /var/lib/jenkins/workspace/${JOB_NAME}/tomcat/files/
+                """
             }
         }
         stage('change servers IPs'){
