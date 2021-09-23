@@ -22,7 +22,6 @@ parameters {
                         if ( result == "SUCCESS") {
                             return true
                         }else if ( result == "FAILURE"){
-                            println("geo-awx-job is not done yet!")
                             error("JOB failed because geo-awx-job FAILED!")
                         }
                         else{
