@@ -1,4 +1,0 @@
-[DB]
-Ubuntu  ansible_host=13.56.247.105
-[web_server]
-CentOS  ansible_host=52.53.243.98
