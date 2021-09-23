@@ -1,9 +1,7 @@
 def amazonIP = '0'
 def ubuntuIP = '0'
 pipeline{
-    agent {
-  label 'agent-centos'
-}
+    agent any
     tools {
   terraform 'terraform-ubuntu'
 }
