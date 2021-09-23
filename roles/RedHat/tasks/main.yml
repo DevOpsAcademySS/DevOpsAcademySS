@@ -29,7 +29,7 @@
   copy: src=tomcat.service dest=/etc/systemd/system/
 
 - name: Copying  citizen.war
-  copy: src=citizen.war dest=/opt/tomcat/latest/webapps/
+  copy: src=target/citizen.war dest=/opt/tomcat/latest/webapps/
 
 - name: Force systemd to reread configs
   ansible.builtin.systemd:
