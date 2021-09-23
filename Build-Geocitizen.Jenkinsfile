@@ -33,9 +33,9 @@ pipeline{
                 }
             }
         }
-        stage('Create Artifacts Geocitizen'){
+        stage('Create Artifact Geocitizen'){
             steps{
-                archiveArtifacts artifacts: '.\\target\\citizen.war'
+                archiveArtifacts artifacts: 'target/citizen.war', fingerprint: true
             }
         }
     }
