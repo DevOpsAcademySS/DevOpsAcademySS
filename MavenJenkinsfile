@@ -1,4 +1,3 @@
-
 pipeline {
   agent any
   tools {
@@ -10,7 +9,7 @@ pipeline {
             git branch: 'main', credentialsId: 'github2', url: 'https://github.com/DevOpsAcademySS/Geocitizen'
         }
     }
-    stage('Hello') {
+    stage('Build Geocitizen') {
       steps {
         sh 'cp ../terraform/script.sh .'
         sh './script.sh'
