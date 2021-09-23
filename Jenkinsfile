@@ -12,7 +12,7 @@ pipeline{
             steps{
                 sh"""
                 sed -i -E '/Ubuntu/s/ansible_host=[0-9.]*/ansible_host='$ubuntuIP'/g' inventory.txt 
-                sed -i -E '/CentOs/s/ansible_host=[0-9.]*/ansible_host='$amazonIP'/g' inventory.txt 
+                sed -i -E '/CentOS/s/ansible_host=[0-9.]*/ansible_host='$amazonIP'/g' inventory.txt 
                 """
             }
         }
