@@ -1,3 +1,5 @@
+def amazonIP = '0'
+def ubuntuIP = '0'
 pipeline{
     agent any
     environment {
@@ -14,6 +16,25 @@ pipeline{
             steps{
                 sh 'terraform apply --auto-approve -no-color'
             }
+        }
+        stage('Terraform output servers IPs'){
+            steps{           
+                sh """ terraform output web_server_ip | tr -d '"' > .amazonip """
+                sh """ terraform output db_ip | tr -d '"' > .ubuntuip """ 
+                 script {
+                    amazonIP = readFile('.amazonip').trim()
+                    ubuntuIP = readFile('.ubuntuip').trim()
+                }
+            }
+        }
+    }
+    post {
+        success {
+            //build job: 'geo-ansible-job', parameters: [string(name: 'amazonIP', value: String.valueOf(amazonIP)), string(name: 'ubuntuIP', value: String.valueOf(ubuntuIP))], wait:false
+            build job: 'geocitizen-build', parameters: [string(name: 'amazonIP', value: String.valueOf(amazonIP)), string(name: 'ubuntuIP', value: String.valueOf(ubuntuIP))], wait:false
+        }
+        failure { 
+
         }
     }
 }
