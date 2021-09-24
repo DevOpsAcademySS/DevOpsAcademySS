@@ -5,4 +5,4 @@
 
   roles:
       - { role: Ubuntu, when: ansible_distribution == 'Ubuntu' }
-      - { role: RedHat, when: ansible_distribution == 'RedHat' }
+      - { role: RedHat, when: ansible_distribution == 'Amazon' }
