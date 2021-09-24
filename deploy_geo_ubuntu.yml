@@ -1,0 +1,6 @@
+---
+- name: Playbook for ubuntu server with postgresql
+  hosts: ubuntu_server
+  roles: 
+      - ubuntu_psql_db
+  become: yes
