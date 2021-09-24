@@ -17,8 +17,14 @@ parameters {
         }
         stage('start awx job'){
             steps{
-                ansibleTower credential: 'aws-cred', inventory: 'geocitizene', jobTemplate: 'amazon_conf', jobType: 'run', removeColor: true, throwExceptionWhenFail: true, towerCredentialsId: 'awx-cred', towerServer: 'DevOpsSS-AWX', extraVars: 'ansible_host: 13.48.42.100'
-                ansibleTower credential: 'aws-cred', inventory: 'geocitizene', jobTemplate: 'ubuntu_conf', jobType: 'run', removeColor: true, throwExceptionWhenFail: true, towerCredentialsId: 'awx-cred', towerServer: 'DevOpsSS-AWX', extraVars: 'ansible_host: 13.48.42.100'
+                parallel(
+                    amazon: {
+                        ansibleTower credential: 'aws-cred', inventory: 'geocitizene', jobTemplate: 'amazon_conf', jobType: 'run', removeColor: true, throwExceptionWhenFail: true, towerCredentialsId: 'awx-cred', towerServer: 'DevOpsSS-AWX', extraVars: 'ansible_host: 13.48.42.100'
+                    },
+                    ubuntu: {
+                        ansibleTower credential: 'aws-cred', inventory: 'geocitizene', jobTemplate: 'ubuntu_conf', jobType: 'run', removeColor: true, throwExceptionWhenFail: true, towerCredentialsId: 'awx-cred', towerServer: 'DevOpsSS-AWX', extraVars: 'ansible_host: 13.48.42.100'
+                    }
+                )
             }
         }   
     }
