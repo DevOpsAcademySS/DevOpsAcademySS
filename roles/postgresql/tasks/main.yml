@@ -2,7 +2,9 @@
 # tasks file for postgresql
 
 - name: Install dependencies for PostgreSQL
-  apt: name="['python3-psycopg2', "acl"]" update_cache=true state=latest
+  apt:
+    name: ['python3-psycopg2', "acl"]
+    update_cache: true state=latest
 
 - name: Install PostgreSQL
   apt: name=postgresql update_cache=true state=present
