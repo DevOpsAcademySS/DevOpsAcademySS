@@ -13,7 +13,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "redhat_geocitizen_service" {
-  ami                    = "ami-0baa9e2e64f3c00db"
+  ami                    = "ami-0f0b4cb72cf3eadf3"
   instance_type          = "t3.micro"
   key_name               = "andre centos 7 core"
   vpc_security_group_ids = [aws_security_group.redhat_security.id]
