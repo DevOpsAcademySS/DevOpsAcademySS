@@ -2,6 +2,7 @@ pipeline {
     agent any
     parameters { 
         booleanParam(name: 'Destroy', defaultValue: false, description: 'Destroy Terraform') 
+        booleanParam(name: 'Build_Gocitizen', defaultValue: true, description: 'Build Gocitizen after Terraform apply') 
     }
     stages{
         stage('Clone Terraform files'){
@@ -71,9 +72,9 @@ pipeline {
         success {
             echo "SUCCESS!) Building Geocitizen!"
             script {
-                if (params.Destroy == false)
+                if (params.Destroy == false && params.Build_Gocitizen == true) {
                     build job: 'Build-Geocitizen', parameters: [string(name: 'WEB_IP', value: String.valueOf(env.WEB_IP)), string(name: 'DB_IP', value: String.valueOf(env.DB_IP))]
-                    build job: 'Ansible-Configuration', parameters: [string(name: 'WEB_IP', value: String.valueOf(env.WEB_IP)), string(name: 'DB_IP', value: String.valueOf(env.DB_IP))]
+                }
             }
         }
         failure{

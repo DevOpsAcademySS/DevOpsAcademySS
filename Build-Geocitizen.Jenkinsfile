@@ -1,7 +1,7 @@
 pipeline{
     agent any
     tools{
-        maven "Maven-3-8-2"
+        maven "Maven-3-6-3"
     }
     parameters{
         booleanParam(name:'Ansible',defaultValue:true,description:"Run Ansible pipeline after this pipeline")
@@ -23,9 +23,10 @@ pipeline{
         }
         stage('Build Geocitizen'){
             steps{
-                nodejs('Nodejs-10-24-1'){
+                nodejs('Nodejs-12-22-6'){
                     dir('.\\front-end\\'){
                         bat "npm install"
+                        bat "npm audit fix"
                         bat "npm run build"
                     }
                     bat ".\\Automation\\edit_index.sh"
@@ -35,7 +36,7 @@ pipeline{
         }
         stage('Create Artifact Geocitizen'){
             steps{
-                archiveArtifacts artifacts: 'target/citizen.war', fingerprint: true
+                archiveArtifacts artifacts: 'target\\citizen.war', fingerprint: true
             }
         }
     }
