@@ -21,7 +21,7 @@ pipeline{
         }
         stage("Copy artifact citizen.war"){
             steps{
-                copyArtifacts projectName: 'Build-Geocitizen', filter: 'target/citizen.war', fingerprintArtifacts: true, target: 'roles/RedHat/files'
+                copyArtifacts projectName: 'GitHub-Geocitizen-Build', filter: 'target/citizen.war', fingerprintArtifacts: true, target: 'roles/RedHat/files'
                 sh "ls roles/RedHat/files"
             }
         }
