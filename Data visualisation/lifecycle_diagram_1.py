@@ -16,9 +16,9 @@ with Diagram("Diagrams as a Code 1", show=True, direction="LR"):
             with Cluster('Ubuntu node'):
                 ubuntu = EC2('Ubuntu')
 
-            with Cluster('CentOS node'):
-                centos = EC2('CentOS')
-            centos - Edge(style="dashed") - ubuntu
+            with Cluster('Amazon node'):
+                amazon = EC2('Amazon')
+            amazon - Edge(style="dashed") - ubuntu
 
         with Cluster('Master'):
             jenkins = Jenkins('Jenkins')
@@ -29,4 +29,4 @@ with Diagram("Diagrams as a Code 1", show=True, direction="LR"):
             jenkins >> Edge() << terraform
 
     devops >> jenkins
-    terraform >> [ubuntu, centos]
+    terraform >> [ubuntu, amazon]

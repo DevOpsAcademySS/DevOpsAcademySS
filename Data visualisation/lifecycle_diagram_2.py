@@ -1,58 +1,42 @@
 from diagrams import Diagram, Cluster, Edge
 from diagrams.custom import Custom
 from diagrams.onprem.vcs import Github
-from diagrams.aws.compute import VmwareCloudOnAWS
-from diagrams.generic.os import Centos, Ubuntu
 from diagrams.programming.language import Java
 from diagrams.onprem.ci import Jenkins
-from diagrams.onprem.iac import Ansible
-from diagrams.aws.network import Route53
-from diagrams.onprem.network import Tomcat
-from diagrams.onprem.database import PostgreSQL
 from diagrams.onprem.iac import Terraform
-
-from diagrams.onprem.client import Client
-
+from diagrams.aws.devtools import Codebuild
+from diagrams.aws.security import Artifact
 
 with Diagram("Diagrams as a Code 2", show=True, direction="LR"):
 
-    client = Client('Client')
     terraform = Terraform('Terraform')
 
     with Cluster('AWS'):
-
         with Cluster('Cluster', direction='LR'):
+            with Cluster('Amazon node', 'TB'):
 
-            with Cluster('Ubuntu node'):
-                ubuntu = Ubuntu('Ubuntu')
-
-                with Cluster('Aplications'):
-                    postsql = PostgreSQL('PostgreSQL')
-
-            with Cluster('CentOS node', 'TB'):
-                centos = Centos('CentOS')
+                amazon = Custom(
+                    'Amazon Linux', './Data visualisation/icons/amazon-linux.png')
 
                 with Cluster('Aplications', 'TB'):
                     maven = Custom(
-                        'Maven 3.6', './icons/Apache_Maven_logo.svg.png')
-                    nodenpm = Custom('npm', './icons/nodejs-npm.png')
-                    geocitizen = Custom('Geocitizen', './icons/war.png')
-                    geocitizen_website = VmwareCloudOnAWS('Geocitizen')
-                    route53 = Route53('route53')
+                        'Maven 3.6.3', './Data visualisation/icons/Apache_Maven_logo.svg.png')
+                    nodenpm = Custom(
+                        'Nodejs+Npm', './Data visualisation/icons/nodejs-npm.png')
+                    geocitizen = Custom(
+                        'geocitizen.war', './Data visualisation/icons/war.png')
+                    geo_artifact = Artifact('Geocitizen Artifact')
                     github = Github('Geocitizen')
-                    tomcat = Tomcat('Tomcat 9')
                     java = Java('Java 1.8')
-                    github - java - nodenpm - maven - geocitizen - tomcat
-                    tomcat - geocitizen_website
+                    github - java - nodenpm - maven - geocitizen
+                    geocitizen - geo_artifact
 
         with Cluster('Master'):
             jenkins = Jenkins('Jenkins')
 
             with Cluster('Agent'):
-                ansible = Ansible('Ansible')
-                jenkins >> ansible
-                ansible >> [ubuntu, centos]
+                geo_build = Codebuild('Build Geocitizen')
+                jenkins >> Edge() << geo_build
+                geo_build >> amazon
 
     terraform >> jenkins
-    geocitizen_website - Edge(style="dashed") - postsql
-    geocitizen_website >> Edge() << route53 >> Edge() << client
