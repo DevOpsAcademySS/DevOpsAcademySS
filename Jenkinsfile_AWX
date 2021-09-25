@@ -9,8 +9,8 @@ parameters {
             steps{
                 withCredentials([usernamePassword(credentialsId: 'awx-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                 sh '''
-                awx --conf.host http://35.195.149.189 --conf.username $USERNAME --conf.password $PASSWORD hosts modify amazonlinux --variables "{ansible_user: ec2-user, ansible_host: ${amazonIP}}"
-                awx --conf.host http://35.195.149.189 --conf.username $USERNAME --conf.password $PASSWORD hosts modify ubuntulinux --variables "{ansible_user: ubuntu, ansible_host: ${ubuntuIP}}"
+                awx --conf.host http://35.195.62.201:30877 --conf.username $USERNAME --conf.password $PASSWORD hosts modify amazonlinux --variables "{ansible_user: ec2-user, ansible_host: ${amazonIP}}"
+                awx --conf.host http://35.195.62.201:30877/ --conf.username $USERNAME --conf.password $PASSWORD hosts modify ubuntulinux --variables "{ansible_user: ubuntu, ansible_host: ${ubuntuIP}}"
                 '''
                 }
             }
@@ -19,10 +19,10 @@ parameters {
             steps{
                 parallel(
                     amazon: {
-                        ansibleTower credential: 'aws-cred', inventory: 'geocitizene', jobTemplate: 'amazon_conf', jobType: 'run', removeColor: true, throwExceptionWhenFail: true, towerCredentialsId: 'awx-cred', towerServer: 'DevOpsSS-AWX', extraVars: 'ansible_host: 13.48.42.100'
+                        ansibleTower credential: 'aws-cred', inventory: 'geocitizene', jobTemplate: 'amazon_conf', jobType: 'run', removeColor: true, throwExceptionWhenFail: true, towerCredentialsId: 'awx-cred', towerServer: 'DevOpsSS-AWX', extraVars: 'ansible_host: 35.195.62.201:30877'
                     },
                     ubuntu: {
-                        ansibleTower credential: 'aws-cred', inventory: 'geocitizene', jobTemplate: 'ubuntu_conf', jobType: 'run', removeColor: true, throwExceptionWhenFail: true, towerCredentialsId: 'awx-cred', towerServer: 'DevOpsSS-AWX', extraVars: 'ansible_host: 13.48.42.100'
+                        ansibleTower credential: 'aws-cred', inventory: 'geocitizene', jobTemplate: 'ubuntu_conf', jobType: 'run', removeColor: true, throwExceptionWhenFail: true, towerCredentialsId: 'awx-cred', towerServer: 'DevOpsSS-AWX', extraVars: 'ansible_host: 35.195.62.201:30877'
                     }
                 )
             }
