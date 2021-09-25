@@ -25,6 +25,7 @@
     name: postgresql
     state: started
     enabled: yes
+    
 - name: Create database
   become_user: postgres
   postgresql_db:
