@@ -1,6 +1,6 @@
 # Terraform
 
-1. Initalize folder wihere `.tf` files will be:
+1. Initalize folder where `.tf` files will be:
 
 ```sh
 terraform init
