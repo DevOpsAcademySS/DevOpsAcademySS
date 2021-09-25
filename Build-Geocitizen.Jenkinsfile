@@ -9,7 +9,7 @@ pipeline{
         string(name:'DB_IP',defaultValue:'0.0.0.0',description:'IP address of PostgreSQL server on AWS')
     }
     stages{
-        stage("Clone Geocitizen from GitHub"){
+        stage('Clone Geocitizen'){
             steps{
                 git branch: 'IA-115-andre-manual-deploy-geocitizen', credentialsId: 'github-cred', url: 'git@github.com:DevOpsAcademySS/Geocitizen.git'
             }
@@ -18,19 +18,13 @@ pipeline{
             steps{
                 echo "DB_IP: ${params.DB_IP}"
                 echo "WEB_IP: ${params.WEB_IP}"
-                bat ".\\Automation\\replace_ip_and_port_geocitizen.sh ${params.DB_IP} ${params.WEB_IP} .\\"
+                bat ".\\Automation\\replace_ip_and_port_geocitizen.sh ${params.DB_IP} ${params.WEB_IP}"
             }
         }
         stage('Build Geocitizen'){
             steps{
                 nodejs('Nodejs-12-22-6'){
-                    dir('.\\front-end\\'){
-                        bat "npm install"
-                        bat "npm audit fix"
-                        bat "npm run build"
-                    }
-                    bat ".\\Automation\\edit_index.sh"
-                    bat "mvn install"
+                    bat ".\\Automation\\build_copy_edit.sh"
                 }
             }
         }
