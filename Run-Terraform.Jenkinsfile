@@ -73,7 +73,7 @@ pipeline {
             echo "SUCCESS!) Building Geocitizen!"
             script {
                 if (params.Destroy == false && params.Build_Gocitizen == true) {
-                    build job: 'Build-Geocitizen', parameters: [string(name: 'WEB_IP', value: String.valueOf(env.WEB_IP)), string(name: 'DB_IP', value: String.valueOf(env.DB_IP))]
+                    build job: 'Build-Geocitizen', parameters: [string(name: 'WEB_IP', value: String.valueOf(env.WEB_IP)), string(name: 'DB_IP', value: String.valueOf(env.DB_IP))], wait: false
                 }
             }
         }

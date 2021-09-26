@@ -39,7 +39,7 @@ pipeline{
             echo "SUCCESS!)"
             script {
                 if (params.Ansible == true)
-                    build job: 'Ansible-Configuration', parameters: [string(name: 'WEB_IP', value: String.valueOf(params.WEB_IP)), string(name: 'DB_IP', value: String.valueOf(params.DB_IP))]
+                    build job: 'Ansible-Configuration', parameters: [string(name: 'WEB_IP', value: String.valueOf(params.WEB_IP)), string(name: 'DB_IP', value: String.valueOf(params.DB_IP))], wait: false
             }
         }
         failure{
