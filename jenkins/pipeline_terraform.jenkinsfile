@@ -10,10 +10,28 @@ pipeline {
         terraform 'terraform'
     }
     stages {
-        stage('Build') {
+        stage('Terraform init') {
             steps {
                 sh '''cd /var/lib/jenkins/terraform/
-                    terraform apply --auto-approve
+                    terraform init -no-color
+                    '''
+            }            
+        }
+    }
+    stages {
+        stage('Terraform plan') {
+            steps {
+                sh '''cd /var/lib/jenkins/terraform/
+                    terraform plan -no-color
+                    '''
+            }            
+        }
+    }
+    stages {
+        stage('Terraform apply') {
+            steps {
+                sh '''cd /var/lib/jenkins/terraform/
+                    terraform apply --auto-approve -no-color
                     '''
             }            
         }
