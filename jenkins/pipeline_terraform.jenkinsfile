@@ -17,8 +17,6 @@ pipeline {
                     '''
             }            
         }
-    }
-    stages {
         stage('Terraform plan') {
             steps {
                 sh '''cd /var/lib/jenkins/terraform/
@@ -26,8 +24,6 @@ pipeline {
                     '''
             }            
         }
-    }
-    stages {
         stage('Terraform apply') {
             steps {
                 sh '''cd /var/lib/jenkins/terraform/
