@@ -1,0 +1,10 @@
+[db]
+ubuntu  ansible_host={{ db_ip }}
+
+[ws]
+aml  ansible_host={{ web_ip }}
+
+[all_gr:children]
+db
+ws
+

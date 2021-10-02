@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+    
+    parameters{
+        string(name:'WEB_IP',defaultValue:'0.0.0.0',description:'IP address of Geocitizen server on AWS')
+        string(name:'DB_IP',defaultValue:'0.0.0.0',description:'IP address of PostgreSQL server on AWS')
+    }
+    stages {
+        stage('Get from GitHub') {
+            steps {
+                git branch: 'IA-188-denis-create-ansible-playbook-for-setup-application-and-database', credentialsId: 'github', url: 'git@github.com:DevOpsAcademySS/DevOpsAcademySS.git'
+            }
+        }
+        stage("Change ip's of aws hosth in 'hosts.txt'"){
+            steps{
+                echo "WEB_IP: ${params.WEB_IP}"
+                echo "DB_IP: ${params.DB_IP}"
+                sh """
+                sed -i "s/{{ web_ip }}/${params.WEB_IP}/" "./hosts.txt"
+                sed -i "s/{{ db_ip }}/${params.DB_IP}/" "./hosts.txt"
+                """
+            }
+        }
+        stage('Run Ansible playbook') {
+            steps {
+                ansiblePlaybook credentialsId: 'terraform', disableHostKeyChecking: true, installation: 'ansible', inventory: 'ansible/hosts.txt', playbook: 'ansible/playbook.yml'
+            }
+        }
+    }
+}
