@@ -1,8 +1,8 @@
 [db]
-ubuntu  ansible_host=13.53.137.49
+ubuntu  ansible_host=13.48.131.92
 
 [ws]
-aml  ansible_host=13.53.171.155
+aml  ansible_host=13.53.201.105
 
 [all_gr:children]
 db
