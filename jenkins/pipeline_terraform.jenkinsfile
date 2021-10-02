@@ -57,5 +57,8 @@ pipeline {
                 
             }
         }
+        failure{
+            echo "Terraform apply is fail!"
+        }
     }
 }
