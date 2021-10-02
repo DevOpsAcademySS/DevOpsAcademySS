@@ -27,7 +27,7 @@ resource "aws_instance" "ubuntu" {
 
 resource "aws_security_group" "allow_postgres" {
   name        = "allow_postgres"
-  description = "allow port 5432 and 22 for DB and ssh inbound traffic"
+  description = "Allow port 5432 and 22 for DB and ssh inbound traffic"
 
   ingress {
     description = "in 5432 port"
@@ -120,5 +120,43 @@ resource "null_resource" "dev-hosts" {
   }
   provisioner "local-exec" {
     command = "echo '${data.template_file.dev_hosts.rendered}' > hosts.txt"
+  }
+}
+
+data "template_file" "db_ip" {
+  template = "${file("${path.module}/templates/db_ip.cfg")}"
+  depends_on = [
+    aws_instance.ubuntu
+  ]
+  vars = {
+    api_ubuntu = "${aws_instance.ubuntu.public_ip}"
+  }
+}
+
+resource "null_resource" "db_ip" {
+  triggers = {
+    template_rendered = "${data.template_file.db_ip.rendered}"
+  }
+  provisioner "local-exec" {
+    command = "echo '${data.template_file.db_ip.rendered}' > db_ip.txt"
+  }
+}
+
+data "template_file" "ws_ip" {
+  template = "${file("${path.module}/templates/ws_ip.cfg")}"
+  depends_on = [
+    aws_instance.aml
+  ]
+  vars = {
+    api_aml = "${aws_instance.aml.public_ip}"
+  }
+}
+
+resource "null_resource" "ws_ip" {
+  triggers = {
+    template_rendered = "${data.template_file.ws_ip.rendered}"
+  }
+  provisioner "local-exec" {
+    command = "echo '${data.template_file.ws_ip.rendered}' > ws_ip.txt"
   }
 }
