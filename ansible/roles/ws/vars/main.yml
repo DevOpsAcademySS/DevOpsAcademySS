@@ -1,0 +1,4 @@
+---
+# vars file for ws
+tomcat-version : 9
+java-version   : java-1.8.0-openjdk-devel

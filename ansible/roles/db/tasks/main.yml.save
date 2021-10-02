@@ -1,0 +1,8 @@
+---
+# tasks file for db
+
+ - name: install postgresql
+   apt: name=postgresql
+
+ - name: change localhost entry with "*"
+  lineinfile: path= regexp="#listen_addresses = 'localhost'" line=listen_addresses='*'

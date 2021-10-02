@@ -1,0 +1,10 @@
+[db]
+ubuntu  ansible_host=13.53.137.49
+
+[ws]
+aml  ansible_host=13.53.171.155
+
+[all_gr:children]
+db
+ws
+
