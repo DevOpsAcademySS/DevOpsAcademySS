@@ -31,11 +31,31 @@ pipeline {
                     '''
             }            
         }
+        stage("Save Terraform output in 'ec2ips.txt', 'db_ip.txt' and 'web_ip.txt'"){
+            steps{
+                sh '''terraform output -raw aws_instance.ubuntu.public_ip > db_ip.txt
+                terraform output -raw aws_instance.aml.public_ip > web_ip.txt
+                '''
+            }
+        }
+        stage("Save IP's in environment variables"){
+            steps{
+                script {
+                    env.DB_IP = readFile('db_ip.txt').trim()
+                    env.WEB_IP = readFile('web_ip.txt').trim()
+                }
+                echo "DB_IP: ${env.DB_IP}"
+                echo "WEB_IP: ${env.WEB_IP}"
+            }
+        }
     }
     post {
-        // If OK copy to ansible directory
         success {
-            sh '''yes | cp -i /var/lib/jenkins/terraform/hosts.txt /var/lib/jenkins/ansible/'''
+            echo "Terraform apply success!!!"
+            script {
+                build job: 'run_ansible', parameters: [string(name: 'WEB_IP', value: String.valueOf(env.WEB_IP)), string(name: 'DB_IP', value: String.valueOf(env.DB_IP))], wait: false
+                
+            }
         }
     }
 }
