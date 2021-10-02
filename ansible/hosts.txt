@@ -1,8 +1,8 @@
 [db]
-ubuntu  ansible_host=13.48.131.92
+ubuntu  ansible_host={{ db_ip }}
 
 [ws]
-aml  ansible_host=13.53.201.105
+aml  ansible_host={{ web_ip }}
 
 [all_gr:children]
 db
