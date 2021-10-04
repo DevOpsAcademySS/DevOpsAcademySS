@@ -47,7 +47,6 @@ pipeline {
                 repository: 'citizen-release',
                 version: '1.0.5-SNAPSHOT'
           }
-        }
       }
   }
   post {
