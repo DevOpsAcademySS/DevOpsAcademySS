@@ -8,5 +8,5 @@ resource "google_compute_firewall" "rules" {
     protocol = "tcp"
     ports    = ["8081", "8095"]
   }
-  target_tags = ["nexus"]
+  target_tags = ["nexus-fw"]
 }

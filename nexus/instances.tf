@@ -10,7 +10,7 @@ resource "google_compute_instance" "default" {
     }
   }
 
-  tags = ["nexus"]
+  tags = ["nexus-fw"]
 
   network_interface {
     # A default network is created for all GCP projects
