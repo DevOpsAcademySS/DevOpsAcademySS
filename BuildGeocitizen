@@ -1,0 +1,55 @@
+pipeline {
+  agent any
+  stages{
+      stage('Git Checkout') {
+          steps {
+                git branch: 'main', credentialsId: 'github2', url: 'https://github.com/DevOpsAcademySS/Geocitizen'
+          }
+      }
+
+      stage('Build Geocitizen') {
+          steps {
+            sh './script.sh'
+            sh 'mvn install'
+          }
+      }
+
+      stage('Build docker') {
+          steps{
+              sh 'docker build . -t  34.68.43.153:8085/citizen:latest'
+          }
+      }
+
+      stage('Push docker image') {
+          steps {
+                sh 'docker push 34.68.43.153:8085/citizen:latest'
+          }
+      }
+
+      stage('Push war file') {
+          steps {
+               nexusArtifactUploader artifacts: [
+                    [
+                        artifactId: 'geo-citizen',
+                        classifier: '',
+                        file: 'target/citizen.war',
+                        type: 'war'
+                    ]
+                ],
+                credentialsId: 'nexus3',
+                groupId: 'com.softserveinc',
+                nexusUrl: '34.68.43.153',
+                nexusVersion: 'nexus3',
+                protocol: 'http',
+                repository: 'citizen-release',
+                version: '1.0.5-SNAPSHOT'
+          }
+        }
+      }
+  }
+  post {
+    always {
+        sh 'docker logout'
+    }
+  }
+}
