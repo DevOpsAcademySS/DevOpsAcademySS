@@ -6,7 +6,7 @@ pipeline {
   stages {
     stage('Git Checkout'){
         steps {
-            git branch: 'IA-180-samir-ansible', credentialsId: 'github2', url: 'https://github.com/DevOpsAcademySS/DevOpsAcademySS'
+            git branch: '051042c4c7aafd2bb7c2f62420370c407fcfcb15', credentialsId: 'github2', url: 'https://github.com/DevOpsAcademySS/DevOpsAcademySS'
         }
     }
     stage('Run playbook') {
