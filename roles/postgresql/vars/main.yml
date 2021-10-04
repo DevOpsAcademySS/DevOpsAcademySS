@@ -1,0 +1,7 @@
+---
+# vars file for postgresql
+
+db_user: postgres
+db_name: ss_demo_1
+db_password: postgres
+path: /etc/postgresql/12/main
