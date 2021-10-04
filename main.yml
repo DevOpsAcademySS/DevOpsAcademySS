@@ -4,5 +4,4 @@
   become: yes
 
   roles:
-    - { role: postgresql, when: ansible_distribution == 'Ubuntu' }
     - { role: tomcat, when: ansible_distribution == 'Amazon' }
