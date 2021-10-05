@@ -1,0 +1,48 @@
+pipeline{
+    agent any
+
+}
+    stages{
+        stage('Git checkout'){
+           steps{
+               git branch: 'IA-195-mykola-terraform-pipeline', credentialsId: '0d321903-fc6f-4ed8-840a-25772018b1b1', url: 'https://github.com/DevOpsAcademySS/DevOpsAcademySS.git'    
+           }
+        }
+        stage('Terragrunt job'){
+            steps{
+               echo "aws geocitizen instances/rds"
+               echo "Nexus on gcp"
+               echo "loadbalancer"
+            }
+        }
+        stage('ansible job'){
+            steps{
+                echo "install and conf docker on instance"
+                echo "install and configure nexus"
+            }
+        }
+        stage('geobuild'){
+            steps{
+               echo "build citizen.war and upload it to nexus"
+            }
+        }
+        stage('docker tomcat image build'){
+            steps{
+               echo "get citizen.war from nexus build tomcat image with citizen.war and upload it to nexus"
+            }
+        }
+        stage('docker tomcat image deploy'){
+            steps{
+               echo "tomcat image from nexus and run it on instance"
+            }
+        }
+    }
+    post {
+        success {
+            
+        }
+        failure { 
+    
+        }
+    }
+}
