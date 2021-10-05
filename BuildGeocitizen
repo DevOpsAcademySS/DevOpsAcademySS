@@ -33,7 +33,7 @@ pipeline {
       stage('Push war file') {
           steps {
                nexusArtifactUploader
-                artifacts: [
+               artifacts: [
                     [
                         artifactId: 'geo-citizen',
                         classifier: '',
