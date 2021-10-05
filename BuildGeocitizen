@@ -4,6 +4,7 @@ pipeline {
     maven 'maven'
   }
   stages {
+
       stage('Git Checkout') {
           steps {
                 git branch: 'main', credentialsId: 'github2', url: 'https://github.com/DevOpsAcademySS/Geocitizen'
@@ -17,17 +18,17 @@ pipeline {
           }
       }
 
-      stage('Build docker') {
-          steps{
-              sh 'docker build . -t  34.68.43.153:8085/citizen:latest'
-          }
-      }
+//      stage('Build docker') {
+//          steps{
+//              sh 'docker build . -t  34.68.43.153:8085/citizen:latest'
+//          }
+//      }
 
-      stage('Push docker image') {
-          steps {
-                sh 'docker push 34.68.43.153:8085/citizen:latest'
-          }
-      }
+//      stage('Push docker image') {
+//          steps {
+//                sh 'docker push 34.68.43.153:8085/citizen:latest'
+//          }
+//      }
 
       stage('Push war file') {
           steps {
@@ -48,6 +49,7 @@ pipeline {
                 version: '1.0.5-SNAPSHOT'
           }
       }
+
   }
   post {
     always {
