@@ -36,7 +36,7 @@ pipeline {
                     [
                         artifactId: 'geo-citizen',
                         classifier: '',
-                        file: 'target/citizen.war',
+                        file: 'target/citizen-1.0.5-SNAPSHOT.war',
                         type: 'war'
                     ]
                 ],
@@ -51,9 +51,9 @@ pipeline {
       }
 
   }
-  post {
-    always {
-        sh 'docker logout'
-    }
-  }
+//  post {
+//    always {
+//        sh 'docker logout'
+//    }
+//  }
 }
