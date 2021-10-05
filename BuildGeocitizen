@@ -14,7 +14,7 @@ pipeline {
       stage('Build Geocitizen') {
           steps {
             sh './script.sh'
-            sh 'mvn install'
+            sh 'mvn clean package'
           }
       }
 
