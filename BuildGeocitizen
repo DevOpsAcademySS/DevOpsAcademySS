@@ -36,7 +36,7 @@ pipeline {
                     [
                         artifactId: 'geo-citizen',
                         classifier: '',
-                        file: 'target/citizen-1.0.5-SNAPSHOT.war',
+                        file: 'target/citizen.war',
                         type: 'war'
                     ]
                 ],
