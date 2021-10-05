@@ -18,18 +18,6 @@ pipeline {
           }
       }
 
-//      stage('Build docker') {
-//          steps{
-//              sh 'docker build . -t  34.68.43.153:8085/citizen:latest'
-//          }
-//      }
-
-//      stage('Push docker image') {
-//          steps {
-//                sh 'docker push 34.68.43.153:8085/citizen:latest'
-//          }
-//      }
-
       stage('Push war file') {
           steps {
                nexusArtifactUploader artifacts: [
@@ -49,11 +37,21 @@ pipeline {
                 version: '1.0.5-SNAPSHOT'
           }
       }
+      stage('Build docker') {
+          steps{
+              sh 'docker build . -t  34.68.43.153:8085/citizen:latest'
+          }
+      }
 
+      stage('Push docker image') {
+          steps {
+                sh 'docker push 34.68.43.153:8085/citizen:latest'
+          }
+      }
   }
-//  post {
-//    always {
-//        sh 'docker logout'
-//    }
-//  }
+  post {
+    always {
+        sh 'docker logout'
+    }
+  }
 }
