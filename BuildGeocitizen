@@ -3,6 +3,11 @@ pipeline {
   tools {
     maven 'maven'
   }
+
+  environment {
+    DOCKERHUB_CREDENTIALS = credentials('DockerHub')
+  }
+
   stages {
 
       stage('Git Checkout') {
@@ -39,19 +44,20 @@ pipeline {
       }
       stage('Build docker') {
           steps{
-              sh 'docker build . -t  34.68.43.153:8085/citizen:latest'
+              sh 'docker build . -t  2ti2225gz2/geocitizen:1.0'
+          }
+      }
+
+      stage('Login') {
+          steps{
+              sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
           }
       }
 
       stage('Push docker image') {
           steps {
-                sh 'docker push 34.68.43.153:8085/citizen:latest'
+                sh 'ddocker push 2ti2225gz2/geocitizen:1.0'
           }
       }
-  }
-  post {
-    always {
-        sh 'docker logout'
-    }
   }
 }
