@@ -36,3 +36,10 @@
     groups: docker
     append: yes
   become: yes
+
+- name: Create a geocitizen container
+  docker_container:
+    name: geocitizen
+    image: tomcat:9.0.53-jre8-openjdk-slim-buster
+    ports:
+     - "8080:8080"
