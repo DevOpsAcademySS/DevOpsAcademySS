@@ -19,8 +19,8 @@
     - amazon-linux-extras
 - name: Install docker module for python
   pip:
-    name: docker
-    
+    name: docker-py
+
 - name: Add extras repository
   shell: yum-config-manager --enable extras
 
