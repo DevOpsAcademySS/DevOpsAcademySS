@@ -28,7 +28,7 @@ pipeline{
         }
         stage('docker tomcat image build'){
             steps{
-               echo "get citizen.war from nexus build tomcat image with citizen.war and upload it to nexus"
+               echo "get citizen.war from nexus build tomcat image with citizen.war and upload it to dockerhub"
             }
         }
         stage('docker tomcat image deploy'){
