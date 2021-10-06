@@ -17,7 +17,10 @@
     - device-mapper-persistent-data
     - lvm2
     - amazon-linux-extras
-
+- name: Install docker module for python
+  pip:
+    name: docker
+    
 - name: Add extras repository
   shell: yum-config-manager --enable extras
 
