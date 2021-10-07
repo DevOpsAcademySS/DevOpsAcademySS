@@ -1,0 +1,3 @@
+variable "projectName" {
+  default = "geonexus"
+}
