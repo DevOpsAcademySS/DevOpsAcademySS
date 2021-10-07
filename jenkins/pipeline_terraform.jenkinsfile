@@ -1,3 +1,5 @@
+def database_ip = '0'
+def webserwer_ip = '0'
 pipeline {
      agent { 
         label "test" 
@@ -17,13 +19,6 @@ pipeline {
                     '''
             }            
         }
-        stage('Terraform plan') {
-            steps {
-                sh '''cd /var/lib/jenkins/terraform/
-                    terraform plan -no-color
-                    '''
-            }            
-        }
         stage('Terraform apply') {
             steps {
                 sh '''cd /var/lib/jenkins/terraform/
@@ -31,21 +26,22 @@ pipeline {
                     '''
             }            
         }
-        stage("Save Terraform output in 'ec2ips.txt', 'db_ip.txt' and 'web_ip.txt'"){
+        stage("Copy txt files to workspace"){
             steps{
-                sh '''terraform output -raw aws_instance.ubuntu.public_ip > db_ip.txt
-                terraform output -raw aws_instance.aml.public_ip > web_ip.txt
+                sh ''' cd /var/lib/jenkins/terraform/
+                cp db_ip.txt /var/lib/jenkins/workspace/$JOB_NAME/
+                cp ws_ip.txt /var/lib/jenkins/workspace/$JOB_NAME/
                 '''
             }
         }
         stage("Save IP's in environment variables"){
             steps{
                 script {
-                    env.DB_IP = readFile('db_ip.txt').trim()
-                    env.WEB_IP = readFile('web_ip.txt').trim()
+                    database_ip = readFile('db_ip.txt').trim()
+                    webserwer_ip = readFile('ws_ip.txt').trim()
                 }
-                echo "DB_IP: ${env.DB_IP}"
-                echo "WEB_IP: ${env.WEB_IP}"
+                echo "database_ip: ${database_ip}"
+                echo "webserwer_ip: ${webserwer_ip}"
             }
         }
     }
@@ -53,12 +49,14 @@ pipeline {
         success {
             echo "Terraform apply success!!!"
             script {
-                build job: 'run_ansible', parameters: [string(name: 'WEB_IP', value: String.valueOf(env.WEB_IP)), string(name: 'DB_IP', value: String.valueOf(env.DB_IP))], wait: false
-                
+                build job: 'build-geocitizen', parameters: [string(name: 'database_ip', value: String.valueOf(database_ip)), string(name: 'webserwer_ip', value: String.valueOf(webserwer_ip))], wait: false
+                build job: 'run_ansible', parameters: [string(name: 'database_ip', value: String.valueOf(database_ip)), string(name: 'webserwer_ip', value: String.valueOf(webserwer_ip))], wait: false
             }
+            telegramSend('Jenkins build is Successfull!!! job: $JOB_NAME')
         }
         failure{
             echo "Terraform apply is fail!"
+            telegramSend('Jenkins build is Fail(((! job: $JOB_NAME')
         }
     }
 }

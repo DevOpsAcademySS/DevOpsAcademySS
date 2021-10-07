@@ -1,0 +1,70 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'maven-3.6.3'
+        jdk 'java'
+    }
+    
+    parameters{
+        string(name:'database_ip',defaultValue:'0.0.0.0',description:'IP address of PostgreSQL')
+        string(name:'webserwer_ip',defaultValue:'0.0.0.0',description:'IP address of Tomcat server')
+    }
+
+    stages {
+         stage('Clone of the Geocitizen'){
+            steps{
+                git branch: 'IA-85-denis-manual-deploy-geocitizen', credentialsId: 'github', url: 'git@github.com:DevOpsAcademySS/Geocitizen.git'
+            }
+        }
+        stage('Change ip addreses') {
+            steps {
+                sh "./scripts/change.sh ${params.database_ip} ${params.webserwer_ip}"
+            }
+        }
+        stage('Build front-end') {
+            steps {
+                nodejs('node12') {
+                sh """
+                cd ./front-end
+                npm install
+                npm audit fix
+                npm run build --no-progress --no-color
+                """
+                }
+            }
+        }
+        stage('Build back-end') {
+            steps {
+                sh """
+                cp -r ./front-end/dist/* ./src/main/webapp/
+                ./scripts/dots.sh
+                """
+            }
+        }
+        stage ('Initialize') {
+            steps {
+                sh '''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
+                '''
+            }
+        }
+
+        stage ('Build with Maven') {
+            steps {
+                sh 'mvn -Dmaven.test.failure.ignore=true install' 
+            }
+            post {
+                success {
+                    echo "Build Geocitizen is success!!!"
+                    telegramSend('Jenkins build is Successfull!!! job: $JOB_NAME')
+                }
+                failure{
+                    echo "Build Geocitizen is fail!"
+                    telegramSend('Jenkins build is Fail(((! job: $JOB_NAME')
+                }
+            }
+        }
+    }
+}

@@ -2,8 +2,8 @@ pipeline {
     agent any
     
     parameters{
-        string(name:'WEB_IP',defaultValue:'0.0.0.0',description:'IP address of Geocitizen server on AWS')
-        string(name:'DB_IP',defaultValue:'0.0.0.0',description:'IP address of PostgreSQL server on AWS')
+        string(name:'database_ip',defaultValue:'0.0.0.0',description:'IP address of PostgreSQL')
+        string(name:'webserwer_ip',defaultValue:'0.0.0.0',description:'IP address of Tomcat server')
     }
     stages {
         stage('Get from GitHub') {
@@ -11,13 +11,13 @@ pipeline {
                 git branch: 'IA-188-denis-create-ansible-playbook-for-setup-application-and-database', credentialsId: 'github', url: 'git@github.com:DevOpsAcademySS/DevOpsAcademySS.git'
             }
         }
-        stage("Change Host IP's in 'inventory.txt'"){
+        stage("Change ip in 'hosts.txt'"){
             steps{
-                echo "WEB_IP: ${params.WEB_IP}"
-                echo "DB_IP: ${params.DB_IP}"
+                echo "database_ip: ${params.database_ip}"
+                echo "webserwer_ip: ${params.webserwer_ip}"
                 sh """
-                sed -i "s/{{ web_ip }}/${params.WEB_IP}/" "./ansible/hosts.txt"
-                sed -i "s/{{ db_ip }}/${params.DB_IP}/" "./ansible/hosts.txt"
+                sed -i "s/{{ db_ip }}/${params.database_ip}/" "./ansible/hosts.txt"
+                sed -i "s/{{ web_ip }}/${params.webserwer_ip}/" "./ansible/hosts.txt"
                 """
             }
         }
@@ -30,9 +30,11 @@ pipeline {
     post{
         success{
             echo "Ansible playbook is success"
+            telegramSend('Jenkins build is Successfull!!! job: $JOB_NAME')
         }
         failure{
             echo "Ansible playbook is fail"
+            telegramSend('Jenkins build is Fail(((! job: $JOB_NAME')
         }
     }
 }
