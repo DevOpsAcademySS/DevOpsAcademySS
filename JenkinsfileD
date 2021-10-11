@@ -1,18 +1,19 @@
 pipeline{
     agent any
     environment {
-        AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
-        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+        AWS_ACCESS_KEY_ID               = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY           = credentials('AWS_SECRET_ACCESS_KEY')
+        GOOGLE_APPLICATION_CREDENTIALS  = credentials('gcp-key')
     }
     stages{
-        stage('Terraform Init'){
+        stage('Terragrunt plan'){
             steps{
-                sh 'terraform init -no-color'
+                sh 'terragrunt run-all plan -no-color'
             }
         }
-        stage('Terraform Destroy'){
+        stage('Terragrunt Destroy'){
             steps{
-                sh 'terraform destroy --auto-approve -no-color'
+                sh 'terragrunt run-all destroy --auto-approve -no-color'
             }     
         }
     }
