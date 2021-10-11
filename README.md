@@ -67,7 +67,7 @@ ansible-galaxy collection install google.cloud
 
 # Conteinerize Geocitizne with Dokcer
 
-To use docker commands in playbooks run next command on your terminal.
+To use docker commands in playbooks run next command in your terminal.
 
 ```sh
 ansible-galaxy collection install community.docker
