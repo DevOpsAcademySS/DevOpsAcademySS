@@ -10,6 +10,7 @@ pipeline{
     stages{
         stage('Terragrunt Plan'){
             steps{
+                sh 'terragrunt -version'
                 sh 'terragrunt run-all plan -no-color'
             }
         }
