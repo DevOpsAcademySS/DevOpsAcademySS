@@ -6,8 +6,8 @@ provider "google" {
   user_project_override = true
 }
 
-resource "google_compute_instance" "Ubuntu" {
-  name = "nexus"
+resource "google_compute_instance" "ubuntu" {
+  name = "nexus3"
   machine_type = "e2-medium"
 
   boot_disk {
@@ -24,7 +24,7 @@ resource "google_compute_instance" "Ubuntu" {
 }
 
 resource "google_compute_firewall" "nexus-rules" {
-  name = "nexusrules"
+  name = "nexusrules3"
   network = "default"
   allow {
     protocol = "tcp"
@@ -33,19 +33,9 @@ resource "google_compute_firewall" "nexus-rules" {
 }
 
 output "ip" {
-  value = google_compute_instance.Ubuntu.network_interface.0.access_config.0.nat_ip
-}
-
-output "folder_id" {
-  value       = google_folder.folder.id
-  description = "The ID of the folder"
+  value = google_compute_instance.ubuntu.network_interface.0.access_config.0.nat_ip
 }
 
 terraform {
   backend "gcs" {}
-}
-
-resource "google_folder" "folder" {
-  display_name = "terragrunt_demo_child"
-  parent       = var.parent_folder_id
 }

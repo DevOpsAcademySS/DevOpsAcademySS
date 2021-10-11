@@ -12,8 +12,3 @@ variable "region" {
 variable "zone" {
   default = "us-central1-a"
 }
-
-variable "parent_folder_id" {
-  description = "ID of parent folder"
-  type        = string
-}
