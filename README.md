@@ -1,78 +1,55 @@
-# Ansible configuration GCP instances
+# Terragrunt
 
-Here is [link][gcp-ans] for [Official Documentaion][gcp-ans].
-Also here is [link][gcp-ans-col] for official documntaion of [Google Cloud Collection][gcp-ans-col].
+First [install][qk-st] [**Terraform**][trfrm] and [**Terragrunt**][trgnt] and go through [quick start][qk-st] to get basics.
 
-[gcp-ans-col]:https://docs.ansible.com/ansible/latest/collections/google/cloud/index.html
-[gcp-ans]:https://docs.ansible.com/ansible/latest/scenario_guides/guide_gce.html
+[trfrm]:https://learn.hashicorp.com/tutorials/terraform/install-cli
+[trgnt]:https://terragrunt.gruntwork.io/docs/getting-started/install/
+[qk-st]:https://terragrunt.gruntwork.io/docs/getting-started/quick-start/
 
-## Requisites
-
----
-
-The GCP modules require both the `requests` and the `google-auth` libraries to be installed.
-
-```sh
-pip install requests google-auth
-```
-
-Alternatively for **RHEL / CentOS**, the `python-requests` package is also available to satisfy `requests` libraries.
-
-```sh
-yum install python-requests
-```
-
-## Credentials
+## Terragrunt Configuration Blocks and Attributes
 
 ---
 
-It’s easy to create a GCP account with credentials for Ansible. You have multiple options to get your credentials - here are two of the most common options:
+In **Terragrunt** you have blocks and attributes here is the [link][blk-atr] for the doccumentaion.
 
-- **Service Accounts (Recommended)**: Use JSON service accounts with specific permissions.
+[blk-atr]:https://terragrunt.gruntwork.io/docs/reference/config-blocks-and-attributes/
 
-- **Machine Accounts**: Use the permissions associated with the GCP Instance you’re using Ansible on.
-
-For the following examples, we’ll be using **service account credentials**.
-
-To work with the GCP modules, you’ll first need to get some credentials in the JSON format:
-
-1. [Create a Service Account](https://developers.google.com/identity/protocols/OAuth2ServiceAccount#creatinganaccount)
-
-2. [Download JSON credentials](https://support.google.com/cloud/answer/6158849?hl=en&ref_topic=6262490#serviceaccounts)
-
-Once you have your credentials, there are two different ways to provide them to Ansible:
-
-- **by specifying them directly as module parameters**
-
-- **by setting environment variables**
-
-## Providing Credentials as Environment Variables
+## Terragrunt Features
 
 ---
 
-Set the following environment variables before running Ansible in order to configure your credentials:
+**Terragrunt** has many features here is [link][feat] to them.
 
-```env
-GCP_AUTH_KIND=serviceaccount
-GCP_SERVICE_ACCOUNT_EMAIL=cred.email@project-name.iam.gserviceaccount.com
-GCP_SERVICE_ACCOUNT_FILE=./path/to/json/name-of-json-file.json
-GCP_SCOPES=[https://www.googleapis.com/auth/compute]
-```
+### Example
 
-The last step is to install plugin for playbook so its can use commands for GCP:
+Good [example][kyc-dry] of howe terraform works and how to use it.
+
+[feat]:https://terragrunt.gruntwork.io/docs/#features
+[kyc-dry]:https://terragrunt.gruntwork.io/docs/features/keep-your-terraform-code-dry/
+
+## Terraform CLI
+
+To run your **Terragrun** you need to use it's CLI here is the [link][trnt-cli] for the documentation.
+
+[trnt-cli]:https://terragrunt.gruntwork.io/docs/reference/cli-options/
+
+Basic commans:
+
+* for single folder:
 
 ```sh
-ansible-galaxy collection install google.cloud
+terragrunt [plan|apply|output|destroy]
+# etc
 ```
 
-# Conteinerize Geocitizne with Dokcer
-
-To use docker commands in playbooks run next command on your terminal.
+* for child folders of root directory:
 
 ```sh
-ansible-galaxy collection install community.docker
-``` 
+terragrunt run-all [validate|plan|apply|destroy|output] # run in root directory to apply for all child *.hcl files
+```
 
-Here is [link][docker-ans] to the official documntation of [Community Docker Collection][docker-ans].
+## Useful Links
 
-[docker-ans]:https://docs.ansible.com/ansible/latest/collections/community/docker/index.html
+* [Terraform Google Provider docs](https://registry.terraform.io/providers/hashicorp/google/latest)
+
+* [Terraform AWS Provider docs](https://registry.terraform.io/providers/hashicorp/aws/latest)

@@ -1,5 +1,0 @@
-[GCPNexus]
-192.168.1.10 ansible_user=andre
-
-[GCPDocker]
-192.168.1.11 ansible_user=andre

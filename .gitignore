@@ -1,2 +1,3 @@
-*.json
-testplay.yaml
+aws/aws_creds/*.sh
+gcp/gcp_creds/*.sh
+gcp/gcp_creds/*.json
