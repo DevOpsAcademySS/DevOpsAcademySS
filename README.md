@@ -22,7 +22,7 @@ In **Terragrunt** you have blocks and attributes here is the [link][blk-atr] for
 
 ### Example
 
-Good [example][kyc-dry] of howe terraform works and how to use it.
+Good [example][kyc-dry] of how terraform works and how to use it.
 
 [feat]:https://terragrunt.gruntwork.io/docs/#features
 [kyc-dry]:https://terragrunt.gruntwork.io/docs/features/keep-your-terraform-code-dry/
