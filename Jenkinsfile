@@ -3,24 +3,25 @@ def ubuntuIP = '0'
 pipeline{
     agent any
     environment {
-        AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
-        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+        AWS_ACCESS_KEY_ID               = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY           = credentials('AWS_SECRET_ACCESS_KEY')
+        GOOGLE_APPLICATION_CREDENTIALS  = credentials('gcp-key')
     }
     stages{
-        stage('Terraform Init'){
+        stage('Terragrunt Plan'){
             steps{
-                sh 'terraform init -no-color'
+                sh 'terragrunt run-all plan -no-color'
             }
         }
-        stage('Terraform Apply'){
+        stage('Terragrunt Apply'){
             steps{
-                sh 'terraform apply --auto-approve -no-color'
+                sh 'terragrunt run-all apply --auto-approve -no-color'
             }
         }
         stage('Terraform output servers IPs'){
             steps{           
                 sh """ terraform output web_server_ip | tr -d '"' > .amazonip """
-                sh """ terraform output db_ip | tr -d '"' > .ubuntuip """ 
+                sh """ terraform output ip | tr -d '"' > .ubuntuip """ 
                  script {
                     amazonIP = readFile('.amazonip').trim()
                     ubuntuIP = readFile('.ubuntuip').trim()
@@ -31,7 +32,7 @@ pipeline{
     post {
         success {
             //build job: 'geo-ansible-job', parameters: [string(name: 'amazonIP', value: String.valueOf(amazonIP)), string(name: 'ubuntuIP', value: String.valueOf(ubuntuIP))], wait:false
-            build job: 'geocitizen-build', parameters: [string(name: 'amazonIP', value: String.valueOf(amazonIP)), string(name: 'ubuntuIP', value: String.valueOf(ubuntuIP))], wait:false
+            //build job: 'geocitizen-build', parameters: [string(name: 'amazonIP', value: String.valueOf(amazonIP)), string(name: 'ubuntuIP', value: String.valueOf(ubuntuIP))], wait:false
         }
     }
 }
