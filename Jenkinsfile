@@ -29,10 +29,10 @@ pipeline{
             }
         }
     }
-    post {
-        success {
+    //post {
+        //success {
             //build job: 'geo-ansible-job', parameters: [string(name: 'amazonIP', value: String.valueOf(amazonIP)), string(name: 'ubuntuIP', value: String.valueOf(ubuntuIP))], wait:false
             //build job: 'geocitizen-build', parameters: [string(name: 'amazonIP', value: String.valueOf(amazonIP)), string(name: 'ubuntuIP', value: String.valueOf(ubuntuIP))], wait:false
-        }
-    }
+        //}
+    //}
 }
