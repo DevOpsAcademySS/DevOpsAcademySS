@@ -8,7 +8,18 @@
   file:
     path: "{{ nexus_path }}"
     state: directory
-    mode: '0755'
+
+- name: Unpack Nexus
+  unarchive:
+    src: "{{ nexus_url }}{{ nexus_package }}"
+    dest: "{{ nexus_path }}"
+    remote_src: True
+
+- name: Create a symbolic link from "{{ nexus_folder }}" to a "nexus"
+  file:
+    src: "{{ nexus_path }}/{{ nexus_folder }}"
+    dest: "{{ nexus_path }}/nexus"
+    state: link
 
 - name: Ensure Nexus o/s group exists
   group:
@@ -23,28 +34,18 @@
     shell: "/bin/bash"
     state: present
 
-- name: Unpack Nexus
-  unarchive:
-    src: "{{ nexus_url }}{{ nexus_package }}"
-    dest: "{{ nexus_path }}"
-    remote_src: True
-
-- name: Rename folder from "{{ nexus_folder }}" to a "nexus"
-  copy:
-    remote_src: true
-    src: "{{ nexus_path }}/{{ nexus_folder }}"
-    dest: "{{ nexus_path }}/nexus"
-  
-- name: Remove old folder "{{ nexus_folder }}"
+- name: Change file owner
   file:
-    path: "{{ nexus_path }}/{{ nexus_folder }}"
-    state: absent
+    path: "{{ nexus_path }}"
+    owner: nexus
+    group: nexus
+    recurse: yes
 
 - name: Copying Nexus service file
   copy:
     src: nexus.service
     dest: /etc/systemd/system/
-    mode: '0755'
+    mode: '744'
 
 - name: Start service Nexus
   systemd:
@@ -53,9 +54,9 @@
     daemon_reload: yes
     enabled: yes
 
-- name: Restart service tomcat
+- name: Restart service Nexus
   systemd:
-    name: tomcat
+    name: nexus
     state: restarted
     daemon_reload: yes
     enabled: yes
