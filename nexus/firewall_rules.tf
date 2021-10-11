@@ -1,6 +1,6 @@
 
 resource "google_compute_firewall" "rules" {
-  project     = "geonexus"
+  project     = var.projectName
   name        = "nexus-rules"
   network     = "default"
   description = "Creates firewall rule targeting tagged instances"
