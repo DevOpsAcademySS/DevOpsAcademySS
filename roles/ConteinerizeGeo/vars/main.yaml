@@ -1,0 +1,5 @@
+---
+# tasks for ConteinerizeGeo role
+geo_path: /home/andre/geo/
+img_name: 192.168.1.18:8081/repository/geocitizen #registry_server:port/name
+tag_name: v1

@@ -1,0 +1,61 @@
+---
+# tasks file for NexusOnUbuntu
+- name: Install required system packages
+  apt: name={{ item }} state=latest update_cache=yes
+  loop: [ 'openjdk-8-jdk', 'wget']
+
+- name: Create a directory if it does not exist
+  file:
+    path: "{{ nexus_path }}"
+    state: directory
+    mode: '0755'
+
+- name: Ensure Nexus o/s group exists
+  group:
+    name: nexus
+    state: present
+
+- name: Ensure Nexus o/s user exists
+  user:
+    name: nexus
+    group: nexus
+    home: "{{ nexus_path }}"
+    shell: "/bin/bash"
+    state: present
+
+- name: Unpack Nexus
+  unarchive:
+    src: "{{ nexus_url }}{{ nexus_package }}"
+    dest: "{{ nexus_path }}"
+    remote_src: True
+
+- name: Rename folder from "{{ nexus_folder }}" to a "nexus"
+  copy:
+    remote_src: true
+    src: "{{ nexus_path }}/{{ nexus_folder }}"
+    dest: "{{ nexus_path }}/nexus"
+  
+- name: Remove old folder "{{ nexus_folder }}"
+  file:
+    path: "{{ nexus_path }}/{{ nexus_folder }}"
+    state: absent
+
+- name: Copying Nexus service file
+  copy:
+    src: nexus.service
+    dest: /etc/systemd/system/
+    mode: '0755'
+
+- name: Start service Nexus
+  systemd:
+    name: nexus
+    state: started
+    daemon_reload: yes
+    enabled: yes
+
+- name: Restart service tomcat
+  systemd:
+    name: tomcat
+    state: restarted
+    daemon_reload: yes
+    enabled: yes

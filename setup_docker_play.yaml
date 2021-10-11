@@ -1,0 +1,6 @@
+---
+- name: Install Docker on Ubuntu 20.04
+  hosts: GCPDocker
+  become: true
+  roles:
+    - DockerOnUbuntu

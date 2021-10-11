@@ -1,0 +1,46 @@
+---
+- name: Ensure andre o/s group exists
+  group:
+    name: andre
+    state: present
+
+# - name: Copying Dockerfile and citizen.war files
+#   copy:
+#     src: "{{ item }}"
+#     dest: "{{ geo_path }}"
+#     mode: '0755'
+#   loop: ['Dockerfile', 'citizen.war']
+
+- name: Create a directory if it does not exist
+  file:
+    path: "{{ geo_path }}"
+    state: directory
+    owner: andre
+    group: andre
+    mode: '0644'
+
+- name: Copying Dockerfile files
+  copy:
+    src: Dockerfile
+    dest: "{{ geo_path }}"
+    owner: andre
+    group: andre
+    mode: '0755'
+
+- name: Copying citizen.war files
+  copy:
+    src: citizen.war
+    dest: "{{ geo_path }}"
+    owner: andre
+    group: andre
+    mode: '0755'
+
+# tasks for ConteinerizeGeo role
+- name: Build an Docker image and push it to a private Nexus repo
+  docker_image:
+    build:
+      path: "{{ geo_path }}"
+    name: "{{ img_name }}:{{ tag_name }}"
+    tag: "{{ tag_name }}"
+    push: yes
+    source: build

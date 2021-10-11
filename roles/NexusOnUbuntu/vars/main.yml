@@ -1,0 +1,6 @@
+---
+# vars file for DockerOnUbuntu
+nexus_path: /opt/nexus
+nexus_folder: nexus-3.34.1-01
+nexus_package: nexus-3.34.1-01-unix.tar.gz
+nexus_url: https://download.sonatype.com/nexus/3/

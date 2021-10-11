@@ -1,0 +1,6 @@
+---
+- name: Install Nexus Repository on Ubuntu 20.04
+  hosts: GCPNexus
+  become: true
+  roles:
+    - NexusOnUbuntu
