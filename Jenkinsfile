@@ -5,9 +5,11 @@ pipeline{
     stages{
         stage('Terragrunt Plan'){
             steps{
-                sh 'cd tomcat'
-                sh 'sudo terragrunt -version'
-                sh 'sudo terragrunt plan -no-color'
+                withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]){
+                    sh 'cd tomcat'
+                    sh 'sudo terragrunt -version'
+                    sh 'sudo terragrunt plan -no-color'
+                }
             }
         }
         stage('Terragrunt Apply'){
