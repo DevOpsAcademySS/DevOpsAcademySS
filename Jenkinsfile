@@ -11,18 +11,18 @@ pipeline{
         stage('Terragrunt Plan'){
             steps{
                 sh 'sudo terragrunt -version'
-                sh 'terragrunt run-all plan -no-color'
+                sh 'sudo terragrunt run-all plan -no-color'
             }
         }
         stage('Terragrunt Apply'){
             steps{
-                sh 'terragrunt run-all apply --auto-approve -no-color'
+                sh 'sudo terragrunt run-all apply --auto-approve -no-color'
             }
         }
         stage('Terraform output servers IPs'){
             steps{           
-                sh """ terraform output web_server_ip | tr -d '"' > .amazonip """
-                sh """ terraform output ip | tr -d '"' > .ubuntuip """ 
+                sh """ sudo terraform output web_server_ip | tr -d '"' > .amazonip """
+                sh """ sudo terraform output ip | tr -d '"' > .ubuntuip """ 
                  script {
                     amazonIP = readFile('.amazonip').trim()
                     ubuntuIP = readFile('.ubuntuip').trim()
