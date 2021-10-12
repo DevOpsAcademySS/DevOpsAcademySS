@@ -7,14 +7,14 @@ pipeline {
           }
       }
 
-      stage('GCP Login') {
-          steps {
-              withCredentials([file(credentialsId: 'GCP', variable: 'GC_KEY')]) {
-                  sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
-                  sh("gcloud container clusters get-credentials prod --zone us-central1 --project focused-evening-327612")
-              }
-          }
-      }
+//      stage('GCP Login') {
+//          steps {
+//              withCredentials([file(credentialsId: 'GCP', variable: 'GC_KEY')]) {
+//                  sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
+//                  sh("gcloud container clusters get-credentials prod --zone us-central1 --project focused-evening-327612")
+//              }
+//          }
+//      }
       stage('Terraform Init'){
           steps{
               sh 'terragrunt init'
