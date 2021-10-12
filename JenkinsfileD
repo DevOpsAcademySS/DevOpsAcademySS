@@ -8,12 +8,12 @@ pipeline{
     stages{
         stage('Terragrunt plan'){
             steps{
-                sh 'terragrunt run-all plan -no-color'
+                sh 'sudo terragrunt run-all plan -no-color'
             }
         }
         stage('Terragrunt Destroy'){
             steps{
-                sh 'terragrunt run-all destroy --auto-approve -no-color'
+                sh 'sudo terragrunt run-all destroy --auto-approve -no-color'
             }     
         }
     }
