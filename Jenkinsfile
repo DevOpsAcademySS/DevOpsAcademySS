@@ -5,13 +5,14 @@ pipeline{
     stages{
         stage('Terragrunt Plan'){
             steps{
+                sh 'cd tomcat'
                 sh 'sudo terragrunt -version'
-                sh 'sudo terragrunt run-all plan -no-color'
+                sh 'sudo terragrunt plan -no-color'
             }
         }
         stage('Terragrunt Apply'){
             steps{
-                sh 'sudo terragrunt run-all apply --auto-approve -no-color'
+                sh 'sudo terragrunt apply --auto-approve -no-color'
             }
         }
         stage('Terraform output servers IPs'){
