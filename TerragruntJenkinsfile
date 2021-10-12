@@ -1,0 +1,27 @@
+pipeline {
+  agent any
+  stages{
+      stage('Git Checkout'){
+          steps {
+              git branch: 'IA-207-samir-terragrunt', credentialsId: 'github2', url: 'https://github.com/DevOpsAcademySS/DevOpsAcademySS'
+          }
+      }
+
+
+      withCredentials([file(credentialsId: 'GCP', variable: 'GC_KEY')]) {
+          sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
+          sh("gcloud container clusters get-credentials prod --zone us-central1 --project focused-evening-327612")
+      }
+
+      stage('Terraform Init'){
+          steps{
+              sh 'terragrunt init'
+          }
+      }
+      stage('Terraform Apply'){
+          steps{
+              sh 'terragrunt run-all apply'
+          }
+      }
+  }
+}
