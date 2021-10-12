@@ -5,7 +5,7 @@ pipeline{
     stages{
         stage('Terragrunt Plan'){
             steps{
-                withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]){
+                withAWS(credentials: 'aws_key_for_geo') {
                     sh 'cd tomcat'
                     sh 'sudo terragrunt -version'
                     sh 'sudo terragrunt plan -no-color'
