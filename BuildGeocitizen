@@ -50,7 +50,7 @@ pipeline {
 
       stage('Login') {
           steps{
-              sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u admin --password-stdin'
+              sh 'echo $DOCKERHUB_CREDENTIALS | docker login -u admin --password-stdin'
           }
       }
 
