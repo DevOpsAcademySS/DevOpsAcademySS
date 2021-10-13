@@ -50,7 +50,7 @@ pipeline {
 
       stage('Login') {
           steps{
-              sh 'echo $DOCKERHUB_CREDENTIALS | docker login -u admin 34.68.43.153:8085 --password-stdin'
+              sh 'docker login -u admin 34.68.43.153:8085 -p 4312'
           }
       }
 
