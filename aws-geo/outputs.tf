@@ -1,4 +1,4 @@
 
-output "amazon-server-public-ip" {
-  value = aws_instance.testAmazon.public_ip
+output "elb" {
+  value = aws_elb.geo_load_balancer.dns_name
 }
