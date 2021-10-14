@@ -1,5 +1,6 @@
 ---
 # tasks for ContainerizeGeo role
+daemon_path: /etc/docker/
 geo_path: /home/andre/geo/
 nexus_url: 192.168.1.10:8085
 nexus_usr: your_nexus_usrename

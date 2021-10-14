@@ -29,6 +29,19 @@
     group: andre
     mode: '0755'
 
+- name: Copying daemon.json files
+  copy:
+    src: daemon.json
+    dest: "{{ daemon_path }}"
+    mode: '0755'
+
+- name: Restart service Docker
+  systemd:
+    name: docker
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+
 - name: Log into private registry and force re-authorization
   docker_login:
     registry_url: "{{ nexus_url }}"
