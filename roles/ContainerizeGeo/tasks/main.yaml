@@ -30,7 +30,7 @@
     mode: '0755'
 
 - name: Log into private registry and force re-authorization
-  community.docker.docker_login:
+  docker_login:
     registry_url: "{{ nexus_url }}"
     username: "{{ nexus_usr }}"
     password: "{{ nexus_pass }}"
