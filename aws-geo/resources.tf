@@ -33,6 +33,16 @@ resource "aws_launch_configuration" "amazontomcat" {
   key_name                    = "d4mgeocitizen"
   associate_public_ip_address = true
   security_groups             = [aws_security_group.tomcat_sec_group.id]
+  # user_data                   = <<-EOF
+  #   #!/bin/bash
+  #   sudo su
+  #   yum -y install httpd
+  #   echo "<p> My Instance! </p> $(curl ifconfig.me)" >> /var/www/html/index.html
+  #   sed -E -i '/^Listen/s/80/8080/g' /etc/httpd/conf/httpd.conf
+  #   sudo systemctl enable httpd
+  #   sudo systemctl start httpd
+  # EOF
+
   lifecycle {
     create_before_destroy = true
   }
