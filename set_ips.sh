@@ -12,5 +12,3 @@ if [[ "$NEXUS_IP" =~ $IP_REGEXP && "$WEB_IP" =~ $IP_REGEXP && "$DOCKER_IP" =~ $I
 	sed -i "s/{{ nexus_ip }}/$NEXUS_IP/" ./hosts.txt
 	sed -i "s/{{ docker_ip }}/$DOCKER_IP/" ./hosts.txt
 fi
-
-exit 1

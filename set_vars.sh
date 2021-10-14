@@ -17,5 +17,3 @@ if [[ "$NEXUS_IP" =~ $IP_REGEXP ]]; then
 	sed -i "s/nexus_usr:.*/nexus_usr: $NEXUS_USR/" ./roles/GeocitizenOnUbuntu/vars/main.yaml
 	sed -i "s/nexus_pass:.*/nexus_pass: $NEXUS_PASS/" ./roles/GeocitizenOnUbuntu/vars/main.yaml
 fi
-
-exit 1
