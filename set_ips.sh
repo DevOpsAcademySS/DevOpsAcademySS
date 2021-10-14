@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 NEXUS_IP=$1
 WEB_IP=$2
