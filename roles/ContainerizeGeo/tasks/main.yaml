@@ -1,0 +1,61 @@
+---
+# tasks for ContainerizeGeo role
+- name: Ensure andre o/s group exists
+  group:
+    name: andre
+    state: present
+
+- name: Create a directory if it does not exist
+  file:
+    path: "{{ geo_path }}"
+    state: directory
+    owner: andre
+    group: andre
+    mode: '0644'
+
+- name: Copying Dockerfile files
+  copy:
+    src: Dockerfile
+    dest: "{{ geo_path }}"
+    owner: andre
+    group: andre
+    mode: '0755'
+
+- name: Copying citizen.war files
+  copy:
+    src: citizen.war
+    dest: "{{ geo_path }}"
+    owner: andre
+    group: andre
+    mode: '0755'
+
+- name: Log into private registry and force re-authorization
+  community.docker.docker_login:
+    registry_url: "{{ nexus_url }}"
+    username: "{{ nexus_usr }}"
+    password: "{{ nexus_pass }}"
+    reauthorize: yes
+
+- name: Build an Docker image and push it to a private Nexus repo
+  docker_image:
+    build:
+      path: "{{ geo_path }}"
+    name: "{{ nexus_url }}{{ img_name }}:{{ tag_name }}"
+    tag: "{{ tag_name }}"
+    push: yes
+    source: build
+
+# - name: Start 4 load-balanced containers
+#   docker_container:
+#     name: "geocitizen-container"
+#     image: "{{ img_name }}:{{ tag_name }}"
+#     state: started
+
+
+# - name: Start 4 load-balanced containers
+#   docker_container:
+#     name: "container{{ item }}"
+#     recreate: yes
+#     image: someuser/anotherappimage
+#     command: sleep 1d
+#   with_sequence: count=4

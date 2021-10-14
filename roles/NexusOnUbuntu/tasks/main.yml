@@ -60,3 +60,11 @@
     state: restarted
     daemon_reload: yes
     enabled: yes
+
+- name: Get admin user password
+  shell: cat "{{ nexus_pass_file }}"
+  register: admpass
+
+- name: Show admin user password 
+  debug:
+    var: admpass.stdout

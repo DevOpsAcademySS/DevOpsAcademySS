@@ -1,0 +1,6 @@
+---
+- name: Containerize Geocitizen with Docker
+  hosts: GCPDocker
+  become: True
+  roles:
+    - ContainerizeGeo

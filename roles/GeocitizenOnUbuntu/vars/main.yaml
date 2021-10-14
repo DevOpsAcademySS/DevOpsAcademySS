@@ -1,0 +1,8 @@
+---
+container_name: geocitizen
+img_name: /geo-docker
+img_tag: v1
+nexus_url: 192.168.1.10:8085
+nexus_usr: your_nexus_usrename
+nexus_pass: your_nexus_password
+
