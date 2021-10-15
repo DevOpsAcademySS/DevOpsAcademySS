@@ -40,6 +40,12 @@
     append: yes
   become: yes
 
+- name: Creating an daemon.json file
+  file:
+    path: /etc/docker/daemon.json
+    state: touch
+  become: yes
+
 - name: Allow access to insecure registry
   lineinfile:
     dest: /etc/docker/daemon.json
