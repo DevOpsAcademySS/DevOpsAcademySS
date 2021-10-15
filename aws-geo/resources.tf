@@ -43,6 +43,28 @@ resource "aws_launch_configuration" "amazontomcat" {
   #   sudo systemctl start httpd
   # EOF
 
+  user_data = <<-EOF
+  #!/bin/bash
+          exec > /tmp/autoscale.log 2>&1
+          set -x
+          TOWER_ADDRESS=34.76.111.224:30877
+          TEMPLATE_ID=docker-tomcat
+          retry_attempts=10
+          attempt=0
+          while [[ $attempt -lt $retry_attempts ]]
+          do
+            status_code=`curl -k -s -i --data  http://$TOWER_ADDRESS/api/v2/job_templates/$TEMPLATE_ID/callback/ | head -n 1 | awk '{print $2}'`
+            if [[ $status_code == 202 ]]
+              then
+              exit 0
+            fi
+            attempt=$(( attempt + 1 ))
+            echo "$status_code received... retrying in 1 minute. (Attempt $attempt)"
+            sleep 60
+          done
+          exit 1
+  EOF
+
   lifecycle {
     create_before_destroy = true
   }
