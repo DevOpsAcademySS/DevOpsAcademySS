@@ -44,7 +44,7 @@ pipeline {
       }
       stage('Build docker') {
           steps{
-              sh 'docker build . -t  34.68.43.153:8085/citizen:1.8'
+              sh 'docker build . -t  34.68.43.153:8085/citizen:1.2'
           }
       }
 
@@ -56,7 +56,7 @@ pipeline {
 
       stage('Push docker image') {
           steps {
-                sh 'docker push 34.68.43.153:8085/citizen:1.8'
+                sh 'docker push 34.68.43.153:8085/citizen:1.2'
           }
       }
   }
