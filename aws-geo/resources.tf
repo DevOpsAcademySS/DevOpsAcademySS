@@ -47,13 +47,14 @@ resource "aws_launch_configuration" "amazontomcat" {
   #!/bin/bash
           exec > /tmp/autoscale.log 2>&1
           set -x
-          TOWER_ADDRESS=34.76.111.224:30877
-          TEMPLATE_ID=docker-tomcat
+          TOWER_ADDRESS=34.78.202.11
+          TEMPLATE_ID=10
+          HOST_CONFIG_KEY=75799
           retry_attempts=10
           attempt=0
           while [[ $attempt -lt $retry_attempts ]]
           do
-            status_code=`curl -k -s -i --data  http://$TOWER_ADDRESS/api/v2/job_templates/$TEMPLATE_ID/callback/ | head -n 1 | awk '{print $2}'`
+            status_code=`curl -s -i -H "Content-Type: application/json" --data "host_config_key=$HOST_CONFIG_KEY" http://$TOWER_ADDRESS/api/v2/job_templates/$TEMPLATE_ID/callback/ | head -n 1 | awk '{print $2}'`
             if [[ $status_code == 202 ]]
               then
               exit 0
