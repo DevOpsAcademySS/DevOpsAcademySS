@@ -13,7 +13,7 @@
     group: andre
     mode: '0644'
 
-- name: Copying Dockerfile files
+- name: Copying Dockerfile file
   copy:
     src: Dockerfile
     dest: "{{ geo_path }}"
@@ -21,9 +21,17 @@
     group: andre
     mode: '0755'
 
-- name: Copying citizen.war files
+- name: Copying citizen.war file
   copy:
     src: citizen.war
+    dest: "{{ geo_path }}"
+    owner: andre
+    group: andre
+    mode: '0755'
+
+- name: Copying context.xml file
+  copy:
+    src: context.xml
     dest: "{{ geo_path }}"
     owner: andre
     group: andre
