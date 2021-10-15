@@ -40,9 +40,27 @@
     append: yes
   become: yes
 
+- name: Allow access to insecure registry
+  lineinfile:
+    dest: /etc/docker/daemon.json
+    line: '{"insecure-registries" : ["34.79.142.68:8095"]}'
+  become: yes
+
+- name: restart docker
+  service:
+    name: docker
+    state: restarted
+
+- name: Log into private registry and force re-authorization
+  docker_login:
+    registry: http://34.79.142.68:8095/repository/d4m-docker-images/
+    username: admin
+    password: fifa11cool
+    reauthorize: yes
+
 - name: Create a geocitizen container
   docker_container:
     name: geocitizen
-    image: tomcat:9.0.53-jre8-openjdk-slim-buster
+    image: 34.79.142.68:8095/repository/d4m-docker-images/tomcat-geo:latest
     ports:
       - "8080:8080"
