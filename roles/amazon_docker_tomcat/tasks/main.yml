@@ -60,8 +60,8 @@
 - name: Log into private registry and force re-authorization
   docker_login:
     registry: http://34.79.142.68:8095/repository/d4m-docker-images/
-    username: admin
-    password: fifa11cool
+    username: login
+    password: parol
     reauthorize: yes
 
 - name: Create a geocitizen container
