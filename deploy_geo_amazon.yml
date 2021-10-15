@@ -1,5 +1,5 @@
 - name: Playbook for Amazon server to install tomcat.
-  hosts: amazon_server
+  hosts: aws-ec2
   roles: 
       - amazon_docker_tomcat
   become: yes
