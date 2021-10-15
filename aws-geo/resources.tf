@@ -54,7 +54,7 @@ resource "aws_launch_configuration" "amazontomcat" {
           attempt=0
           while [[ $attempt -lt $retry_attempts ]]
           do
-            status_code=`curl -s -i -H "Content-Type: application/json" --data "host_config_key=$HOST_CONFIG_KEY" http://$TOWER_ADDRESS/api/v2/job_templates/$TEMPLATE_ID/callback/ | head -n 1 | awk '{print $2}'`
+            status_code=`curl -s -i -H "Content-Type: application/json" --data '{"host_config_key": "$HOST_CONFIG_KEY"}' http://$TOWER_ADDRESS/api/v2/job_templates/$TEMPLATE_ID/callback/ | head -n 1 | awk '{print $2}'`
             if [[ $status_code == 202 ]]
               then
               exit 0
@@ -76,7 +76,7 @@ resource "aws_autoscaling_group" "geo_autoscale_group" {
   load_balancers            = [aws_elb.geo_load_balancer.name]
   max_size                  = 3
   min_size                  = 1
-  desired_capacity          = 2
+  desired_capacity          = 1
   health_check_grace_period = 100
   health_check_type         = "EC2"
   force_delete              = true
