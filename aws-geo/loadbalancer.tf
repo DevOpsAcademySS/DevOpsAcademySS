@@ -20,7 +20,7 @@ resource "aws_elb" "geo_load_balancer" {
     healthy_threshold   = 2
     unhealthy_threshold = 2
     timeout             = 5
-    target              = "HTTP:8080/citizen"
+    target              = "HTTP:8080/"
     interval            = 10
   }
 
