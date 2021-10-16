@@ -47,6 +47,8 @@
   notify: 
   - Reload docker
 
+- meta: flush_handlers
+
 - name: Log into private registry and force re-authorization
   docker_login:
     registry: "http://{{ nexus_url }}/repository/d4m-docker-images/"
