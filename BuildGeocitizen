@@ -7,8 +7,8 @@ pipeline {
 
   environment {
         DOCKERHUB_CREDENTIALS = credentials('nexus')
-        registry = "YourDockerhubAccount/YourRepository"
-        registryCredential = 'dockerhub_id'
+        registry = "35.224.13.239:8081/citizen-docker-release"
+        registryCredential = 'nexus'
         dockerImage = ''
   }
 
