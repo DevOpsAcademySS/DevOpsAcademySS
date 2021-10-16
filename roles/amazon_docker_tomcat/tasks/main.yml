@@ -47,8 +47,9 @@
   notify: 
   - Reload docker
 
-- meta: flush_handlers
-
+- name: Force all notified handlers to run at this point, not waiting for normal sync points
+  meta: flush_handlers
+  
 - name: Log into private registry and force re-authorization
   docker_login:
     registry: "http://{{ nexus_url }}/repository/d4m-docker-images/"
