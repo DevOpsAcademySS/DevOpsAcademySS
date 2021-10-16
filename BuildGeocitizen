@@ -62,7 +62,7 @@ pipeline {
             docker.withRegistry('35.224.13.239:8085', 'nexus') {
                sh "docker push 35.224.13.239:8085/citizen:11"
             }
-       }
+      }
 
 //      stage('Login') {
 //          steps{
