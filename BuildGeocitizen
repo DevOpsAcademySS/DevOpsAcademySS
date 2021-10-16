@@ -25,6 +25,8 @@ pipeline {
 
       stage('Push war file') {
           steps {
+            script{
+               def mavenPom = resd MavenPom "pom.xml"
                nexusArtifactUploader artifacts: [
                     [
                         artifactId: 'geo-citizen',
@@ -35,28 +37,29 @@ pipeline {
                 ],
                 credentialsId: 'nexus3',
                 groupId: 'com.softserveinc',
-                nexusUrl: '34.68.43.153:8081',
+                nexusUrl: '35.224.13.239:8081',
                 nexusVersion: 'nexus3',
                 protocol: 'http',
                 repository: 'citizen-release',
-                version: '1.0.5-SNAPSHOT'
+                version: "${mavenPom.version}"
+            }
           }
       }
       stage('Build docker') {
           steps{
-              sh 'docker build . -t  34.68.43.153:8085/citizen:1.2'
+              sh "docker build . -t  35.224.13.239:8085/citizen:${mavenPom.version}"
           }
       }
 
       stage('Login') {
           steps{
-              sh 'docker login -u admin 34.68.43.153:8085 -p 4312'
+              sh 'docker login -u admin 35.224.13.239:8085 -p 4312'
           }
       }
 
       stage('Push docker image') {
           steps {
-                sh 'docker push 34.68.43.153:8085/citizen:1.2'
+                sh "docker push 35.224.13.239:8085/citizen:${mavenPom.version}"
           }
       }
   }
