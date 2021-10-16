@@ -5,10 +5,11 @@ pipeline {
   }
 
   environment {
-    DOCKERHUB_CREDENTIALS = credentials('nexus')
+        DOCKERHUB_CREDENTIALS = credentials('nexus')
   }
 
   stages {
+    def app
 
       stage('Git Checkout') {
           steps {
@@ -45,6 +46,7 @@ pipeline {
             }
           }
       }
+
       stage('Build docker') {
           steps{
             script{
@@ -54,19 +56,31 @@ pipeline {
           }
       }
 
-      stage('Login') {
-          steps{
-              sh 'docker login -u admin 35.224.13.239:8085 -p 4312'
-          }
+      stage('Build image') {
+            app = docker.build("citizen:3")
       }
 
-      stage('Push docker image') {
-          steps{
-            script{
-                def mavenPom = readMavenPom file: "pom.xml"
-                sh "docker push 35.224.13.239:8085/citizen:${mavenPom.version}"
+      stage('Push image') {
+            docker.withRegistry('<your docker registry>', 'nexus') {
+                app.push("${env.BUILD_NUMBER}")
+                app.push("latest")
             }
-          }
+        }
       }
+
+//      stage('Login') {
+//          steps{
+//              sh 'docker login -u admin 35.224.13.239:8085 -p 4312'
+//          }
+//      }
+//
+//      stage('Push docker image') {
+//          steps{
+//            script{
+//                def mavenPom = readMavenPom file: "pom.xml"
+//                sh "docker push 35.224.13.239:8085/citizen:${mavenPom.version}"
+//            }
+//          }
+//      }
   }
 }
