@@ -6,10 +6,7 @@ pipeline {
   }
 
   environment {
-        DOCKERHUB_CREDENTIALS = credentials('nexus')
-        registry = "35.224.13.239:8081/citizen-docker-release"
-        registryCredential = 'nexus'
-        dockerImage = ''
+        NEXUS_CREDENTIALS = credentials('nexus')
   }
 
   stages {
@@ -19,31 +16,6 @@ pipeline {
                 git branch: 'main', credentialsId: 'github2', url: 'https://github.com/DevOpsAcademySS/Geocitizen'
           }
       }
-
-      stage('Build docker') {
-          steps{
-              script{
-                    dockerImage = docker.build registry + ":4"
-              }
-          }
-      }
-
-      stage('Deploy our image') {
-          steps{
-              script{
-                  docker.withRegistry( '', registryCredential ) {
-                    dockerImage.push()
-                  }
-              }
-          }
-      }
-
-      stage('Cleaning up') {
-          steps {
-            sh "docker rmi $registry:4"
-          }
-      }
-
 
 //      stage('Build image') {
 //        app = docker.build("citizen:3")
@@ -85,19 +57,21 @@ pipeline {
 //            }
 //          }
 //      }
-//      stage('Login') {
-//          steps{
+
+      stage('Login') {
+          steps{
 //              sh 'docker login -u admin 35.224.13.239:8085 -p 4312'
-//          }
-//      }
-//
-//      stage('Push docker image') {
-//          steps{
-//            script{
-//                def mavenPom = readMavenPom file: "pom.xml"
-//                sh "docker push 35.224.13.239:8085/citizen:${mavenPom.version}"
-//            }
-//          }
-//      }
+              sh 'echo $NEXUS_CREDENTIALS_PSW | docker login -u admin --password-stdin'
+          }
+      }
+
+      stage('Push docker image') {
+          steps{
+            script{
+                def mavenPom = readMavenPom file: "pom.xml"
+                sh "docker push 35.224.13.239:8085/citizen:${mavenPom.version}"
+            }
+          }
+      }
   }
 }
