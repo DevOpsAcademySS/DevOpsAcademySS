@@ -56,7 +56,10 @@ pipeline {
 
       stage('Login') {
           steps{
-              sh 'docker login -u admin 35.224.13.239:8085 -p 4312'
+            script{
+                def mavenPom = readMavenPom file: "pom.xml"
+                sh "docker login -u admin 35.224.13.239:8085 -p 4312"
+            }
           }
       }
 
