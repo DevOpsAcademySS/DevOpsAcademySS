@@ -51,7 +51,7 @@
     src: /etc/docker/daemon.json
     operations:
       - op: add
-        path: "insecure-registries"
+        path: "/insecure-registries"
         value: "{{ nexus_url }}"
     pretty: yes
     create: yes
