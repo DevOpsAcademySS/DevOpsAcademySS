@@ -54,20 +54,20 @@ pipeline {
 //          }
 //      }
 
-      stage('Build image') {
-            checkout scm
-            def dockerImage
-
-            app = docker.build("citizen:3")
-      }
-
-      stage('Push image') {
-          checkout scm
-          def dockerImage
-          docker.withRegistry('35.224.13.239:8085', 'nexus') {
-            dockerImage.push()
-          }
-      }
+//      stage('Build image') {
+//            checkout scm
+//            def dockerImage
+//
+//            app = docker.build("citizen:3")
+//      }
+//
+//      stage('Push image') {
+//          checkout scm
+//          def dockerImage
+//          docker.withRegistry('35.224.13.239:8085', 'nexus') {
+//            dockerImage.push()
+//          }
+//      }
 
 //      stage('Login') {
 //          steps{
