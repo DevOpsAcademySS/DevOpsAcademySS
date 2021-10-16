@@ -45,14 +45,14 @@ pipeline {
 //          }
 //      }
 
-      stage('Build docker') {
-          steps{
-            script{
-                def mavenPom = readMavenPom file: "pom.xml"
-                sh "docker build . -t  35.224.13.239:8085/citizen:33"
-            }
-          }
-      }
+//      stage('Build docker') {
+//          steps{
+//            script{
+//                def mavenPom = readMavenPom file: "pom.xml"
+//                sh "docker build . -t  35.224.13.239:8085/citizen:33"
+//            }
+//          }
+//      }
 
 //      stage('Build image') {
 //            checkout scm
@@ -61,14 +61,20 @@ pipeline {
 //            app = docker.build("citizen:3")
 //      }
 
-      stage('Push image') {
-          script {
-              withDockerRegistry([ credentialsId: "nexus", url: "35.224.13.239:8085" ]){
-                sh "docker push 35.224.13.239:8085/citizen:33"
-              }
-          }
-      }
+       node {
+            def app
 
+            stage('Build image') {
+                app = docker.build("<image name>")
+            }
+
+            stage('Push image') {
+                docker.withRegistry('35.224.13.239:8085', 'nexus') {
+                    app.push("${env.BUILD_NUMBER}")
+                    app.push("latest")
+                }
+            }
+       }
 //      stage('Login') {
 //          steps{
 //              sh 'docker login -u admin 35.224.13.239:8085 -p 4312'
