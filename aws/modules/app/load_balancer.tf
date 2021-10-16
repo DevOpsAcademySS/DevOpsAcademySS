@@ -3,11 +3,6 @@ resource "aws_elb" "geo_elb" {
   name               = "terraform-elb"
   availability_zones = var.availability_zones
   security_groups    = [aws_security_group.geo_sg.id]
-  access_logs {
-    bucket        = "foo"
-    bucket_prefix = "bar"
-    interval      = 60
-  }
 
   listener {
     instance_port     = 8080
