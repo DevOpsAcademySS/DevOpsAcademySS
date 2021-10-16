@@ -1,5 +1,6 @@
 pipeline {
   agent any
+  def app
   tools {
     maven 'maven'
   }
@@ -7,9 +8,8 @@ pipeline {
   environment {
         DOCKERHUB_CREDENTIALS = credentials('nexus')
   }
-  node {
-      def app
 
+  stages {
 
       stage('Git Checkout') {
           steps {
@@ -17,23 +17,30 @@ pipeline {
           }
       }
 
+      stage('Build docker') {
+          steps{
+            script{
+                def mavenPom = readMavenPom file: "pom.xml"
+                sh "docker build . -t  35.224.13.239:8085/citizen:3"
+            }
+          }
+      }
       stage('Build image') {
-        app = docker.build("test")
+        app = docker.build("citizen:3")
       }
 
       stage('Push image') {
-            docker.withRegistry('35.224.13.239:8085', 'nexus') {
+          docker.withRegistry('<your docker registry>', 'docker-private-credentials') {
                 app.push("${env.BUILD_NUMBER}")
                 app.push("latest")
-            }
+          }
       }
-  }
-//  stages {
-//      stage('Git Checkout') {
-//          steps {
-//                git branch: 'main', credentialsId: 'github2', url: 'https://github.com/DevOpsAcademySS/Geocitizen'
-//          }
-//      }
+
+
+
+
+
+
 
 //      stage('Build Geocitizen') {
 //          steps {
@@ -64,24 +71,6 @@ pipeline {
 //            }
 //          }
 //      }
-
-//      stage('Build docker') {
-//          steps{
-//            script{
-//                def mavenPom = readMavenPom file: "pom.xml"
-//                sh "docker build . -t  35.224.13.239:8085/citizen:33"
-//            }
-//          }
-//      }
-
-//      stage('Build image') {
-//            checkout scm
-//            def dockerImage
-//
-//            app = docker.build("citizen:3")
-//      }
-
-
 //      stage('Login') {
 //          steps{
 //              sh 'docker login -u admin 35.224.13.239:8085 -p 4312'
@@ -96,5 +85,5 @@ pipeline {
 //            }
 //          }
 //      }
-//  }
+  }
 }
