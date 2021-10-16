@@ -63,7 +63,7 @@ pipeline {
 
       stage('Push image') {
           script {
-              withDockerRegistry([ credentialsId: "Docker-Hub-Cred", url: "35.224.13.239:8085" ]){
+              withDockerRegistry([ credentialsId: "nexus", url: "35.224.13.239:8085" ]){
                 sh "docker push 35.224.13.239:8085/citizen:33"
               }
           }
