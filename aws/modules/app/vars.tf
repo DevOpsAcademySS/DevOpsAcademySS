@@ -53,3 +53,10 @@ variable "sg_ports" {
   #default = [22, 80, 443, 53] # 8080
   description = "Specify list of ports for security group"
 }
+
+#=============autoscaling group/policy=============
+variable "availability_zones" {
+  type        = list[string]
+  default     = ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
+  description = "Availability zones for load balancer and autoscaling group"
+}
