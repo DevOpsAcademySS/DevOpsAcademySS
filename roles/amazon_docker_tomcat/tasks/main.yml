@@ -59,14 +59,14 @@
 
 - name: Log into private registry and force re-authorization
   docker_login:
-    registry: http://{{ nexus_url }}/repository/d4m-docker-images/
-    username: {{ nexus_admin }}
-    password: {{ nexus_pass }}
+    registry: "http://{{ nexus_url }}/repository/d4m-docker-images/"
+    username: "{{ nexus_admin }}"
+    password: "{{ nexus_pass }}"
     reauthorize: yes
 
 - name: Create a geocitizen container
   docker_container:
     name: geocitizen
-    image: {{ nexus_url }}/repository/d4m-docker-images/tomcat-geo:latest
+    image: "{{ nexus_url }}/repository/d4m-docker-images/tomcat-geo:latest"
     ports:
       - "8080:8080"
