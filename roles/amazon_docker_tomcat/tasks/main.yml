@@ -40,29 +40,12 @@
     append: yes
   become: yes
 
-# - name: Creating an daemon.json file
-#   file:
-#     path: /etc/docker/daemon.json
-#     state: touch
-#   become: yes
-
-- name: append key/values
-  json_patch:
-    src: /etc/docker/daemon.json
-    operations:
-      - op: add
-        path: "/insecure-registries"
-        value: "[{{ nexus_url }}]"
-    pretty: yes
-    create: yes
-
-# - name: Allow access to insecure registry
-#   lineinfile:
-#     dest: /etc/docker/daemon.json
-#     line: '{\"insecure-registries\" : [\""{{ nexus_url }}""\"]}'
-#   become: yes
-#   notify: 
-#   - Reload docker
+- name: Allow access to insecure registry
+  template:
+    src: daemon.j2
+    dest: /etc/docker/daemon.json
+  notify: 
+  - Reload docker
 
 - name: Log into private registry and force re-authorization
   docker_login:
