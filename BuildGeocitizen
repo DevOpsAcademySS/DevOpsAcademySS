@@ -54,9 +54,9 @@ pipeline {
           }
       }
 
-      stage('Build image') {
-            app = docker.build("citizen:3")
-      }
+//      stage('Build image') {
+//            app = docker.build("citizen:3")
+//      }
 
       stage('Push image') {
             docker.withRegistry('35.224.13.239:8085', 'nexus') {
