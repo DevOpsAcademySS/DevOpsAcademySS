@@ -49,7 +49,7 @@
 - name: Allow access to insecure registry
   lineinfile:
     dest: /etc/docker/daemon.json
-    line: '{"insecure-registries" : ["{{ nexus_url }}"]}'
+    line: '{\"insecure-registries\" : [\""{{ nexus_url }}""\"]}'
   become: yes
   notify: 
   - Reload docker
