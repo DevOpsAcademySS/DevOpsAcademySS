@@ -61,7 +61,7 @@ pipeline {
       stage('Login') {
           steps{
 //              sh 'docker login -u admin 35.224.13.239:8085 -p 4312'
-              sh 'echo $NEXUS_CREDENTIALS_PSW | docker login -u admin --password-stdin'
+              sh 'echo $NEXUS_CREDENTIALS | docker login -u admin --password-stdin'
           }
       }
 
