@@ -47,7 +47,10 @@ pipeline {
       }
       stage('Build docker') {
           steps{
-              sh "docker build . -t  35.224.13.239:8085/citizen:${mavenPom.version}"
+            script{
+                def mavenPom = readMavenPom file: "pom.xml"
+                sh "docker build . -t  35.224.13.239:8085/citizen:${mavenPom.version}"
+            }
           }
       }
 
