@@ -52,7 +52,7 @@
     operations:
       - op: add
         path: "/insecure-registries"
-        value: "{{ nexus_url }}"
+        value: "[{{ nexus_url }}]"
     pretty: yes
     create: yes
 
