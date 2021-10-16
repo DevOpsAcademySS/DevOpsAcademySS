@@ -15,53 +15,58 @@ pipeline {
           }
       }
 
-      stage('Build Geocitizen') {
-          steps {
-            sh './script.sh'
-            sh 'mvn clean package'
-          }
-      }
-
-      stage('Push war file') {
-          steps {
-            script{
-               def mavenPom = readMavenPom file: "pom.xml"
-               nexusArtifactUploader artifacts: [
-                    [
-                        artifactId: 'geo-citizen',
-                        classifier: '',
-                        file: 'target/citizen.war',
-                        type: 'war'
-                    ]
-            ],
-            credentialsId: 'nexus3',
-            groupId: 'com.softserveinc',
-            nexusUrl: '35.224.13.239:8081',
-            nexusVersion: 'nexus3',
-            protocol: 'http',
-            repository: 'citizen-release',
-            version: "${mavenPom.version}"
-            }
-          }
-      }
-
-      stage('Build docker') {
-          steps{
-            script{
-                def mavenPom = readMavenPom file: "pom.xml"
-                sh "docker build . -t  35.224.13.239:8085/citizen:${mavenPom.version}"
-            }
-          }
-      }
-
-//      stage('Build image') {
-//            app = docker.build("citizen:3")
+//      stage('Build Geocitizen') {
+//          steps {
+//            sh './script.sh'
+//            sh 'mvn clean package'
+//          }
+//      }
+//
+//      stage('Push war file') {
+//          steps {
+//            script{
+//               def mavenPom = readMavenPom file: "pom.xml"
+//               nexusArtifactUploader artifacts: [
+//                    [
+//                        artifactId: 'geo-citizen',
+//                        classifier: '',
+//                        file: 'target/citizen.war',
+//                        type: 'war'
+//                    ]
+//            ],
+//            credentialsId: 'nexus3',
+//            groupId: 'com.softserveinc',
+//            nexusUrl: '35.224.13.239:8081',
+//            nexusVersion: 'nexus3',
+//            protocol: 'http',
+//            repository: 'citizen-release',
+//            version: "${mavenPom.version}"
+//            }
+//          }
 //      }
 
+//      stage('Build docker') {
+//          steps{
+//            script{
+//                def mavenPom = readMavenPom file: "pom.xml"
+//                sh "docker build . -t  35.224.13.239:8085/citizen:${mavenPom.version}"
+//            }
+//          }
+//      }
+
+      stage('Build image') {
+            checkout scm
+            def dockerImage
+
+            app = docker.build("citizen:3")
+      }
+
       stage('Push image') {
-            docker.withRegistry('35.224.13.239:8085', 'nexus') {
-               sh "docker push 35.224.13.239:8085/citizen:11"
-            }
+          checkout scm
+          def dockerImage
+          docker.withRegistry('35.224.13.239:8085', 'nexus') {
+            dockerImage.push()
+          }
       }
 
 //      stage('Login') {
