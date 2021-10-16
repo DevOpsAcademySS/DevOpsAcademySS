@@ -26,7 +26,7 @@ pipeline {
       stage('Push war file') {
           steps {
             script{
-               def mavenPom = resd MavenPom "pom.xml"
+               def mavenPom = resd MavenPom file: "pom.xml"
                nexusArtifactUploader artifacts: [
                     [
                         artifactId: 'geo-citizen',
