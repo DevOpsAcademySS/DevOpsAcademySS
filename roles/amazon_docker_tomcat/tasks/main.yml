@@ -49,7 +49,7 @@
 - name: Allow access to insecure registry
   lineinfile:
     dest: /etc/docker/daemon.json
-    line: '{"insecure-registries" : ["34.79.142.68:8095"]}'
+    line: '{"insecure-registries" : ["{{ nexus_url }}"]}'
   become: yes
 
 - name: restart docker
@@ -59,14 +59,14 @@
 
 - name: Log into private registry and force re-authorization
   docker_login:
-    registry: http://34.79.142.68:8095/repository/d4m-docker-images/
-    username: login
-    password: parol
+    registry: http://{{ nexus_url }}/repository/d4m-docker-images/
+    username: {{ nexus_admin }}
+    password: {{ nexus_pass }}
     reauthorize: yes
 
 - name: Create a geocitizen container
   docker_container:
     name: geocitizen
-    image: 34.79.142.68:8095/repository/d4m-docker-images/tomcat-geo:latest
+    image: {{ nexus_url }}/repository/d4m-docker-images/tomcat-geo:latest
     ports:
       - "8080:8080"
