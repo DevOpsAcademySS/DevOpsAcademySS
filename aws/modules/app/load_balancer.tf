@@ -19,7 +19,7 @@ resource "aws_elb" "geo_elb" {
     interval            = 30
   }
 
-  instances                   = [aws_instance.geicitizen.id]
+  instances                   = [aws_instance.geicitizen.id, aws_launch_configuration.geo_launch.id]
   cross_zone_load_balancing   = true
   idle_timeout                = 400
   connection_draining         = true
