@@ -1,2 +1,2 @@
 [ws_doc_mon]
-ws  ansible_host={{ ws_doc_mon_ip }}
+aml  ansible_host={{ web_ip }}
