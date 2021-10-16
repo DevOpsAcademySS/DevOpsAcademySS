@@ -17,51 +17,50 @@ pipeline {
           }
       }
 
-//      stage('Build image') {
-//        app = docker.build("citizen:3")
-//      }
-//
-//      stage('Push image') {
-//          docker.withRegistry('<your docker registry>', 'docker-private-credentials') {
-//                app.push("${env.BUILD_NUMBER}")
-//                app.push("latest")
-//          }
-//      }
+      stage('Build image') {
+        app = docker.build("citizen:3")
+      }
 
-//      stage('Build Geocitizen') {
-//          steps {
-//            sh './script.sh'
-//            sh 'mvn clean package'
-//          }
-//      }
-//
-//      stage('Push war file') {
-//          steps {
-//            script{
-//               def mavenPom = readMavenPom file: "pom.xml"
-//               nexusArtifactUploader artifacts: [
-//                    [
-//                        artifactId: 'geo-citizen',
-//                        classifier: '',
-//                        file: 'target/citizen.war',
-//                        type: 'war'
-//                    ]
-//            ],
-//            credentialsId: 'nexus3',
-//            groupId: 'com.softserveinc',
-//            nexusUrl: '35.224.13.239:8081',
-//            nexusVersion: 'nexus3',
-//            protocol: 'http',
-//            repository: 'citizen-release',
-//            version: "${mavenPom.version}"
-//            }
-//          }
-//      }
+      stage('Push image') {
+          docker.withRegistry('<your docker registry>', 'docker-private-credentials') {
+                app.push("${env.BUILD_NUMBER}")
+                app.push("latest")
+          }
+      }
+
+      stage('Build Geocitizen') {
+          steps {
+            sh './script.sh'
+            sh 'mvn clean package'
+          }
+      }
+
+      stage('Push war file') {
+          steps {
+            script{
+               def mavenPom = readMavenPom file: "pom.xml"
+               nexusArtifactUploader artifacts: [
+                    [
+                        artifactId: 'geo-citizen',
+                        classifier: '',
+                        file: 'target/citizen.war',
+                        type: 'war'
+                    ]
+            ],
+            credentialsId: 'nexus3',
+            groupId: 'com.softserveinc',
+            nexusUrl: '35.224.13.239:8081',
+            nexusVersion: 'nexus3',
+            protocol: 'http',
+            repository: 'citizen-release',
+            version: "${mavenPom.version}"
+            }
+          }
+      }
 
       stage('Login') {
           steps{
-//              sh 'docker login -u admin 35.224.13.239:8085 -p 4312'
-              sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u admin 35.224.13.239:8085 --password-stdin'
+              sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR 35.224.13.239:8085 --password-stdin'
           }
       }
 
