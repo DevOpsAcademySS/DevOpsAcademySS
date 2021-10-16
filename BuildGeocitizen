@@ -49,7 +49,7 @@ pipeline {
           steps{
             script{
                 def mavenPom = readMavenPom file: "pom.xml"
-                sh "docker build . -t  35.224.13.239:8085/citizen:${mavenPom.version}"
+                sh "docker build . -t  35.224.13.239:8085/citizen:33"
             }
           }
       }
@@ -64,7 +64,7 @@ pipeline {
       stage('Push image') {
           script {
               withDockerRegistry([ credentialsId: "Docker-Hub-Cred", url: "https://index.docker.io/v1/" ]){
-                sh "docker push 35.224.13.239:8085/citizen:${mavenPom.version}"
+                sh "docker push 35.224.13.239:8085/citizen:33"
               }
           }
       }
