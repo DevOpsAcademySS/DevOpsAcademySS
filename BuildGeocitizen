@@ -7,13 +7,33 @@ pipeline {
   environment {
         DOCKERHUB_CREDENTIALS = credentials('nexus')
   }
+  node {
+      def app
 
-  stages {
+
       stage('Git Checkout') {
           steps {
                 git branch: 'main', credentialsId: 'github2', url: 'https://github.com/DevOpsAcademySS/Geocitizen'
           }
       }
+
+      stage('Build image') {
+        app = docker.build("test")
+      }
+
+      stage('Push image') {
+            docker.withRegistry('35.224.13.239:8085', 'nexus') {
+                app.push("${env.BUILD_NUMBER}")
+                app.push("latest")
+            }
+      }
+  }
+//  stages {
+//      stage('Git Checkout') {
+//          steps {
+//                git branch: 'main', credentialsId: 'github2', url: 'https://github.com/DevOpsAcademySS/Geocitizen'
+//          }
+//      }
 
 //      stage('Build Geocitizen') {
 //          steps {
@@ -61,20 +81,7 @@ pipeline {
 //            app = docker.build("citizen:3")
 //      }
 
-       node {
-            def app
 
-            stage('Build image') {
-                app = docker.build("<image name>")
-            }
-
-            stage('Push image') {
-                docker.withRegistry('35.224.13.239:8085', 'nexus') {
-                    app.push("${env.BUILD_NUMBER}")
-                    app.push("latest")
-                }
-            }
-       }
 //      stage('Login') {
 //          steps{
 //              sh 'docker login -u admin 35.224.13.239:8085 -p 4312'
@@ -89,5 +96,5 @@ pipeline {
 //            }
 //          }
 //      }
-  }
+//  }
 }
