@@ -54,7 +54,6 @@ resource "aws_launch_configuration" "amazontomcat" {
           TOWER_ADDRESS=34.78.202.11
           TEMPLATE_ID=10
           HOST_CONFIG_KEY=${data.aws_secretsmanager_secret_version.host_conf_key.secret_string}
-          echo $HOST_CONFIG_KEY > /tmp/testkey
           retry_attempts=10
           attempt=0
           while [[ $attempt -lt $retry_attempts ]]
