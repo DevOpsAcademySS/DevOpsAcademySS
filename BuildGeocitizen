@@ -34,14 +34,14 @@ pipeline {
                         file: 'target/citizen.war',
                         type: 'war'
                     ]
-                ],
-                credentialsId: 'nexus3',
-                groupId: 'com.softserveinc',
-                nexusUrl: '35.224.13.239:8081',
-                nexusVersion: 'nexus3',
-                protocol: 'http',
-                repository: 'citizen-release',
-                version: "${mavenPom.version}"
+            ],
+            credentialsId: 'nexus3',
+            groupId: 'com.softserveinc',
+            nexusUrl: '35.224.13.239:8081',
+            nexusVersion: 'nexus3',
+            protocol: 'http',
+            repository: 'citizen-release',
+            version: "${mavenPom.version}"
             }
           }
       }
