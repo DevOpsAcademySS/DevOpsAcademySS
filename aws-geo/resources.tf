@@ -60,7 +60,7 @@ resource "aws_launch_configuration" "amazontomcat" {
           while [[ $attempt -lt $retry_attempts ]]
           do
             status_code=`curl -s -i -H "Content-Type: application/json" --data '{"host_config_key": "'$HOST_CONFIG_KEY'"}' http://$TOWER_ADDRESS/api/v2/job_templates/$TEMPLATE_ID/callback/ | head -n 1 | awk '{print $2}'`
-            if [[ $status_code == 202 ]]
+            if [[ $status_code == 201 ]]
               then
               exit 0
             fi
