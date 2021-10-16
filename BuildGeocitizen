@@ -56,16 +56,16 @@ pipeline {
 
       stage('Login') {
           steps{
-            script{
-                def mavenPom = readMavenPom file: "pom.xml"
-                sh "docker login -u admin 35.224.13.239:8085 -p 4312"
-            }
+              sh 'docker login -u admin 35.224.13.239:8085 -p 4312'
           }
       }
 
       stage('Push docker image') {
-          steps {
+          steps{
+            script{
+                def mavenPom = readMavenPom file: "pom.xml"
                 sh "docker push 35.224.13.239:8085/citizen:${mavenPom.version}"
+            }
           }
       }
   }
