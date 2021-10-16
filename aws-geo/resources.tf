@@ -1,7 +1,3 @@
-data "aws_secretsmanager_secret_version" "host_conf_key" {
-  # Fill in the name you gave to your secret
-  secret_id = "HOST_CONFIG_KEY"
-}
 resource "aws_security_group" "tomcat_sec_group" {
   name        = "Tomcat security group"
   description = "Security group for Tomcat server, Geocitizen."
@@ -51,9 +47,9 @@ resource "aws_launch_configuration" "amazontomcat" {
   #!/bin/bash
           exec > /tmp/autoscale.log 2>&1
           set -x
-          TOWER_ADDRESS=34.78.202.11
-          TEMPLATE_ID=10
-          HOST_CONFIG_KEY=${data.aws_secretsmanager_secret_version.host_conf_key.secret_string}
+          TOWER_ADDRESS=${local.provision_creds.url}
+          TEMPLATE_ID=${local.provision_creds.id}
+          HOST_CONFIG_KEY=${local.provision_creds.key}
           retry_attempts=10
           attempt=0
           while [[ $attempt -lt $retry_attempts ]]
