@@ -9,8 +9,6 @@ pipeline {
   }
 
   stages {
-    def app
-
       stage('Git Checkout') {
           steps {
                 git branch: 'main', credentialsId: 'github2', url: 'https://github.com/DevOpsAcademySS/Geocitizen'
