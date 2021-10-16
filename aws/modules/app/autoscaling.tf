@@ -22,7 +22,7 @@ resource "aws_autoscaling_group" "geo_asg" {
 }
 
 resource "aws_autoscaling_policy" "geo_asp_up" {
-  name                      = "terraform-asp"
+  name                      = "terraform-asp-up"
   adjustment_type           = "ChangeInCapacity"
   policy_type               = "TargetTrackingScaling"
   autoscaling_group_name    = aws_autoscaling_group.geo_asg.name
@@ -32,12 +32,12 @@ resource "aws_autoscaling_policy" "geo_asp_up" {
       predefined_metric_type = "ASGAverageCPUUtilization"
     }
     disable_scale_in = true
-    target_value     = 70.0
+    target_value     = 50.0
   }
 }
 
 resource "aws_autoscaling_policy" "geo_asp_down" {
-  name                      = "terraform-asp"
+  name                      = "terraform-asp-down"
   adjustment_type           = "ChangeInCapacity"
   policy_type               = "TargetTrackingScaling"
   autoscaling_group_name    = aws_autoscaling_group.geo_asg.name
