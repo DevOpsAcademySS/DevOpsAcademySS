@@ -87,7 +87,10 @@ resource "aws_launch_configuration" "geo_launch" {
 
   #### Run Geo Citizen
 
-  # docker login -u yor_ussername -p yor_password
-  # docker run  --name container_name -d -p 8080:8080 192.168.1.10:8085/geo-docker:v1
+  NEXUS_IP_PORT="192.168.1.10:8085"
+  # echo -e "{\n\t\"insecure-registries\" : [\"http://$NEXUS_IP_PORT\"]\n}" > /etc/docker/daemon.json
+  # service docker restart
+  # docker login -u yor_ussername -p yor_password $NEXUS_IP_PORT
+  # docker run  --name container_name -d -p 8080:8080 $NEXUS_IP_PORT/geo-docker:v1
   EOF
 }
