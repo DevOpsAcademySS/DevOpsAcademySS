@@ -1,3 +1,7 @@
+data "aws_secretsmanager_secret_version" "host_conf_key" {
+  # Fill in the name you gave to your secret
+  secret_id = "HOST_CONFIG_KEY"
+}
 resource "aws_security_group" "tomcat_sec_group" {
   name        = "Tomcat security group"
   description = "Security group for Tomcat server, Geocitizen."
@@ -49,7 +53,7 @@ resource "aws_launch_configuration" "amazontomcat" {
           set -x
           TOWER_ADDRESS=34.78.202.11
           TEMPLATE_ID=10
-          HOST_CONFIG_KEY=75799
+          HOST_CONFIG_KEY=${data.aws_secretsmanager_secret_version.host_conf_key.secret_string}
           retry_attempts=10
           attempt=0
           while [[ $attempt -lt $retry_attempts ]]
@@ -76,7 +80,7 @@ resource "aws_autoscaling_group" "geo_autoscale_group" {
   load_balancers            = [aws_elb.geo_load_balancer.name]
   max_size                  = 3
   min_size                  = 1
-  desired_capacity          = 1
+  desired_capacity          = 2
   health_check_grace_period = 100
   health_check_type         = "EC2"
   force_delete              = true
