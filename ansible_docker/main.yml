@@ -1,6 +1,6 @@
 ---
 - name: Deploy Geocitizen and Monitoring
-  hosts: mon
+  hosts: ws_doc_mon
   become: yes
 
   roles: 
