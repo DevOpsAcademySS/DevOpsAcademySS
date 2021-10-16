@@ -4,7 +4,7 @@ resource "aws_autoscaling_group" "geo_asg" {
   max_size                  = 3
   min_size                  = 1
   desired_capacity          = 2
-  health_check_grace_period = 300
+  health_check_grace_period = 150
   health_check_type         = "EC2"
   force_delete              = true
   launch_configuration      = aws_launch_configuration.geo_launch.name
@@ -22,12 +22,11 @@ resource "aws_autoscaling_group" "geo_asg" {
 }
 
 resource "aws_autoscaling_policy" "geo_asp_up" {
-  name                   = "terraform-asp"
-  scaling_adjustment     = 1
-  adjustment_type        = "ChangeInCapacity"
-  cooldown               = 90
-  policy_type            = "TargetTrackingScaling"
-  autoscaling_group_name = aws_autoscaling_group.geo_asg.name
+  name                      = "terraform-asp"
+  adjustment_type           = "ChangeInCapacity"
+  policy_type               = "TargetTrackingScaling"
+  autoscaling_group_name    = aws_autoscaling_group.geo_asg.name
+  estimated_instance_warmup = 90
   target_tracking_configuration {
     predefined_metric_specification {
       predefined_metric_type = "ASGAverageCPUUtilization"
@@ -38,12 +37,11 @@ resource "aws_autoscaling_policy" "geo_asp_up" {
 }
 
 resource "aws_autoscaling_policy" "geo_asp_down" {
-  name                   = "terraform-asp"
-  scaling_adjustment     = -1
-  adjustment_type        = "ChangeInCapacity"
-  cooldown               = 90
-  policy_type            = "TargetTrackingScaling"
-  autoscaling_group_name = aws_autoscaling_group.geo_asg.name
+  name                      = "terraform-asp"
+  adjustment_type           = "ChangeInCapacity"
+  policy_type               = "TargetTrackingScaling"
+  autoscaling_group_name    = aws_autoscaling_group.geo_asg.name
+  estimated_instance_warmup = 90
   target_tracking_configuration {
     predefined_metric_specification {
       predefined_metric_type = "ASGAverageCPUUtilization"
