@@ -59,25 +59,25 @@ pipeline {
       }
 
       stage('Push image') {
-            docker.withRegistry('<your docker registry>', 'nexus') {
+            docker.withRegistry('35.224.13.239:8085', 'nexus') {
                 app.push("${env.BUILD_NUMBER}")
                 app.push("latest")
             }
        }
 
-      stage('Login') {
-          steps{
-              sh 'docker login -u admin 35.224.13.239:8085 -p 4312'
-          }
-      }
-
-      stage('Push docker image') {
-          steps{
-            script{
-                def mavenPom = readMavenPom file: "pom.xml"
-                sh "docker push 35.224.13.239:8085/citizen:${mavenPom.version}"
-            }
-          }
-      }
+//      stage('Login') {
+//          steps{
+//              sh 'docker login -u admin 35.224.13.239:8085 -p 4312'
+//          }
+//      }
+//
+//      stage('Push docker image') {
+//          steps{
+//            script{
+//                def mavenPom = readMavenPom file: "pom.xml"
+//                sh "docker push 35.224.13.239:8085/citizen:${mavenPom.version}"
+//            }
+//          }
+//      }
   }
 }
