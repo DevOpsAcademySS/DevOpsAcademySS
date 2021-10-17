@@ -22,7 +22,7 @@ pipeline {
 //      }
       stage('Terraform Apply'){
           steps{
-              sh '/usr/local/bin/terragrunt run-all apply'
+              sh '/usr/local/bin/terragrunt run-all apply --auto-approve -no-color'
           }
       }
   }
