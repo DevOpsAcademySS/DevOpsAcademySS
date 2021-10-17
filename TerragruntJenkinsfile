@@ -7,22 +7,15 @@ pipeline {
           }
       }
 
-//      stage('GCP Login') {
-//          steps {
-//              withCredentials([file(credentialsId: 'GCP', variable: 'GC_KEY')]) {
-//                  sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
-//                  sh("gcloud container clusters get-credentials prod --zone us-central1 --project focused-evening-327612")
-//              }
-//          }
-//      }
-//      stage('Terraform Init'){
-//          steps{
-//              sh '/usr/local/bin/terragrunt init'
-//          }
-//      }
+      stage('Terraform Init'){
+          steps{
+              sh 'terraform init -no-color'
+          }
+      }
+
       stage('Terraform Apply'){
           steps{
-              sh '/usr/local/bin/terragrunt run-all apply --auto-approve -no-color'
+              sh 'terraform apply --auto-approve -no-color'
           }
       }
   }
