@@ -55,7 +55,6 @@ resource "google_compute_target_pool" "my_target_pool" {
 
 resource "google_compute_instance_group_manager" "my_group" {
   name = "my-igm1"
-  zone = var.zone
 
   version {
     instance_template  = google_compute_instance_template.my_lamp_instance.id
@@ -68,7 +67,6 @@ resource "google_compute_instance_group_manager" "my_group" {
 
 resource "google_compute_autoscaler" "autoscal" {
   name   = "my-autoscaler"
-  zone   = var.zone
   target = google_compute_instance_group_manager.my_group.id
 
   autoscaling_policy {
