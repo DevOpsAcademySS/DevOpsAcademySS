@@ -112,7 +112,7 @@
 - name: Copy a "statsd-agent.py" to /opt
   ansible.builtin.copy:
     src: ./statsd-agent/statsd-agent.py
-    dest: /opt
+    dest: /opt/statsd-agent.py
     remote_src: yes
 
 - name: create supervisor app
