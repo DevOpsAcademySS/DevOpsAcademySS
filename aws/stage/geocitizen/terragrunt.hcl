@@ -16,5 +16,6 @@ inputs = {
   aws_region = "eu-central-1"
   sg_name = "security_group_name"
   sg_desc = "security group name desc"
-  sg_ports = [22, 80, 443, 53, 8030]
+  sg_ports_tcp = [22, 80, 443, 53, 8030]
+  sg_ports_udp = [ 8030 ]
 }

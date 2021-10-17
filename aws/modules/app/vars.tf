@@ -48,10 +48,13 @@ variable "sg_desc" {
   type        = string
   description = "Specify description for security group"
 }
-variable "sg_ports" {
-  type = list(number)
-  #default = [22, 80, 443, 53] # 8080
-  description = "Specify list of ports for security group"
+variable "sg_ports_tcp" {
+  type        = list(number)
+  description = "Specify list of TCP ports for security group"
+}
+variable "sg_ports_udp" {
+  type        = list(number)
+  description = "Specify list of UDP ports for security group"
 }
 
 #=============autoscaling group/policy=============
