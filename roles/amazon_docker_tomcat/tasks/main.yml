@@ -69,19 +69,19 @@
 - name: Clone statsd from github
   git:
     repo: https://github.com/statsd/statsd.git
-    dest: /statsd
+    dest: "/home/{{ ansible_user_id }}/statsd"
     clone: yes
 
 - name: Change graphite url
   lineinfile:
-    path: /statsd/Dockerfile
+    path: "/home/{{ ansible_user_id }}/statsd/Dockerfile"
     regexp: 'graphite\.example\.com'
     line: "{{ graphite_url }}"
 
 - name: Build statsd image
   docker_image:
     build:
-      path: ./statsd
+      path: "/home/{{ ansible_user_id }}/statsd"
     name: statsd
     tag: latest
     source: build
@@ -97,12 +97,12 @@
 - name: Clone statsd-agent from github
   git:
     repo: https://github.com/blackrosezy/statsd-agent.git
-    dest: /statsd-agent
+    dest: ./statsd-agent
     clone: yes
 
 - name: Copy a "statsd-agent.py" to /opt
   ansible.builtin.copy:
-    src: /statsd-agent/statsd-agent.py
+    src: ./statsd-agent/statsd-agent.py
     dest: /opt
     remote_src: yes
 
