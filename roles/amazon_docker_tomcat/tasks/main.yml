@@ -73,7 +73,7 @@
     clone: yes
 
 - name: Change graphite url
-  lineinfile:
+  replace:
     path: ./statsd/Dockerfile
     regexp: 'graphite\.example\.com'
     line: "{{ graphite_url }}"
