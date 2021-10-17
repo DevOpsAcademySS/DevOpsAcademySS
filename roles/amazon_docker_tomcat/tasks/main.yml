@@ -124,6 +124,6 @@
   service:
     name: supervisor
     state: restarted
-    enable: true
+    enabled: true
 
 #sensugo client
