@@ -99,8 +99,7 @@
   git:
     repo: https://github.com/blackrosezy/statsd-agent.git
     dest: /statsd-agent
-    single_branch: yes
-    version: master
+    clone: yes
 
 - name: Copy a "statsd-agent.py" to /opt
   ansible.builtin.copy:
