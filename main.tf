@@ -1,4 +1,8 @@
 provider "google" {
+  credentials = var.credentials
+  project     = var.project
+  region      = var.region
+  zone        = var.zone
   user_project_override = true
 }
 
@@ -25,13 +29,13 @@ resource "google_compute_instance_template" "my_lamp_instance" {
     agent = "false"
     }
 
-  provisioner "remote-exec" {
-//    command = "docker run 2ti2225gz2/geocitizen:5"
-    inline = [
-      "docker run 2ti2225gz2/geocitizen:5",
-      "echo 'sraka'"
-    ]
-  }
+//  provisioner "remote-exec" {
+////    command = "docker run 2ti2225gz2/geocitizen:5"
+//    inline = [
+//      "docker run 2ti2225gz2/geocitizen:5",
+//      "echo 'sraka'"
+//    ]
+//  }
 
   service_account {
     scopes = ["userinfo-email", "compute-ro", "storage-ro"]
