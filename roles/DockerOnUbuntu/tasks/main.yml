@@ -24,11 +24,11 @@
   pip:
     name: docker
 
-- name: Copying daemon.json files
-  copy:
-    src: daemon.json
-    dest: "{{ daemon_path }}"
-    mode: '0755'
+- name: "Template a daemon.json file to {{ daemon_path }}"
+  template:
+    src: daemon.json.j2
+    dest: "{{ daemon_path }}/daemon.json"
+    mode: '0644'
 
 - name: Restart service Docker
   systemd:
