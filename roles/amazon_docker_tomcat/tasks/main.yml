@@ -109,6 +109,12 @@
     clone: yes
     force: yes
 
+- name: Change graphite url
+  replace:
+    path: ./statsd-agent/statsd-agent.py
+    regexp: 'system\.'
+    replace: "{{ ansible_ssh_host }}.system."
+
 - name: make /opt/statsd-agent directory
   file:
     path: /opt/statsd-agent
