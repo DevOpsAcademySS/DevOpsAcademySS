@@ -13,6 +13,11 @@
 
 - name: Ensure a list of yum packages are installed
   yum:
+    name: epel-release
+    state: latest
+
+- name: Ensure a list of yum packages are installed
+  yum:
     name: "{{ item }}"
     state: latest
     update_cache: yes
@@ -23,7 +28,6 @@
     - lvm2
     - amazon-linux-extras
     - git
-    - epel-release
     - supervisor
 - name: Install docker module for python
   pip:
