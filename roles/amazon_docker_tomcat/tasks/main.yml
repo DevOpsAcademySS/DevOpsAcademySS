@@ -109,10 +109,15 @@
     clone: yes
     force: yes
 
-- name: Copy a "statsd-agent.py" to /opt
+- name: make /opt/statsd-agent directory
+  file:
+    path: /opt/statsd-agent
+    state: directory
+
+- name: Copy a "statsd-agent.py" to /opt/statsd-agent
   ansible.builtin.copy:
     src: ./statsd-agent/statsd-agent.py
-    dest: /opt/statsd-agent.py
+    dest: /opt/statsd-agent/statsd-agent.py
     remote_src: yes
 
 - name: create supervisor app
