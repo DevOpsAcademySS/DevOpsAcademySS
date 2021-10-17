@@ -67,8 +67,6 @@ pipeline{
                         string(name: 'WEB_IP', value: String.valueOf(params.WEB_IP)),
                         string(name: 'NEXUS_IP', value: String.valueOf(params.NEXUS_IP)),
                         string(name: 'DOCKER_IP', value: String.valueOf(params.DOCKER_IP)),
-                        string(name: 'Nexus Username', value: 'andre'),
-                        string(name: 'Nexus Password', value: 'andre123'),
                         booleanParam(name: 'Configure Nexus', value: false),
                         booleanParam(name: 'Configure Docker', value: true)
                     ]

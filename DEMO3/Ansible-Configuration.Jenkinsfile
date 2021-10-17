@@ -11,8 +11,6 @@ pipeline{
         string(name:'WEB_IP',defaultValue:'0.0.0.0',description:'IP address of Geocitizen server on AWS')
         string(name:'NEXUS_IP',defaultValue:'0.0.0.0',description:'IP address of Nexus server on GCP')
         string(name:'DOCKER_IP',defaultValue:'0.0.0.0',description:'IP address of Docker server on GCP')
-        string(name:'Nexus Username',defaultValue:'',description:'Your Nexus Repository Username')
-        string(name:'Nexus Password',defaultValue:'',description:'Your Nexus Repository Password')
         booleanParam(name:'Configure Nexus',defaultValue:false,description:'Configure Nexus Repository 3 on GCP Instance')
         booleanParam(name:'Configure Docker',defaultValue:false,description:'Configure Docker on GCP Instance')
     }
@@ -33,7 +31,9 @@ pipeline{
         }
         stage('Set Roles Vars'){
             steps{
-                sh "./set_vars.sh ${params.NEXUS_IP} ${params['Nexus Username']} ${params['Nexus Password']}"
+                withCredentials([usernamePassword(credentialsId: 'nexus-creds', passwordVariable: 'NEXUS_PASS', usernameVariable: 'NEXUS_USR')]){
+                    sh "./set_vars.sh ${params.NEXUS_IP} ${NEXUS_USR} ${NEXUS_PASS}"
+                }
             }
         }
         stage('Configure Instance for Nexus Repository'){
@@ -59,7 +59,7 @@ pipeline{
                 }
             }
         }
-        stage('Containerize Geocitizen and Push Image to Nexus Docker Rgistry'){
+        stage('Containerize Geocitizen and Save to Nexus Docker Rgistry'){
             steps{
                 sh "ansible-playbook containerize_geo_play.yaml"
             }
