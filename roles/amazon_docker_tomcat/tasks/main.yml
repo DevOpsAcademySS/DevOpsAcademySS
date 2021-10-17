@@ -132,7 +132,7 @@
   register: public_ip
 
 
-- name: Change graphite url
+- name: Change statsd-agent dirs
   replace:
     path: ./statsd-agent/statsd-agent.py
     regexp: 'system\.'
