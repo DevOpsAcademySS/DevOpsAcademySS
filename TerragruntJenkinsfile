@@ -15,11 +15,11 @@ pipeline {
 //              }
 //          }
 //      }
-      stage('Terraform Init'){
-          steps{
-              sh 'terragrunt init'
-          }
-      }
+//      stage('Terraform Init'){
+//          steps{
+//              sh 'terragrunt init'
+//          }
+//      }
       stage('Terraform Apply'){
           steps{
               sh 'terragrunt run-all apply'
