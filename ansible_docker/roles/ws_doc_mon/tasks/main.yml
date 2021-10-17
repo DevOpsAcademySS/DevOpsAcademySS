@@ -42,6 +42,7 @@
   become: yes
 - name: Install docker-compose
 #    remote_user: ubuntu
+    user: ec2-user
     get_url: 
       url : https://github.com/docker/compose/releases/download/1.25.1-rc1/docker-compose-Linux-x86_64
       dest: /usr/local/bin/docker-compose
