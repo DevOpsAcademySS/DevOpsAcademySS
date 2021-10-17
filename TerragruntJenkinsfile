@@ -17,12 +17,12 @@ pipeline {
 //      }
       stage('Terraform Init'){
           steps{
-              sh './usr/local/bin/terragrunt init'
+              sh '/usr/local/bin/terragrunt init'
           }
       }
       stage('Terraform Apply'){
           steps{
-              sh './usr/local/bin/terragrunt run-all apply'
+              sh '/usr/local/bin/terragrunt run-all apply'
           }
       }
   }
