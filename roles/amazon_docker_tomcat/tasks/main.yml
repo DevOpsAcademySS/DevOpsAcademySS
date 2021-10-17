@@ -118,7 +118,7 @@
 - name: create supervisor app
   template:
     src: statsd-agent.j2
-    dest: /etc/supervisor/conf.d/statsd-agent.conf
+    dest: /etc/supervisord.d/statsd-agent.ini
 
 - name: start and enable supervisor
   service:
