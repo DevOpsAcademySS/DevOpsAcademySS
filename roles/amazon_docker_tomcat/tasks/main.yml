@@ -113,11 +113,22 @@
     clone: yes
     force: yes
 
+- name: get ip of the host
+  copy: 
+    content: "{{ ansible_ssh_host }}"
+    dest: /tmp/public_ip
+
+- name: delete everything but ip
+  lineinfile:
+    path: /tmp/public_ip
+    regexp: '\..*'
+    replace: ""
+
 - name: Change graphite url
   replace:
     path: ./statsd-agent/statsd-agent.py
     regexp: 'system\.'
-    replace: "{{ ansible_default_ipv4.address }}.system."
+    replace: "{{ lookup('file', '/tmp/public_ip') }}.system."
 
 - name: make /opt/statsd-agent directory
   file:
