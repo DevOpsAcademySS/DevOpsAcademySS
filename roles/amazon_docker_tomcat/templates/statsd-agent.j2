@@ -1,6 +1,6 @@
 [program:statsd-agent]
 directory = /opt/statsd-agent
 command = /usr/bin/python statsd-agent.py
-user="{{ ansible_user_id }}"
+user="{{ aws_ec2_user }}"
 autostart=true
 autorestart=true

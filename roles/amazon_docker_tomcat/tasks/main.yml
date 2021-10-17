@@ -122,7 +122,7 @@
 
 - name: start and enable supervisor
   service:
-    name: supervisor
+    name: supervisord
     state: restarted
     enabled: true
 
