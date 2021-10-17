@@ -9,7 +9,7 @@ variable "db_name" {
   description = "Specify name of DB"
 }
 
-variable "inst_type" {
+variable "instance_type" {
   type        = string
   description = "Specify type of DB instance (e.g. db.t2.micro)"
 }
