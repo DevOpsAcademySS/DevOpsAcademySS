@@ -71,6 +71,7 @@
     repo: https://github.com/statsd/statsd.git
     dest: ./statsd
     clone: yes
+    force: yes
 
 - name: Change graphite url
   replace:
@@ -99,6 +100,7 @@
     repo: https://github.com/blackrosezy/statsd-agent.git
     dest: ./statsd-agent
     clone: yes
+    force: yes
 
 - name: Copy a "statsd-agent.py" to /opt
   ansible.builtin.copy:
