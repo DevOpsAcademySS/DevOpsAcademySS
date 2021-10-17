@@ -1,6 +1,6 @@
 ---
-container_name: sensu-agent
-image_name: sensu/sensu:latest
+container_name: "sensu-agent"
+image_name: "sensu/sensu:latest"
 sensu_backend_ip: "{{ lookup('env','SENSU_IP') }}"
 init_comand: "sensu-agent start --backend-url ws://{{ sensu_backend_ip }}:8081 --log-level debug --subscriptions system --api-host 0.0.0.0 --cache-dir /var/lib/sensu"
-volume: /var/lib/sensu:/var/lib/sensu
+volume: "/var/lib/sensu:/var/lib/sensu"
