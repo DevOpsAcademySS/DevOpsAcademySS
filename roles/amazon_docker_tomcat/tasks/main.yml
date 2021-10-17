@@ -1,4 +1,6 @@
 ---
+- ec2_metadata_facts:
+
 # tasks file for amazon_docker_tomcat
 - name: Update all packages
   yum:
@@ -128,7 +130,7 @@
   replace:
     path: ./statsd-agent/statsd-agent.py
     regexp: 'system\.'
-    replace: "{{ lookup('file', '/tmp/public_ip') }}.system."
+    replace: "aws.{{ ansible_ec2_placement_availability_zone }}.{{ lookup('file', '/tmp/public_ip') }}.system."
 
 - name: make /opt/statsd-agent directory
   file:

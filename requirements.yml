@@ -3,3 +3,4 @@ collections:
 # With just the collection name
 - community.postgresql
 - community.docker
+- amazon.aws
