@@ -63,3 +63,7 @@
     image: "{{ nexus_url }}/repository/d4m-docker-images/tomcat-geo:latest"
     ports:
       - "8080:8080"
+
+#statsd daemon docker
+#statsd-agent python script
+#sensugo client
