@@ -3,12 +3,15 @@ resource "aws_security_group" "postgres_sg" {
   description = "Security group for PostgreSQL"
   ingress = [
     {
-      cidr_blocks      = ["0.0.0.0/0"]
-      description      = "Allow Postgres TCP ingress ports"
       from_port        = 5432
-      ipv6_cidr_blocks = ["::/0"]
-      protocol         = "tcp"
       to_port          = 5432
+      protocol         = "tcp"
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = ["::/0"]
+      description      = "Allow Postgres TCP ingress ports"
+      prefix_list_ids  = []
+      security_groups  = []
+      self             = false
     }
   ]
 
