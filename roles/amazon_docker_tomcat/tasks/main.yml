@@ -17,9 +17,10 @@
     - device-mapper-persistent-data
     - lvm2
     - amazon-linux-extras
+    - git
 - name: Install docker module for python
   pip:
-    name: docker-py
+    name: ["docker-py","psutil","statsd"]
 
 - name: Add extras repository
   shell: yum-config-manager --enable extras
@@ -65,5 +66,57 @@
       - "8080:8080"
 
 #statsd daemon docker
+- name: Clone statsd from github
+  git:
+    repo: https://github.com/statsd/statsd.git
+    dest: /statsd
+    single_branch: yes
+    version: master
+
+- name: Change graphite url
+  lineinfile:
+    path: /statsd/Dockerfile
+    regexp: 'graphite\.example\.com'
+    line: "{{ graphite_url }}"
+
+- name: Build statsd image
+  docker_image:
+    build:
+      path: ./statsd
+    name: statsd
+    tag: latest
+    source: build
+
+- name: Create a geocitizen container
+  docker_container:
+    name: statsd
+    image: "statsd:latest"
+    ports:
+      - "8125:8125/udp"
+
 #statsd-agent python script
+- name: Clone statsd-agent from github
+  git:
+    repo: https://github.com/blackrosezy/statsd-agent.git
+    dest: /statsd-agent
+    single_branch: yes
+    version: master
+
+- name: Copy a "statsd-agent.py" to /opt
+  ansible.builtin.copy:
+    src: /statsd-agent/statsd-agent.py
+    dest: /opt
+    remote_src: yes
+
+- name: create supervisor app
+  template:
+    src: statsd-agent.j2
+    dest: /etc/supervisor/conf.d/statsd-agent.conf
+
+- name: start and enable supervisor
+  service:
+    name: supervisor
+    state: restarted
+    enable: true
+
 #sensugo client

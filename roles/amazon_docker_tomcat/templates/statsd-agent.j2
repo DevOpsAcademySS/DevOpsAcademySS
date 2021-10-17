@@ -1,0 +1,6 @@
+[program:statsd-agent]
+directory = /opt/statsd-agent
+command = /usr/bin/python statsd-agent.py
+user="{{ ansible_user_id }}"
+autostart=true
+autorestart=true
