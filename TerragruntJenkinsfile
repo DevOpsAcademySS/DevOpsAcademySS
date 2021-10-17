@@ -6,7 +6,7 @@ pipeline {
   stages{
       stage('Git Checkout'){
           steps {
-              git branch: 'IA-207-samir-terragrunt', credentialsId: 'github2', url: 'https://github.com/DevOpsAcademySS/DevOpsAcademySS'
+              git branch: 'IA-207-samir-terraform-gcp-lb', credentialsId: 'github2', url: 'https://github.com/DevOpsAcademySS/DevOpsAcademySS'
           }
       }
 
