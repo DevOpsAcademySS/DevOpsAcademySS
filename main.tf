@@ -6,10 +6,6 @@ provider "google" {
   user_project_override = true
 }
 
-terraform {
-  backend "gcs" {}
-}
-
 resource "google_compute_instance_template" "my_lamp_instance" {
   name           = "my-instance-template1"
   machine_type   = "e2-medium"
