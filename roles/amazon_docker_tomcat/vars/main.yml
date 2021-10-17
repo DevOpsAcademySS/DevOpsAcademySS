@@ -26,4 +26,4 @@ nexus_url: !vault |
           33343036343666306534313866656438376538383965636434393935383530393565
 graphite_url: "13.49.145.64"
 
-aws_ec2_user: "{{ ansible_env.LOGNAME }}"
+aws_ec2_user: ec2-user
