@@ -23,7 +23,7 @@
     - lvm2
     - amazon-linux-extras
     - git
-    - epel
+    - epel-release
     - supervisor
 - name: Install docker module for python
   pip:
