@@ -17,7 +17,7 @@ pipeline {
 //      }
       stage('Terraform Init'){
           steps{
-              sh 'terragrunt init'
+              sh 'sudo terragrunt init'
           }
       }
       stage('Terraform Apply'){
