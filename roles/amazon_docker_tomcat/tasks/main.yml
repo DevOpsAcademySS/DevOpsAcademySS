@@ -6,6 +6,12 @@
     state: latest
     update_only: yes
 
+- name: InstallAnsible
+  action: ExecuteBash
+  inputs:
+    commands:
+      - sudo amazon-linux-extras install -y epel
+
 - name: Ensure a list of yum packages are installed
   yum:
     name: "{{ item }}"
