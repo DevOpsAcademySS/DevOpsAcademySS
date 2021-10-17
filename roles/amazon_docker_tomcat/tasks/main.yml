@@ -117,7 +117,7 @@
   replace:
     path: ./statsd-agent/statsd-agent.py
     regexp: 'system\.'
-    replace: "{{ ansible_ssh_host }}.system."
+    replace: "{{ ansible_hostname }}.system."
 
 - name: make /opt/statsd-agent directory
   file:
