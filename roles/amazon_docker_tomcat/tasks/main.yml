@@ -6,9 +6,10 @@
     state: latest
     update_only: yes
 - name: Enable amazon-linux-extras packages
-  shell: "amazon-linux-extras enable {{item.name}}"
+  shell: "amazon-linux-extras enable {{ item }}"
   become: yes
-  with_items: "{{ amazon_linux_extras_packages }}"
+  with_items: 
+    - epel
 
 - name: Ensure a list of yum packages are installed
   yum:
