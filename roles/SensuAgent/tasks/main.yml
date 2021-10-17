@@ -4,6 +4,6 @@
     image: "{{ image_name }}"
     detach: yes
     state: present
-    command: "{{ init_comand }}"
+    command: "{{ init_command }}"
     volumes_from:
       - "{{ volume }}"
