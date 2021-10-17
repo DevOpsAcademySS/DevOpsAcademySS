@@ -87,8 +87,8 @@
 - name: Change graphite url
   replace:
     path: ./statsd/Dockerfile
-    regexp: 'graphite\.example\.com'
-    replace: "{{ graphite_url }}"
+    regexp: '\/graphite\/'
+    replace: "/{{ graphite_url }}/"
 
 - name: Build statsd image
   docker_image:
