@@ -69,19 +69,19 @@
 - name: Clone statsd from github
   git:
     repo: https://github.com/statsd/statsd.git
-    dest: "/home/{{ ansible_user_id }}/statsd"
+    dest: ./statsd
     clone: yes
 
 - name: Change graphite url
   lineinfile:
-    path: "/home/{{ ansible_user_id }}/statsd/Dockerfile"
+    path: ./statsd/Dockerfile
     regexp: 'graphite\.example\.com'
     line: "{{ graphite_url }}"
 
 - name: Build statsd image
   docker_image:
     build:
-      path: "/home/{{ ansible_user_id }}/statsd"
+      path: ./statsd
     name: statsd
     tag: latest
     source: build
