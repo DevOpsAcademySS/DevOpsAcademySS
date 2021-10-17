@@ -5,12 +5,10 @@
     name: '*'
     state: latest
     update_only: yes
-
-- name: InstallAnsible
-  action: ExecuteBash
-  inputs:
-    commands:
-      - sudo amazon-linux-extras install -y epel
+- name: Enable amazon-linux-extras packages
+  shell: "amazon-linux-extras enable {{item.name}}"
+  become: yes
+  with_items: "{{ amazon_linux_extras_packages }}"
 
 - name: Ensure a list of yum packages are installed
   yum:
@@ -24,6 +22,7 @@
     - lvm2
     - amazon-linux-extras
     - git
+    - epel
     - supervisor
 - name: Install docker module for python
   pip:
