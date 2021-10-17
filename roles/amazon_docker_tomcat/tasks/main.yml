@@ -119,7 +119,7 @@
     dest: /tmp/public_ip
 
 - name: delete everything but ip
-  lineinfile:
+  replace:
     path: /tmp/public_ip
     regexp: '\..*'
     replace: ""
