@@ -5,5 +5,5 @@
     detach: yes
     state: present
     command: "{{ init_command }}"
-    volumes_from:
+    volumes:
       - "{{ volume }}"
