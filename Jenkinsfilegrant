@@ -1,0 +1,21 @@
+pipeline{
+    agent any
+
+    stages{
+        stage('Terraform Apply'){
+            steps{
+                withAWS(credentials: 'aws-credential-geocitizen') {
+                    sh '(cd aws-geo && terragrunt apply --auto-approve)'
+                }
+            }
+        }
+    }
+    post {
+        success {
+            echo 'all good!!!!'
+        }
+        failure { 
+            echo 'something went wrong'
+        }
+    }
+}
