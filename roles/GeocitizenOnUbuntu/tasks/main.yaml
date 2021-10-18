@@ -11,6 +11,7 @@
     name: "{{ container_name }}"
     image: "{{ nexus_url }}{{ img_name }}:{{ img_tag }}"
     state: started
+    detach: yes
     ports:
      # Publish container port 8080 as host port 8080
      - "8080:8080"
