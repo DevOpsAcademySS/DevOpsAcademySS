@@ -79,7 +79,7 @@
       - "8080:8080"
 
 #statsd daemon docker
-- name: Create a geocitizen container
+- name: Create a statsd container
   docker_container:
     name: statsd
     image: "{{ nexus_url }}/repository/d4m-docker-images/statsd:latest"
