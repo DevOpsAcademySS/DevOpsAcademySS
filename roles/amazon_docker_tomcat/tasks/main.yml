@@ -97,7 +97,7 @@
     path: ./statsd/Dockerfile
     after: 'config.js'
     regexp: '$'
-    replace: ' \\'
+    replace: " \"
 
 - name: Replace between the expressions (requires Ansible >= 2.4)
   replace:
