@@ -1,0 +1,20 @@
+pipeline{
+    agent any
+    stages{
+        stage('Terragrunt Apply'){
+            steps{
+                withAWS(credentials: 'aws-credential-geocitizen') {
+                    sh '(cd aws-geo && terragrunt destroy --auto-approve -no-color)'
+                }
+            }
+        }
+    }
+    post {
+        success {
+            echo 'all good!!!!'
+        }
+        failure { 
+            echo 'something went wrong'
+        }
+    }
+}
