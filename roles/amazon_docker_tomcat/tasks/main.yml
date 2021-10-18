@@ -153,11 +153,10 @@
   docker_container:
     name: cadvisor
     image: google/cadvisor:latest
+    network_mode: host
     entrypoint:
       - "/usr/bin/cadvisor"
       - "-logtostderr"
       - "-storage_driver=statsd"
       - "-storage_driver_host=localhost:8125"
-    ports:
-      - "8020:8080"
 #sensugo client
