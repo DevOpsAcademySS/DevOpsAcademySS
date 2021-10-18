@@ -4,8 +4,8 @@ pipeline{
         stage('Terragrunt Apply'){
             steps{
                 withAWS(credentials: 'aws-credential-geocitizen') {
-                    // 
-                    echo "echo $AWS_SESSION_TOKEN"
+                    // sh '(cd aws-geo && terragrunt apply --auto-approve)'
+                    sh 'echo $AWS_ACCESS_KEY_ID'
                 }
             }
         }
