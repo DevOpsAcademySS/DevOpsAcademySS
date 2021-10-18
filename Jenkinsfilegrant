@@ -1,8 +1,7 @@
 pipeline{
     agent any
-
     stages{
-        stage('Terraform Apply'){
+        stage('Terragrunt Apply'){
             steps{
                 withAWS(credentials: 'aws-credential-geocitizen') {
                     sh '(cd aws-geo && terragrunt apply --auto-approve)'
