@@ -79,36 +79,14 @@
       - "8080:8080"
 
 #statsd daemon docker
-- name: Clone statsd from github
-  git:
-    repo: https://github.com/statsd/statsd.git
-    dest: ./statsd
-    clone: yes
-    force: yes
-
-- name: Replace the content of my file
-  copy:
-    src: statsd_config.js
-    dest: ./statsd/exampleConfig.js
-
-- name: Change graphite url
-  replace:
-    path: ./statsd/Dockerfile
-    regexp: '\/graphite\/'
-    replace: "/{{ graphite_url }}/"
-
-- name: Build statsd image
-  docker_image:
-    build:
-      path: ./statsd
-    name: statsd
-    tag: latest
-    source: build
-
 - name: Create a geocitizen container
   docker_container:
     name: statsd
-    image: "statsd:latest"
+    image: "{{ nexus_url }}/repository/d4m-docker-images/statsd:latest"
+    entrypoint:
+      - "sh"
+      - "run.sh"
+      - "{{ graphite_url }}"
     ports:
       - "8125:8125/udp"
 
@@ -171,7 +149,6 @@
     enabled: true
 
 #cadvisor with statsd
-
 - name: Create a cadvisor container
   docker_container:
     name: cadvisor
@@ -181,4 +158,6 @@
       - "-logtostderr"
       - "-storage_driver=statsd"
       - "-storage_driver_host=localhost:8125"
+    ports:
+      - "8080:8080"
 #sensugo client
