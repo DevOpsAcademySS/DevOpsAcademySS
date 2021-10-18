@@ -89,7 +89,7 @@
 - name: Replace between the expressions 
   replace:
     path: ./statsd/exampleConfig.js
-    after: "*/"
+    after: "*\/"
     before: ","
     regexp: '\{'
     replace: '{ deleteIdleStats: true,'
