@@ -95,9 +95,8 @@
 - name: Replace between the expressions (requires Ansible >= 2.4)
   replace:
     path: ./statsd/Dockerfile
-    after: 'config.js'
-    regexp: '(.+)$'
-    replace: ' \'
+    regexp: '\'.config\.js'
+    replace: "' config.js \"
 
 - name: Replace between the expressions (requires Ansible >= 2.4)
   replace:
