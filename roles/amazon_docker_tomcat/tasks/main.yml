@@ -92,10 +92,10 @@
     regexp: '\/graphite\/'
     replace: "/{{ graphite_url }}/"
 
-- name: Replace between the expressions (requires Ansible >= 2.4)
+- name: Replace between the expressions 
   replace:
     path: ./statsd/Dockerfile
-    after: 'config.js'
+    after: "graphite/' config.js"
     before: '# Expose'
     regexp: '^(.+)$'
     replace: 'RUN sed "/\{/a deleteIdleStats: true," config.js'
