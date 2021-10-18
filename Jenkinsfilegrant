@@ -4,6 +4,7 @@ pipeline{
         stage('Terragrunt Apply'){
             steps{
                 withAWS(credentials: 'aws-credential-geocitizen') {
+                    sh 'export TF_CLI_ARGS="-no-color"'
                     sh '(cd aws-geo && terragrunt apply --auto-approve -no-color)'
                 }
             }
