@@ -90,6 +90,7 @@
   replace:
     path: ./statsd/exampleConfig.js
     after: "{"
+    before: "graphitePort"
     regexp: '^(.+)$'
     replace: 'deleteIdleStats: true,'
 
