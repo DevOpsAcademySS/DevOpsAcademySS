@@ -5,7 +5,7 @@ pipeline{
             steps{
                 withAWS(credentials: 'aws-credential-geocitizen') {
                     sh 'export TF_CLI_ARGS="-no-color"'
-                    sh '(cd aws-geo && terragrunt destroy --auto-approve)'
+                    sh '(cd aws-geo && terragrunt destroy --auto-approve -no-color)'
                 }
             }
         }
