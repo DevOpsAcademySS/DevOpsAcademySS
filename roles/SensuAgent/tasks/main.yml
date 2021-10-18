@@ -3,7 +3,7 @@
     name: "{{ container_name }}"
     image: "{{ image_name }}"
     detach: yes
-    state: present
+    state: started
     command: "{{ init_command }}"
     volumes:
       - "{{ volume }}"
