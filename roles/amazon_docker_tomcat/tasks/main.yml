@@ -86,13 +86,19 @@
     clone: yes
     force: yes
 
+- name: delete comments
+  replace:
+    path: ./statsd/exampleConfig.js
+    regexp: '^\/\*.*\*\/'
+    replace: ''
+
 - name: Replace between the expressions 
   replace:
     path: ./statsd/exampleConfig.js
-    after: '*\\/'
+    after: '2003$'
     before: ","
-    regexp: '\{'
-    replace: '{ deleteIdleStats: true,'
+    regexp: '^\s*$'
+    replace: ', deleteIdleStats: true'
 
 - name: Change graphite url
   replace:
