@@ -14,34 +14,34 @@ pipeline{
         stage('Terraform Init'){
             steps{
                 withAWS(credentials: 'aws-credential-geocitizen') {
-                    sh 'terraform init -no-color'
+                    sh '(cd aws-geo && terraform init -no-color)'
                 }    
             }
         }
-        stage('Terraform Apply'){
-            steps{
-                withAWS(credentials: 'aws-credential-geocitizen') {
-                    sh 'terraform apply --auto-approve -no-color'
-                }
-            }
-        }
-        stage('Terraform output servers IPs'){
-            steps{
-                withAWS(credentials: 'aws-credential-geocitizen') {
-                   sh """ terraform output -raw amazon-server-public-ip > .amazonip """
-                   sh """ terraform output -raw ubuntu-server-public-ip > .ubuntuip """
-                }
-                 script {
-                    amazonIP = readFile('.amazonip').trim()
-                    ubuntuIP = readFile('.ubuntuip').trim()
-                }
-            }
-        }
+        // stage('Terraform Apply'){
+        //     steps{
+        //         withAWS(credentials: 'aws-credential-geocitizen') {
+        //             sh 'terraform apply --auto-approve -no-color'
+        //         }
+        //     }
+        // }
+        // stage('Terraform output servers IPs'){
+        //     steps{
+        //         withAWS(credentials: 'aws-credential-geocitizen') {
+        //            sh """ terraform output -raw amazon-server-public-ip > .amazonip """
+        //            sh """ terraform output -raw ubuntu-server-public-ip > .ubuntuip """
+        //         }
+        //          script {
+        //             amazonIP = readFile('.amazonip').trim()
+        //             ubuntuIP = readFile('.ubuntuip').trim()
+        //         }
+        //     }
+        // }
     }
     post {
         success {
-            build job: 'geo-awx-job', parameters: [string(name: 'amazonIP', value: String.valueOf(amazonIP)), string(name: 'ubuntuIP', value: String.valueOf(ubuntuIP))], wait:false
-            build job: 'geocitizen-build', parameters: [string(name: 'amazonIP', value: String.valueOf(amazonIP)), string(name: 'ubuntuIP', value: String.valueOf(ubuntuIP))], wait:false
+            // build job: 'geo-awx-job', parameters: [string(name: 'amazonIP', value: String.valueOf(amazonIP)), string(name: 'ubuntuIP', value: String.valueOf(ubuntuIP))], wait:false
+            // build job: 'geocitizen-build', parameters: [string(name: 'amazonIP', value: String.valueOf(amazonIP)), string(name: 'ubuntuIP', value: String.valueOf(ubuntuIP))], wait:false
             telegramSend('JOB $JOB_NAME FINNISHED SUCCESFULL. STARTING ANSIBLE AND GEOCITIZEN JOBS')
         }
         failure { 
