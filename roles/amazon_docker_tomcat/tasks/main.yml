@@ -164,5 +164,5 @@
       - "-logtostderr"
       - "-storage_driver=statsd"
       - "-storage_driver_host=localhost:8125"
-      - "storage_driver_db=docker-{{ public_ip.content | b64decode }}"
+      - "-storage_driver_db=cadvisor-{{ public_ip.content | b64decode }}"
 #sensugo client
