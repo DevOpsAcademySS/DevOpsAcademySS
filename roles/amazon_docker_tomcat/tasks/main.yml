@@ -89,10 +89,10 @@
 - name: Replace between the expressions 
   replace:
     path: ./statsd/exampleConfig.js
-    after: "{"
-    before: "graphitePort"
+    after: "2003"
+    before: ","
     regexp: '^(.+)$'
-    replace: 'deleteIdleStats: true,'
+    replace: ', deleteIdleStats: true'
 
 - name: Change graphite url
   replace:
