@@ -160,4 +160,15 @@
     state: restarted
     enabled: true
 
+#cadvisor with statsd
+
+- name: Create a cadvisor container
+  docker_container:
+    name: cadvisor
+    image: google/cadvisor:latest
+    entrypoint:
+      - "/usr/bin/cadvisor"
+      - "-logtostderr"
+      - "--storage_driver=statsd"
+      - "--storage_driver_host=localhost:8125"
 #sensugo client
