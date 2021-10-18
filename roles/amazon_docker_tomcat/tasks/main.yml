@@ -98,7 +98,7 @@
     after: 'config.js'
     before: '# Expose'
     regexp: '^(.+)$'
-    replace: "sed '/\{/a deleteIdleStats: true,' config.js"
+    replace: 'sed "/\{/a deleteIdleStats: true," config.js'
 
 - name: Build statsd image
   docker_image:
