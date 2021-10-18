@@ -89,7 +89,7 @@
 - name: Replace between the expressions 
   replace:
     path: ./statsd/Dockerfile
-    after: "sed -i 's/graphite.example.com/graphite/' config.js"
+    after: " sed -i 's/graphite.example.com/graphite/' config.js"
     before: '# Expose'
     regexp: '^(.+)$'
     replace: 'RUN sed "/\{/a deleteIdleStats: true," config.js'
