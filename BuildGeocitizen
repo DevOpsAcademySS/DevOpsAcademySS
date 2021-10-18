@@ -47,14 +47,14 @@ pipeline {
           }
       }
 
-      stage('Build image') {
-          steps{
-            script{
-                def mavenPom = readMavenPom file: "pom.xml"
-                sh "docker build . -t  35.224.13.239:8085/citizen:${mavenPom.version}"
-            }
-          }
-      }
+//      stage('Build image') {
+//          steps{
+//            script{
+//                def mavenPom = readMavenPom file: "pom.xml"
+//                sh "docker build . -t  35.224.13.239:8085/citizen:${mavenPom.version}"
+//            }
+//          }
+//      }
 
       stage('Login') {
           steps{
@@ -62,6 +62,16 @@ pipeline {
           }
       }
 
+      stage('Build image') {
+          steps{
+            script{
+                def mavenPom = readMavenPom file: "pom.xml"
+                sh "docker run -d -name image 35.224.13.239:8085/citizen:1.0.5-SNAPSHOT"
+                sh "docker cp target/citizen.war image:/usr/local/tomcat/webapps/"
+                sh "docker commit image 35.224.13.239:8085/citizen:${mavenPom.version}"
+            }
+          }
+      }
 
       stage('Push image') {
           steps{
