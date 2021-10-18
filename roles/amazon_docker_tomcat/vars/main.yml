@@ -1,6 +1,6 @@
 ---
 # vars file for amazon_docker_tomcat
-graphite_url: "13.53.130.16"
+graphite_url: "13.53.32.55"
 
 aws_ec2_user: "{{ ansible_ssh_user }}"
 
