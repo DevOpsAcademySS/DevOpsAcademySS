@@ -89,8 +89,8 @@
 - name: Replace between the expressions 
   replace:
     path: ./statsd/exampleConfig.js
-    after: "Port: 2003"
-    before: ", graphite"
+    after: "Port:\ 2003"
+    before: ",\ graphite"
     regexp: '^(.+)$'
     replace: ', deleteIdleStats: true'
 
