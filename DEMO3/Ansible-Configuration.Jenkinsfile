@@ -11,6 +11,7 @@ pipeline{
         string(name:'WEB_IP',defaultValue:'0.0.0.0',description:'IP address of Geocitizen server on AWS')
         string(name:'NEXUS_IP',defaultValue:'0.0.0.0',description:'IP address of Nexus server on GCP')
         string(name:'DOCKER_IP',defaultValue:'0.0.0.0',description:'IP address of Docker server on GCP')
+        string(name:'SENSU_IP',defaultValue:'0.0.0.0',description:'IP address of Sensu GO server on GCP')
         booleanParam(name:'Configure Nexus',defaultValue:false,description:'Configure Nexus Repository 3 on GCP Instance')
         booleanParam(name:'Configure Docker',defaultValue:false,description:'Configure Docker on GCP Instance')
     }
@@ -27,13 +28,6 @@ pipeline{
                 echo "DOCKER_IP: ${params.DOCKER_IP}"
                 sh "chmod +x *.sh"
                 sh "./set_ips.sh ${params.NEXUS_IP} ${params.WEB_IP} ${params.DOCKER_IP}"
-            }
-        }
-        stage('Set Roles Vars'){
-            steps{
-                withCredentials([usernamePassword(credentialsId: 'nexus-creds', passwordVariable: 'NEXUS_PASS', usernameVariable: 'NEXUS_USR')]){
-                    sh "./set_vars.sh ${params.NEXUS_IP} ${NEXUS_USR} ${NEXUS_PASS}"
-                }
             }
         }
         stage('Configure Instance for Nexus Repository'){
@@ -61,12 +55,16 @@ pipeline{
         }
         stage('Containerize Geocitizen and Save to Nexus Docker Rgistry'){
             steps{
-                sh "ansible-playbook containerize_geo_play.yaml"
+                withCredentials([usernamePassword(credentialsId: 'nexus-creds', passwordVariable: 'NEXUS_PASS', usernameVariable: 'NEXUS_USR')]){
+                    sh "ansible-playbook containerize_geo_play.yaml"
+                }
             }
         }
         stage("Configure AWS Instance with Docker and Setup Geocitizen"){
             steps{
-                sh "ansible-playbook setup_gecitizen_play.yaml"
+                withCredentials([usernamePassword(credentialsId: 'nexus-creds', passwordVariable: 'NEXUS_PASS', usernameVariable: 'NEXUS_USR')]){
+                    sh "ansible-playbook setup_geocitizen_play.yaml"
+                }
             }
         }
     }
