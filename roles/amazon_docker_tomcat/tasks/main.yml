@@ -79,41 +79,41 @@
       - "8080:8080"
 
 #statsd daemon docker
-- name: Clone statsd from github
-  git:
-    repo: https://github.com/statsd/statsd.git
-    dest: ./statsd
-    clone: yes
-    force: yes
+# - name: Clone statsd from github
+#   git:
+#     repo: https://github.com/statsd/statsd.git
+#     dest: ./statsd
+#     clone: yes
+#     force: yes
 
-- name: Replace between the expressions 
-  replace:
-    path: ./statsd/Dockerfile
-    after: "  sed -i 's/graphite.example.com/graphite/' config.js"
-    before: '# Expose'
-    regexp: '^(.+)$'
-    replace: 'RUN sed "/\{/a deleteIdleStats: true," config.js'
+# # - name: Replace between the expressions 
+# #   replace:
+# #     path: ./statsd/Dockerfile
+# #     after: "  sed -i 's/graphite.example.com/graphite/' config.js"
+# #     before: '# Expose'
+# #     regexp: '^(.+)$'
+# #     replace: 'RUN sed "/\{/a deleteIdleStats: true," config.js'
 
-- name: Change graphite url
-  replace:
-    path: ./statsd/Dockerfile
-    regexp: '\/graphite\/'
-    replace: "/{{ graphite_url }}/"
+# - name: Change graphite url
+#   replace:
+#     path: ./statsd/Dockerfile
+#     regexp: '\/graphite\/'
+#     replace: "/{{ graphite_url }}/"
 
-- name: Build statsd image
-  docker_image:
-    build:
-      path: ./statsd
-    name: statsd
-    tag: latest
-    source: build
+# - name: Build statsd image
+#   docker_image:
+#     build:
+#       path: ./statsd
+#     name: statsd
+#     tag: latest
+#     source: build
 
-- name: Create a geocitizen container
-  docker_container:
-    name: statsd
-    image: "statsd:latest"
-    ports:
-      - "8125:8125/udp"
+# - name: Create a geocitizen container
+#   docker_container:
+#     name: statsd
+#     image: "statsd:latest"
+#     ports:
+#       - "8125:8125/udp"
 
 #statsd-agent python script
 - name: Clone statsd-agent from github
@@ -139,6 +139,11 @@
     src: /tmp/public_ip
   register: public_ip
 
+- name: Change statsd-agent dirs
+  replace:
+    path: ./statsd-agent/statsd-agent.py
+    regexp: 'localhost'
+    replace: "{{ graphite_url }}"
 
 - name: Change statsd-agent dirs
   replace:
