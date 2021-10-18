@@ -47,30 +47,18 @@ pipeline {
           }
       }
 
-//      stage('Build image') {
-//          steps{
-//            script{
-//                def mavenPom = readMavenPom file: "pom.xml"
-//                sh "docker build . -t  35.224.13.239:8085/citizen:${mavenPom.version}"
-//            }
-//          }
-//      }
-
-      stage('Login') {
-          steps{
-              sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR 35.224.13.239:8085 --password-stdin'
-          }
-      }
-
       stage('Build image') {
           steps{
             script{
                 def mavenPom = readMavenPom file: "pom.xml"
-                sh "docker run -d -name template 35.224.13.239:8085/citizen:1.0.5-SNAPSHOT"
-                sh "docker cp target/citizen.war template:/usr/local/tomcat/webapps/"
-                sh "docker commit template 35.224.13.239:8085/citizen:${mavenPom.version}"
-                sh "docker container kill image"
+                sh "docker build . -t  35.224.13.239:8085/citizen:${mavenPom.version}"
             }
+          }
+      }
+
+      stage('Login') {
+          steps{
+              sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR 35.224.13.239:8085 --password-stdin'
           }
       }
 
