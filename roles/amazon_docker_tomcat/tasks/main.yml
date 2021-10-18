@@ -96,6 +96,13 @@
   replace:
     path: ./statsd/Dockerfile
     after: 'config.js'
+    regexp: '.'
+    replace: ' \'
+
+- name: Replace between the expressions (requires Ansible >= 2.4)
+  replace:
+    path: ./statsd/Dockerfile
+    after: 'config.js'
     before: '# Expose'
     regexp: '^(.+)$'
     replace: '\ sed "/\{/a deleteIdleStats: true," config.js'
