@@ -153,10 +153,16 @@
   docker_container:
     name: cadvisor
     image: google/cadvisor:latest
+    volumes:
+      - "/:/rootfs:ro"
+      - "/var/run:/var/run:rw"
+      - "/sys:/sys:ro"
+      - "/var/lib/docker/:/var/lib/docker:ro"
     network_mode: host
     entrypoint:
       - "/usr/bin/cadvisor"
       - "-logtostderr"
       - "-storage_driver=statsd"
       - "-storage_driver_host=localhost:8125"
+      - "storage_driver_db=docker-{{ public_ip.content | b64decode }}"
 #sensugo client
