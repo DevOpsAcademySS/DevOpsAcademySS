@@ -93,7 +93,7 @@
 #statsd-agent python script
 - name: Clone statsd-agent from github
   git:
-    repo: https://github.com/blackrosezy/statsd-agent.git
+    repo: https://github.com/day4me/statsd-agent.git
     dest: ./statsd-agent
     clone: yes
     force: yes
