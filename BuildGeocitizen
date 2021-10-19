@@ -71,15 +71,16 @@ pipeline {
           }
       }
   }
+
   post {
       success {
             withCredentials([string(credentialsId: 'TG', variable: 'TOKEN')]) {
-                sh "curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage -d chat_id=566174026 -d parse_mode=markdown -d text='*${env.JOB_NAME}* : `not OK` *Published* = `YES`'"
+                sh "curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage -d chat_id=566174026 -d parse_mode=markdown -d text='*${env.JOB_NAME}* *Published* = `YES`'"
             }
       }
       failure {
             withCredentials([string(credentialsId: 'TG', variable: 'TOKEN')]) {
-                sh "curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage -d chat_id=566174026 -d parse_mode=markdown -d text='*${env.JOB_NAME}* : `not OK` *Published* = `NO`'"
+                sh "curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage -d chat_id=566174026 -d parse_mode=markdown -d text='*${env.JOB_NAME}* *Published* = `NO`'"
             }
       }
   }
