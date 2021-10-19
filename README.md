@@ -1,32 +1,42 @@
-## DevOpsAcademySS
-is a repository in which the team stores code from **practical tasks of DevOps Academy.**
+#Multi-Cloud (AWS and GCP) IaC with Terraform empowered with Terragrunt
+## Prerequisites
+### External
+* AWS Account, Identity and Access Management (IAM) user and generated programmatic credentials.
+* GCP Account, project and generated programmatic credentials.
+### Environment
+* Terraform 1.0.8 (https://www.terraform.io/downloads.html)
+* Terragrunt (https://github.com/gruntwork-io/terragrunt/releases)
 
-1. [Atlassian Jira Board] consists **tickets** each of which corresponds to the task in the Academy. Each performed task has its own branch marked with ticket link (IA-XXX).
+## Preparation
+* Export all programmatic credentials for all clouds/systems to your environment.
+* Create resources to store remote backend:
+### Manually
+on:
+* S3 bucket
+* Dynamo DB
+using names which are assinged in `remote_state` block in `terragrunt.hcl` file
+or
+### Using terraform
+```
+cd backend_init
+terraform init
+terraform plan
+terraform apply
+```
+## Usage
+### Apply AWS stack (or other, GCP)
+```
+cd aws
+terragrunt run-all plan
+terragrunt run-all apply
+```
+### Apply all stacks
+```
+terragrunt run-all plan
+terragrunt run-all apply
+```
+### Destroy all stacks
+```
+# first, return to project root directory
+terragrunt run-all destroy
 
-2. [Geocitizen GitHub **repository**] is where work with Manual Deploy **Geocitizen** task located. This is one in which a team is assigned to deploy a project by identifying bugs.
-
-3. [**Project milestones** file] is where all **Expected Deliverables** & Acceptance Criteria of Academy Internship plan are placed.
-Estimation table is [here].
-
-4. [DevOps team **credentials**] table is created in order to let team members simply communicate with each other.
-
-5. [Link to **zoom conference**] is where the team studies and communicates with mentors and experts every weekday.
-
-6. [DevOps-2021 **course** in Softserve Academy's Moodle] is where more **useful materials and courses** for the Academy are available
-
-
-
-
-[Atlassian Jira Board]: <https://devopsacademy.atlassian.net/jira/software/projects/IA/boards/1>
-
-[Geocitizen GitHub **repository**]: <https://github.com/DevOpsAcademySS/Geocitizen>
-
-[**Project milestones** file]: <https://docs.google.com/document/d/1GlTHOB31Ge00lPWYHvw-MRHQydUPAx1gCyBVJ47P__I/edit?usp=drivesdk>
-
-[here]: <https://docs.google.com/spreadsheets/d/1ScgksjDFEZ1OBospo5tm6N9SxzBHTB12wY4L2Igvdp0/edit?usp=sharing_eil_m&ts=6118dc49>
-
-[DevOps team **credentials**]: <https://docs.google.com/spreadsheets/d/1cMczvIlUcScRl9QY_H2AYGGeCOuLtoYGA4HqhI5d86c/edit#gid=0>
-
-[Link to **zoom conference**]: <https://softserveinc.zoom.us/j/93500189579?pwd=emw1ZTMzUlJ6M2RKQytlanlXYmJ1Zz09>
-
-[DevOps-2021 **course** in Softserve Academy's Moodle]: <https://softserve.academy/course/view.php?id=214>
