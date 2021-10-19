@@ -5,7 +5,7 @@
 * AWS Identity and Access Management (IAM) user
 * Generated programmatic AWS credentials
 ### Environment
-* Terraform 1.0.8 (https://www.terraform.io/downloads.html
+* Terraform 1.0.8 (https://www.terraform.io/downloads.html)
 
 ## Preparation
 Export programmatic AWS credentials to your environment.
