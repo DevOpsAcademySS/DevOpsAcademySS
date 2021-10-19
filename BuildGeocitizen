@@ -52,7 +52,7 @@ pipeline {
             script{
                 def mavenPom = readMavenPom file: "pom.xml"
                 sh  "cat <<EOF > Dockerfile \nFROM 2ti2225gz2/geocitizen:1.0 \nCOPY target/citizen.war ./webapps/"
-                sh "docker build . -t  35.224.13.239:8085/citizen:${mavenPom.version}"
+                sh "docker build . -t  35.224.13.239:8085/citizen:template"
             }
           }
       }
@@ -67,7 +67,7 @@ pipeline {
           steps{
             script{
                 def mavenPom = readMavenPom file: "pom.xml"
-                sh "docker push 35.224.13.239:8085/citizen:${mavenPom.version}"
+                sh "docker push 35.224.13.239:8085/citizen:template"
             }
           }
       }
