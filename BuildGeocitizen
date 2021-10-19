@@ -47,19 +47,19 @@ pipeline {
           }
       }
 
+      stage('Login') {
+          steps{
+              sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR 35.224.13.239:8085 --password-stdin'
+          }
+      }
+
       stage('Build image') {
           steps{
             script{
                 def mavenPom = readMavenPom file: "pom.xml"
-                sh  "cat <<EOF > Dockerfile \nFROM 2ti2225gz2/geocitizen:1.0 \nCOPY target/citizen.war ./webapps/"
-                sh "docker build . -t  35.224.13.239:8085/citizen:template"
+                sh "cat <<EOF > Dockerfile \nFROM 35.224.13.239:8085/citizen:template \nCOPY target/citizen.war ./webapps/"
+                sh "docker build . -t  35.224.13.239:8085/citizen:${mavenPom.version}"
             }
-          }
-      }
-
-      stage('Login') {
-          steps{
-              sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR 35.224.13.239:8085 --password-stdin'
           }
       }
 
@@ -67,7 +67,7 @@ pipeline {
           steps{
             script{
                 def mavenPom = readMavenPom file: "pom.xml"
-                sh "docker push 35.224.13.239:8085/citizen:template"
+                sh "docker push ${mavenPom.version}"
             }
           }
       }
