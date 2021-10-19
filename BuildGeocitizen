@@ -51,6 +51,12 @@ pipeline {
           steps{
             script{
                 def mavenPom = readMavenPom file: "pom.xml"
+                sh  """
+                cat <<EOF > Dockerfile3
+                FROM 2ti2225gz2/geocitizen:1.0
+                COPY target/citizen.war ./webapps/
+                EOF
+                """
                 sh "docker build . -t  35.224.13.239:8085/citizen:${mavenPom.version}"
             }
           }
