@@ -153,11 +153,14 @@
   docker_container:
     name: cadvisor
     image: google/cadvisor:latest
+    #privileged: yes
     volumes:
       - "/:/rootfs:ro"
       - "/var/run:/var/run:rw"
       - "/sys:/sys:ro"
       - "/var/lib/docker/:/var/lib/docker:ro"
+    devices:
+      - "/dev/kmsg"
     network_mode: host
     entrypoint:
       - "/usr/bin/cadvisor"
