@@ -1,4 +1,4 @@
-#Multi-Cloud (AWS and GCP) IaC with Terraform empowered with Terragrunt
+# Multi-Cloud (AWS and GCP) IaC with Terraform empowered with Terragrunt
 ## Prerequisites
 ### External
 * AWS Account, Identity and Access Management (IAM) user and generated programmatic credentials.
@@ -11,10 +11,9 @@
 * Export all programmatic credentials for all clouds/systems to your environment.
 * Create resources to store remote backend:
 ### Manually
-on:
+Create resources using names, which are assinged in `remote_state` block in `terragrunt.hcl` file, on:
 * S3 bucket
 * Dynamo DB
-using names which are assinged in `remote_state` block in `terragrunt.hcl` file
 or
 ### Using terraform
 ```
