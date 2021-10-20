@@ -9,8 +9,15 @@
 
 ## Preparation
 * Export all programmatic credentials for all clouds/systems to your environment:
-![image](https://user-images.githubusercontent.com/64926867/138105063-0163fbcf-4c4d-4260-b99d-98fef1af2e4e.png)(https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
-![image](https://user-images.githubusercontent.com/64926867/138105143-a37df8ff-bdf6-425c-bc97-06b5f2adb224.png)(https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/provider_reference)
+  * for [AWS provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs):
+    * AWS_ACCESS_KEY_ID
+    * AWS_SECRET_ACCESS_KEY
+    * AWS_DEFAULT_REGION
+  * for [GCP provider](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/provider_reference)
+    * GOOGLE_APPLICATION_CREDENTIALS
+    * GOOGLE_PROJECT
+    * GOOGLE_REGION
+    * GOOGLE_ZONE
 * Create resources to store remote backend:
 ### Manually
 Create resources using names, which are assinged in `remote_state` block in `terragrunt.hcl` file, on:
