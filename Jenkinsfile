@@ -9,8 +9,8 @@ pipeline{
                     sh 'echo $AWS_ACCESS_KEY_ID '
                     sh 'echo $AWS_SECRET_ACCESS_KEY '
                     sh 'cd tomcat'
-                    sh 'sudo terragrunt -version'
-                    sh 'sudo terragrunt plan -no-color'
+                    sh 'terragrunt -version'
+                    sh 'terragrunt plan -no-color'
                 }
             }
         }
