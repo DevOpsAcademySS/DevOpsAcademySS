@@ -32,6 +32,11 @@ variable "fw_ports" {
   description = "Specify list of ports for firewall"
 }
 
+variable "trgt_tags" {
+  type        = list(string)
+  description = "Specify list of instance tags indicating sets of instances located in the network that may make network connections as specified in allowed[]."
+}
+
 #==========provider==========
 variable "gcp_proj_name" {
   type        = string

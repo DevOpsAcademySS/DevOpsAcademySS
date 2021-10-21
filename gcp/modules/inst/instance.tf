@@ -10,10 +10,12 @@ resource "google_compute_instance" "vm_instance" {
 
   network_interface {
     # A default network is created for all GCP projects
-    network = "default"
+    network = google_compute_network.vpc_network.name
     access_config {
     }
   }
+
+  tags = var.trgt_tags # network tags
 
   depends_on = [
     google_compute_firewall.default
