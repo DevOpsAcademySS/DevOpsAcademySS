@@ -6,6 +6,7 @@ pipeline{
         stage('Terragrunt Plan'){
             steps{
                 withAWS(credentials: 'aws_key_for_geo') {
+                    sh 'echo $AWS_ACCESS_KEY_ID '
                     sh 'cd tomcat'
                     sh 'sudo terragrunt -version'
                     sh 'sudo terragrunt plan -no-color'
