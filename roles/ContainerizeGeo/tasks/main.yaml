@@ -11,7 +11,7 @@
     state: directory
     owner: andre
     group: andre
-    mode: '0644'
+    mode: '0744'
 
 - name: Copying Dockerfile file
   copy:
@@ -19,7 +19,7 @@
     dest: "{{ geo_path }}"
     owner: andre
     group: andre
-    mode: '0755'
+    mode: '0644'
 
 - name: Copying citizen.war file
   copy:
@@ -27,7 +27,7 @@
     dest: "{{ geo_path }}"
     owner: andre
     group: andre
-    mode: '0755'
+    mode: '0644'
 
 - name: Copying context.xml file
   copy:
@@ -65,18 +65,3 @@
     tag: "{{ tag_name }}"
     push: yes
     source: build
-
-# - name: Start 4 load-balanced containers
-#   docker_container:
-#     name: "geocitizen-container"
-#     image: "{{ img_name }}:{{ tag_name }}"
-#     state: started
-
-
-# - name: Start 4 load-balanced containers
-#   docker_container:
-#     name: "container{{ item }}"
-#     recreate: yes
-#     image: someuser/anotherappimage
-#     command: sleep 1d
-#   with_sequence: count=4
