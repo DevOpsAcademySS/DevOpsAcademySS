@@ -1,6 +1,6 @@
 resource "google_compute_firewall" "default" {
   name          = var.fw_name
-  network       = google_compute_network.vpc_network.name
+  network       = var.network_name # google_compute_network.vpc_network.name
   source_ranges = ["0.0.0.0/0"]
 
   allow {
