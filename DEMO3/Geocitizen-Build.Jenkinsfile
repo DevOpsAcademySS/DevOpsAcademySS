@@ -9,6 +9,7 @@ pipeline{
         string(name:'DB_IP',defaultValue:'0.0.0.0',description:'IP address of PostgreSQL RDS Instance on AWS')
         string(name:'NEXUS_IP',defaultValue:'0.0.0.0',description:'IP address of Nexus server on GCP')
         string(name:'DOCKER_IP',defaultValue:'0.0.0.0',description:'IP address of Docker server on GCP')
+        string(name:'SENSU_IP',defaultValue:'0.0.0.0',description:'IP address of Sensu GO server on GCP')
     }
     stages{
         stage('Clone Geocitizen'){
@@ -67,7 +68,7 @@ pipeline{
                         string(name: 'WEB_IP', value: String.valueOf(params.WEB_IP)),
                         string(name: 'NEXUS_IP', value: String.valueOf(params.NEXUS_IP)),
                         string(name: 'DOCKER_IP', value: String.valueOf(params.DOCKER_IP)),
-                        string(name: 'SENSU_IP', value: '34.122.43.92'),
+                        string(name: 'SENSU_IP', value: String.valueOf(params.SENSU_IP)),
                         booleanParam(name: 'Configure Nexus', value: false),
                         booleanParam(name: 'Configure Docker', value: true)
                     ]

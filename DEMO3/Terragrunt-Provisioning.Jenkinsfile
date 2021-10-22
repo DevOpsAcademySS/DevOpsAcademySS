@@ -83,6 +83,22 @@ echo "Hello world!"
                 // dir('gcp/stage') {
                 //     bat "terragrunt run-all apply --terragrunt-non-interactive -no-color"
                 // }
+                dir('gcp/stage/awx') {
+                    bat "terragrunt apply -auto-approve -no-color"
+                    bat "terragrunt output instance_public_ip > AWX_IP.txt"
+                    script{
+                        env.AWX_IP = (readFile('AWX_IP.txt').trim() =~ "nat_ip\" = \"(.*)\"")[0][1]
+                    }
+                    echo "Nexus IP: ${env.AWX_IP}"
+                }
+                dir('gcp/stage/sensu') {
+                    bat "terragrunt apply -auto-approve -no-color"
+                    bat "terragrunt output instance_public_ip > SENSU_IP.txt"
+                    script{
+                        env.SENSU_IP = (readFile('SENSU_IP.txt').trim() =~ "nat_ip\" = \"(.*)\"")[0][1]
+                    }
+                    echo "Nexus IP: ${env.SENSU_IP}"
+                }
                 dir('gcp/stage/nexus') {
                     bat "terragrunt apply -auto-approve -no-color"
                     bat "terragrunt output instance_public_ip > NEXUS_IP.txt"
@@ -135,6 +151,7 @@ echo "Hello world!"
                        string(name: 'DB_IP', value: String.valueOf(env.DB_IP)),
                        string(name: 'NEXUS_IP', value: String.valueOf(env.NEXUS_IP)),
                        string(name: 'DOCKER_IP', value: String.valueOf(env.DOCKER_IP))
+                      string(name: 'SENSU_IP', value: String.valueOf(env.SENSU_IP))
                     ]
                 // if (params['Ansible Configuration'] == true)
                 //     build wait: false,
