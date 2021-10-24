@@ -52,8 +52,10 @@ RUN cp /tmp/context.xml /usr/local/tomcat/webapps/manager/META-INF/context.xml
 
 # install python3, pip & supervisor
 RUN apt update && apt install -y python3 python3-pip && pip install supervisor 
+# make folders
+RUN mkdir -p /etc/supervisor && mkdir -p /etc/supervisor/conf.d && mkdir -p /var/log/supervisor
 # make config
-RUN mkdir /etc/supervisor && mkdir /etc/supervisor/conf.d && echo_supervisord_conf > /etc/supervisor/supervisord.conf
+RUN echo_supervisord_conf > /etc/supervisor/supervisord.conf
 # insert data in config
 RUN echo [include] >> /etc/supervisor/supervisord.conf && echo files = /etc/supervisor/conf.d/*.conf >> /etc/supervisor/supervisord.conf
 
@@ -61,5 +63,5 @@ COPY tomcat_svd.conf /etc/supervisor/conf.d/tomcat_svd.conf
 
 EXPOSE 8080
 EXPOSE 9001 
-#CMD ["catalina.sh", "run"]
+
 CMD ["/usr/local/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
