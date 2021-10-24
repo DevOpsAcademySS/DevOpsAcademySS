@@ -1,8 +1,0 @@
----
-- name: deploy geocitizen
-  hosts: all
-  become: yes
-
-  roles: 
-    - { role: db, when: ansible_distribution == "Ubuntu" }
-    - { role: ws, when: ansible_distribution == "Amazon" }

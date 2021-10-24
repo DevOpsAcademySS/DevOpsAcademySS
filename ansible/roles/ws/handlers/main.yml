@@ -1,8 +1,0 @@
----
-# handlers file for ws
-
-- name: restart daemons
-  systemd: daemon_reload=yes
-  
-- name: restart tomcat service
-  service: name=tomcat state=restarted
