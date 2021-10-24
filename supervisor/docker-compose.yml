@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+
+  tomcat:
+    build: .
+    ports:
+      - 8080:8080    
+    volumes:
+      - tomtat-webapps:/usr/local/tomcat/webapps
+      
+  node-exporter:
+    image: prom/node-exporter:v1.2.0
+    ports:
+      - "9100:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude'
+      - '^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)'    
+volumes:
+  tomtat-webapps:
