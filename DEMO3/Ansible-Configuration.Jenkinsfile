@@ -10,10 +10,14 @@ pipeline{
     parameters{
         string(name:'WEB_IP',defaultValue:'0.0.0.0',description:'IP address of Geocitizen server on AWS')
         string(name:'NEXUS_IP',defaultValue:'0.0.0.0',description:'IP address of Nexus server on GCP')
+        string(name:'AWX_IP',defaultValue:'0.0.0.0',description:'IP address of AWX server on GCP')
         string(name:'DOCKER_IP',defaultValue:'0.0.0.0',description:'IP address of Docker server on GCP')
         string(name:'SENSU_IP',defaultValue:'0.0.0.0',description:'IP address of Sensu GO server on GCP')
+        string(name:'SONAR_IP',defaultValue:'0.0.0.0',description:'IP address of SonarQube server on GCP')
         booleanParam(name:'Configure Nexus',defaultValue:false,description:'Configure Nexus Repository 3 on GCP Instance')
+        booleanParam(name:'Configure AWX',defaultValue:false,description:'Configure AWX on GCP Instance')
         booleanParam(name:'Configure Docker',defaultValue:false,description:'Configure Docker on GCP Instance')
+        booleanParam(name:'Configure SonarQube',defaultValue:false,description:'Configure Docker on GCP Instance')
     }
     stages{
         stage("Clone Ansible from GitHub"){
@@ -27,7 +31,7 @@ pipeline{
                 echo "NEXUS_IP: ${params.NEXUS_IP}"
                 echo "DOCKER_IP: ${params.DOCKER_IP}"
                 sh "chmod +x *.sh"
-                sh "./set_ips.sh ${params.NEXUS_IP} ${params.WEB_IP} ${params.DOCKER_IP}"
+                sh "./set_ips.sh ${params.NEXUS_IP} ${params.WEB_IP} ${params.DOCKER_IP} ${params.SONAR_IP}"
             }
         }
         stage('Configure Instance for Nexus Repository'){
@@ -44,6 +48,14 @@ pipeline{
             }
             steps{
                 sh "ansible-playbook setup_docker_play.yaml"
+            }
+        }
+        stage('Configure Instance for SonarQube'){
+            when{
+                expression { params['Configure SonarQube'] }
+            }
+            steps{
+                sh "ansible-playbook setup_sonarqube_play.yaml"
             }
         }
         stage('Download citizen.war from Nexus Repository'){

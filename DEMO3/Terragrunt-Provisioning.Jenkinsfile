@@ -89,7 +89,7 @@ echo "Hello world!"
                     script{
                         env.AWX_IP = (readFile('AWX_IP.txt').trim() =~ "nat_ip\" = \"(.*)\"")[0][1]
                     }
-                    echo "Nexus IP: ${env.AWX_IP}"
+                    echo "AWX IP: ${env.AWX_IP}"
                 }
                 dir('gcp/stage/sensu') {
                     bat "terragrunt apply -auto-approve -no-color"
@@ -114,6 +114,14 @@ echo "Hello world!"
                         env.DOCKER_IP = (readFile('DOCKER_IP.txt').trim() =~ "nat_ip\" = \"(.*)\"")[0][1]
                     }
                     echo "Dcoker IP: ${env.DOCKER_IP}"
+                }
+                dir('gcp/stage/sonar') {
+                    bat "terragrunt apply -auto-approve -no-color"
+                    bat "terragrunt output instance_public_ip > SONAR_IP.txt"
+                    script{
+                        env.SONAR_IP = (readFile('SONAR_IP.txt').trim() =~ "nat_ip\" = \"(.*)\"")[0][1]
+                    }
+                    echo "SonarQube IP: ${env.SONAR_IP}"
                 }
             }
         }
@@ -146,12 +154,14 @@ echo "Hello world!"
                    build wait: false,
                    job: 'Build-Geocitizen',
                    parameters: [
-                       booleanParam(name: 'Ansible', value: true),
-                       string(name: 'WEB_IP', value: String.valueOf(env.WEB_IP)),
-                       string(name: 'DB_IP', value: String.valueOf(env.DB_IP)),
-                       string(name: 'NEXUS_IP', value: String.valueOf(env.NEXUS_IP)),
-                       string(name: 'DOCKER_IP', value: String.valueOf(env.DOCKER_IP))
-                      string(name: 'SENSU_IP', value: String.valueOf(env.SENSU_IP))
+                        booleanParam(name: 'Ansible', value: true),
+                        string(name: 'WEB_IP', value: String.valueOf(env.WEB_IP)),
+                        string(name: 'DB_IP', value: String.valueOf(env.DB_IP)),
+                        string(name: 'NEXUS_IP', value: String.valueOf(env.NEXUS_IP)),
+                        string(name: 'AWX_IP', value: String.valueOf(env.AWX_IP)),
+                        string(name: 'DOCKER_IP', value: String.valueOf(env.DOCKER_IP)),
+                        string(name: 'SENSU_IP', value: String.valueOf(env.SENSU_IP)),
+                        string(name: 'SONAR_IP', value: String.valueOf(env.SONAR_IP))
                     ]
                 // if (params['Ansible Configuration'] == true)
                 //     build wait: false,
@@ -159,9 +169,14 @@ echo "Hello world!"
                 //     parameters: [
                 //         string(name: 'WEB_IP', value: String.valueOf(env.WEB_IP)),
                 //         string(name: 'NEXUS_IP', value: String.valueOf(env.NEXUS_IP)),
+                //         string(name: 'AWX_IP', value: String.valueOf(env.AWX_IP)),
                 //         string(name: 'DOCKER_IP', value: String.valueOf(env.DOCKER_IP)),
+                //         string(name: 'SENSU_IP', value: String.valueOf(env.SENSU_IP)),
+                //         string(name: 'SONAR_IP', value: String.valueOf(env.SONAR_IP)),
                 //         booleanParam(name: 'Configure Nexus', value: false),
-                //         booleanParam(name: 'Configure Docker', value: true)
+                //         booleanParam(name: 'Configure AWX', value: false),
+                //         booleanParam(name: 'Configure Docker', value: true),
+                //         booleanParam(name: 'Configure SonarQube', value: false)
                 //     ]
             }
         }
