@@ -4,6 +4,7 @@ pipeline{
         maven "Maven-3-6-3"
     }
     parameters{
+        booleanParam(name:'Publish to Nexus',defaultValue:true,description:'Publish citizen.war to Nexus Repository')
         booleanParam(name:'Ansible',defaultValue:true,description:"Run Ansible pipeline after this pipeline")
         string(name:'WEB_IP',defaultValue:'0.0.0.0',description:'IP address of Geocitizen Instance on AWS')
         string(name:'DB_IP',defaultValue:'0.0.0.0',description:'IP address of PostgreSQL RDS Instance on AWS')
@@ -12,7 +13,7 @@ pipeline{
         string(name:'DOCKER_IP',defaultValue:'0.0.0.0',description:'IP address of Docker server on GCP')
         string(name:'SENSU_IP',defaultValue:'0.0.0.0',description:'IP address of Sensu GO server on GCP')
         string(name:'SONAR_IP',defaultValue:'0.0.0.0',description:'IP address of SonarQube server on GCP')
-    }
+    } 
     stages{
         stage('Clone Geocitizen'){
             steps{
@@ -33,7 +34,17 @@ pipeline{
                 }
             }
         }
+        stage('SonarQube Analysis') {
+            steps{
+                withSonarQubeEnv(installationName:'Geocitizen',credentialsId: 'sonarqube-creds') {
+                  bat "mvn clean verify sonar:sonar"
+                }
+            }
+        }
         stage('Publish Artifact to Nexus Repository'){
+            when{
+                expression{ params['Publish to Nexus'] }
+            }
             steps{
                 // archiveArtifacts artifacts: 'target/citizen.war', fingerprint: true
                 nexusPublisher nexusInstanceId: 'nexus-geo',
@@ -73,7 +84,6 @@ pipeline{
                         string(name: 'DOCKER_IP', value: String.valueOf(params.DOCKER_IP)),
                         string(name: 'SENSU_IP', value: String.valueOf(params.SENSU_IP)),
                         string(name: 'SONAR_IP', value: String.valueOf(env.SONAR_IP)),
-                        booleanParam(name: 'Configure Geocitizen', value: true),
                         booleanParam(name: 'Configure Nexus', value: false),
                         booleanParam(name: 'Configure AWX', value: false),
                         booleanParam(name: 'Configure Docker', value: true),
