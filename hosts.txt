@@ -5,8 +5,19 @@
 ansible_user=ubuntu
 ansible_ssh_private_key_file=~/.ssh/frankfurt-master-key.pem
 
+[GCP:children]
+GCPNexus
+GCPDocker
+GCPSonar
+
+[GCP:vars]
+ansible_user=andre
+
 [GCPNexus]
-{{ nexus_ip }} ansible_user=andre
+{{ nexus_ip }}
 
 [GCPDocker]
-{{ docker_ip }} ansible_user=andre
+{{ docker_ip }}
+
+[GCPSonar]
+{{ sonar_ip }}

@@ -1,6 +1,6 @@
 ---
 - name: Log into private registry and force re-authorization
-  community.docker.docker_login:
+  docker_login:
     registry_url: "{{ nexus_url }}"
     username: "{{ nexus_usr }}"
     password: "{{ nexus_pass }}"
@@ -13,5 +13,5 @@
     state: started
     detach: yes
     ports:
-     # Publish container port 8080 as host port 8080
-     - "8080:8080"
+      # Publish container port 8080 as host port 8080
+      - "8080:8080"

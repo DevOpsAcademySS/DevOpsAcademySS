@@ -1,0 +1,35 @@
+---
+# This is an example playbook to execute Ansible tests.
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Example assertion
+      assert:
+        that: true
+
+    - name: Install required system packages
+      package:
+        name: "{{ item }}"
+        state: "installed"
+      check_mode: yes
+      loop:
+        [
+          "aptitude",
+          "apt-transport-https",
+          "ca-certificates",
+          "curl",
+          "software-properties-common",
+          "python3-pip",
+          "virtualenv",
+          "python3-setuptools",
+        ]
+      register: pkg_status
+
+    - name: "Show statuses"
+      debug: var=pkg_status
+
+    - name: "java - test java package is installed"
+      assert:
+        that:
+          - not pkg_status.changed

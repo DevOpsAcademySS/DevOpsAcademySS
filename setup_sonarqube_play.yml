@@ -1,0 +1,7 @@
+---
+- name: Install SoqnrQube in Docker on ubuntu
+  hosts: GCPSonar
+  become: yes
+  roles:
+    - DockerOnUbuntu
+    - SonarQubeOnUbuntu

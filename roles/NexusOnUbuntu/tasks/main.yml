@@ -1,8 +1,11 @@
 ---
 # tasks file for NexusOnUbuntu
 - name: Install required system packages
-  apt: name={{ item }} state=latest update_cache=yes
-  loop: [ 'openjdk-8-jdk', 'wget']
+  apt:
+    name: { { item } }
+    state: latest
+    update_cache: yes
+  loop: ["openjdk-8-jdk", "wget"]
 
 - name: Create a directory if it does not exist
   file:
@@ -45,7 +48,7 @@
   copy:
     src: nexus.service
     dest: /etc/systemd/system/
-    mode: '744'
+    mode: "744"
 
 - name: Start service Nexus
   systemd:
@@ -65,6 +68,6 @@
   shell: cat "{{ nexus_pass_file }}"
   register: admpass
 
-- name: Show admin user password 
+- name: Show admin user password
   debug:
     var: admpass.stdout
