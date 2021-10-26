@@ -5,6 +5,7 @@ pipeline{
     }
     parameters{
         booleanParam(name:'Publish to Nexus',defaultValue:true,description:'Publish citizen.war to Nexus Repository')
+        booleanParam(name:'SonarQube Analys',defaultValue:true,description:'Publish citizen.war to Nexus Repository')
         booleanParam(name:'Ansible',defaultValue:true,description:"Run Ansible pipeline after this pipeline")
         string(name:'WEB_IP',defaultValue:'0.0.0.0',description:'IP address of Geocitizen Instance on AWS')
         string(name:'DB_IP',defaultValue:'0.0.0.0',description:'IP address of PostgreSQL RDS Instance on AWS')
@@ -13,7 +14,7 @@ pipeline{
         string(name:'DOCKER_IP',defaultValue:'0.0.0.0',description:'IP address of Docker server on GCP')
         string(name:'SENSU_IP',defaultValue:'0.0.0.0',description:'IP address of Sensu GO server on GCP')
         string(name:'SONAR_IP',defaultValue:'0.0.0.0',description:'IP address of SonarQube server on GCP')
-    } 
+    }
     stages{
         stage('Clone Geocitizen'){
             steps{
@@ -35,6 +36,9 @@ pipeline{
             }
         }
         stage('SonarQube Analysis') {
+            when{
+                expression{ params['SonarQube Analys'] }
+            }
             steps{
                 withSonarQubeEnv(installationName:'Geocitizen',credentialsId: 'sonarqube-creds') {
                   bat "mvn clean verify sonar:sonar"
