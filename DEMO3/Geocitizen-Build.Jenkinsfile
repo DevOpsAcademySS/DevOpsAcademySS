@@ -73,6 +73,7 @@ pipeline{
                         string(name: 'DOCKER_IP', value: String.valueOf(params.DOCKER_IP)),
                         string(name: 'SENSU_IP', value: String.valueOf(params.SENSU_IP)),
                         string(name: 'SONAR_IP', value: String.valueOf(env.SONAR_IP)),
+                        booleanParam(name: 'Configure Geocitizen', value: true),
                         booleanParam(name: 'Configure Nexus', value: false),
                         booleanParam(name: 'Configure AWX', value: false),
                         booleanParam(name: 'Configure Docker', value: true),

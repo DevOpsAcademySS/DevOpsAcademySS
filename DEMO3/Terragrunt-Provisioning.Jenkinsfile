@@ -12,7 +12,7 @@ pipeline{
         booleanParam(name:"Destroy AWS",defaultValue:false,description:"Destroy Infrastructure of AWS")
         booleanParam(name:"Destroy GCP",defaultValue:false,description:"Destroy Infrastructure of GCP")
         booleanParam(name:"Build Geocitizen",defaultValue:true,description:"Build Geocitizen WAR")
-        booleanParam(name:"Ansible Configuration",defaultValue:true,description:"Configure All Instances on AWS and GCP")
+        booleanParam(name:"Ansible Configuration",defaultValue:false,description:"Configure All Instances on AWS and GCP")
         text(name: 'Shell script', 
         defaultValue: '''#!/bin/sh
 
@@ -163,21 +163,22 @@ echo "Hello world!"
                         string(name: 'SENSU_IP', value: String.valueOf(env.SENSU_IP)),
                         string(name: 'SONAR_IP', value: String.valueOf(env.SONAR_IP))
                     ]
-                // if (params['Ansible Configuration'] == true)
-                //     build wait: false,
-                //     job: 'Ansible-Configuration-AWS-GCP',
-                //     parameters: [
-                //         string(name: 'WEB_IP', value: String.valueOf(env.WEB_IP)),
-                //         string(name: 'NEXUS_IP', value: String.valueOf(env.NEXUS_IP)),
-                //         string(name: 'AWX_IP', value: String.valueOf(env.AWX_IP)),
-                //         string(name: 'DOCKER_IP', value: String.valueOf(env.DOCKER_IP)),
-                //         string(name: 'SENSU_IP', value: String.valueOf(env.SENSU_IP)),
-                //         string(name: 'SONAR_IP', value: String.valueOf(env.SONAR_IP)),
-                //         booleanParam(name: 'Configure Nexus', value: false),
-                //         booleanParam(name: 'Configure AWX', value: false),
-                //         booleanParam(name: 'Configure Docker', value: true),
-                //         booleanParam(name: 'Configure SonarQube', value: false)
-                //     ]
+                if (params['Ansible Configuration'] == true)
+                    build wait: false,
+                    job: 'Ansible-Configuration-AWS-GCP',
+                    parameters: [
+                        string(name: 'WEB_IP', value: String.valueOf(env.WEB_IP)),
+                        string(name: 'NEXUS_IP', value: String.valueOf(env.NEXUS_IP)),
+                        string(name: 'AWX_IP', value: String.valueOf(env.AWX_IP)),
+                        string(name: 'DOCKER_IP', value: String.valueOf(env.DOCKER_IP)),
+                        string(name: 'SENSU_IP', value: String.valueOf(env.SENSU_IP)),
+                        string(name: 'SONAR_IP', value: String.valueOf(env.SONAR_IP)),
+                        booleanParam(name: 'Configure Geocitizen', value: false),
+                        booleanParam(name: 'Configure Nexus', value: false),
+                        booleanParam(name: 'Configure AWX', value: false),
+                        booleanParam(name: 'Configure Docker', value: false),
+                        booleanParam(name: 'Configure SonarQube', value: false)
+                    ]
             }
         }
         failure{

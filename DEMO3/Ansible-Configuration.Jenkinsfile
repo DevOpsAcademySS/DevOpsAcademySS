@@ -14,6 +14,7 @@ pipeline{
         string(name:'DOCKER_IP',defaultValue:'0.0.0.0',description:'IP address of Docker server on GCP')
         string(name:'SENSU_IP',defaultValue:'0.0.0.0',description:'IP address of Sensu GO server on GCP')
         string(name:'SONAR_IP',defaultValue:'0.0.0.0',description:'IP address of SonarQube server on GCP')
+        booleanParam(name:'Configure Geocitizen',defaultValue:false,description:'Configure Geocitizen on AWS Instance')
         booleanParam(name:'Configure Nexus',defaultValue:false,description:'Configure Nexus Repository 3 on GCP Instance')
         booleanParam(name:'Configure AWX',defaultValue:false,description:'Configure AWX on GCP Instance')
         booleanParam(name:'Configure Docker',defaultValue:false,description:'Configure Docker on GCP Instance')
@@ -55,10 +56,13 @@ pipeline{
                 expression { params['Configure SonarQube'] }
             }
             steps{
-                sh "ansible-playbook setup_sonarqube_play.yaml"
+                sh "ansible-playbook setup_sonarqube_play.yml"
             }
         }
         stage('Download citizen.war from Nexus Repository'){
+            when{
+                expression { params['Configure Geocitizen'] }
+            }
             steps{
                 dir('roles/ContainerizeGeo/files'){
                     sh "wget http://${params.NEXUS_IP}:8081${env.CITIZEN_DOWNLOAD_URL} -O citizen.war"
@@ -66,6 +70,9 @@ pipeline{
             }
         }
         stage('Containerize Geocitizen and Save to Nexus Docker Rgistry'){
+            when{
+                expression { params['Configure Geocitizen'] }
+            }
             steps{
                 withCredentials([usernamePassword(credentialsId: 'nexus-creds', passwordVariable: 'NEXUS_PASS', usernameVariable: 'NEXUS_USR')]){
                     sh "ansible-playbook containerize_geo_play.yaml"
@@ -73,6 +80,9 @@ pipeline{
             }
         }
         stage("Configure AWS Instance with Docker and Setup Geocitizen"){
+            when{
+                expression { params['Configure Geocitizen'] }
+            }
             steps{
                 withCredentials([usernamePassword(credentialsId: 'nexus-creds', passwordVariable: 'NEXUS_PASS', usernameVariable: 'NEXUS_USR')]){
                     sh "ansible-playbook setup_geocitizen_play.yaml"
