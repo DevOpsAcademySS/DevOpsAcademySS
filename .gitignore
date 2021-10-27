@@ -1,0 +1,7 @@
+Diagram as code/
+ansible/
+monitoring/
+python/
+sensugo/
+terraform+mon/
+.vscode/
