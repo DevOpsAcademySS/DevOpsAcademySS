@@ -14,10 +14,12 @@ pipeline{
         string(name:'DOCKER_IP',defaultValue:'0.0.0.0',description:'IP address of Docker server on GCP')
         string(name:'SENSU_IP',defaultValue:'0.0.0.0',description:'IP address of Sensu GO server on GCP')
         string(name:'SONAR_IP',defaultValue:'0.0.0.0',description:'IP address of SonarQube server on GCP')
+        string(name:'MINIKUBE_IP',defaultValue:'0.0.0.0',description:'IP address of Minikube server on GCP')
         booleanParam(name:'Configure Nexus',defaultValue:false,description:'Configure Nexus Repository 3 on GCP Instance')
         booleanParam(name:'Configure AWX',defaultValue:false,description:'Configure AWX on GCP Instance')
         booleanParam(name:'Configure Docker',defaultValue:false,description:'Configure Docker on GCP Instance')
         booleanParam(name:'Configure SonarQube',defaultValue:false,description:'Configure Docker on GCP Instance')
+        booleanParam(name:'Configure Minikube',defaultValue:false,description:'Configure Minikube on GCP Instance')
     }
     stages{
         stage("Clone Ansible from GitHub"){
@@ -31,7 +33,7 @@ pipeline{
                 echo "NEXUS_IP: ${params.NEXUS_IP}"
                 echo "DOCKER_IP: ${params.DOCKER_IP}"
                 sh "chmod +x *.sh"
-                sh "./set_ips.sh ${params.NEXUS_IP} ${params.WEB_IP} ${params.DOCKER_IP} ${params.SONAR_IP}"
+                sh "./set_ips.sh ${params.NEXUS_IP} ${params.WEB_IP} ${params.DOCKER_IP} ${params.SONAR_IP} ${params.MINIKUBE_IP}"
             }
         }
         stage('Configure Instance for Nexus Repository'){
@@ -39,7 +41,7 @@ pipeline{
                 expression { params['Configure Nexus'] }
             }
             steps{
-                sh "ansible-playbook setup_nexus_play.yaml"
+                sh "ansible-playbook setup_nexus_play.yml"
             }
         }
         stage('Configure Instance for Docker'){
@@ -47,7 +49,7 @@ pipeline{
                 expression { params['Configure Docker'] }
             }
             steps{
-                sh "ansible-playbook setup_docker_play.yaml"
+                sh "ansible-playbook setup_docker_play.yml"
             }
         }
         stage('Configure Instance for SonarQube'){
@@ -55,7 +57,15 @@ pipeline{
                 expression { params['Configure SonarQube'] }
             }
             steps{
-                sh "ansible-playbook setup_sonarqube_play.yaml"
+                sh "ansible-playbook setup_sonarqube_play.yml"
+            }
+        }
+        stage('Configure Instance for Minikube'){
+            when{
+                expression { params['Configure Minikube'] }
+            }
+            steps{
+                sh "ansible-playbook setup_minikube_play.yml"
             }
         }
         stage('Download citizen.war from Nexus Repository'){
@@ -68,14 +78,14 @@ pipeline{
         stage('Containerize Geocitizen and Save to Nexus Docker Rgistry'){
             steps{
                 withCredentials([usernamePassword(credentialsId: 'nexus-creds', passwordVariable: 'NEXUS_PASS', usernameVariable: 'NEXUS_USR')]){
-                    sh "ansible-playbook containerize_geo_play.yaml"
+                    sh "ansible-playbook containerize_geo_play.yml"
                 }
             }
         }
         stage("Configure AWS Instance with Docker and Setup Geocitizen"){
             steps{
                 withCredentials([usernamePassword(credentialsId: 'nexus-creds', passwordVariable: 'NEXUS_PASS', usernameVariable: 'NEXUS_USR')]){
-                    sh "ansible-playbook setup_geocitizen_play.yaml"
+                    sh "ansible-playbook setup_geocitizen_play.yml"
                 }
             }
         }

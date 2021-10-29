@@ -14,6 +14,7 @@ pipeline{
         string(name:'DOCKER_IP',defaultValue:'0.0.0.0',description:'IP address of Docker server on GCP')
         string(name:'SENSU_IP',defaultValue:'0.0.0.0',description:'IP address of Sensu GO server on GCP')
         string(name:'SONAR_IP',defaultValue:'0.0.0.0',description:'IP address of SonarQube server on GCP')
+        string(name:'MINIKUBE_IP',defaultValue:'0.0.0.0',description:'IP address of Minikube server on GCP')
     } 
     stages{
         stage('Clone Geocitizen'){

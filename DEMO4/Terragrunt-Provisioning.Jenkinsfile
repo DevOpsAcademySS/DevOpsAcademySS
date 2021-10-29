@@ -123,6 +123,14 @@ echo "Hello world!"
                     }
                     echo "SonarQube IP: ${env.SONAR_IP}"
                 }
+                dir('gcp/stage/minikube') {
+                    bat "terragrunt apply -auto-approve -no-color"
+                    bat "terragrunt output instance_public_ip > MINIKUBE_IP.txt"
+                    script{
+                        env.MINIKUBE_IP = (readFile('MINIKUBE_IP.txt').trim() =~ "nat_ip\" = \"(.*)\"")[0][1]
+                    }
+                    echo "Minikube IP: ${env.MINIKUBE_IP}"
+                }
             }
         }
         stage('Terragrunt Destroy AWS Infrastructure'){
@@ -161,23 +169,26 @@ echo "Hello world!"
                         string(name: 'AWX_IP', value: String.valueOf(env.AWX_IP)),
                         string(name: 'DOCKER_IP', value: String.valueOf(env.DOCKER_IP)),
                         string(name: 'SENSU_IP', value: String.valueOf(env.SENSU_IP)),
-                        string(name: 'SONAR_IP', value: String.valueOf(env.SONAR_IP))
+                        string(name: 'SONAR_IP', value: String.valueOf(env.SONAR_IP)),
+                        string(name: 'MINIKUBE_IP', value: String.valueOf(env.MINIKUBE_IP))
                     ]
-                // if (params['Ansible Configuration'] == true)
-                //     build wait: false,
-                //     job: 'Ansible-Configuration-AWS-GCP',
-                //     parameters: [
-                //         string(name: 'WEB_IP', value: String.valueOf(env.WEB_IP)),
-                //         string(name: 'NEXUS_IP', value: String.valueOf(env.NEXUS_IP)),
-                //         string(name: 'AWX_IP', value: String.valueOf(env.AWX_IP)),
-                //         string(name: 'DOCKER_IP', value: String.valueOf(env.DOCKER_IP)),
-                //         string(name: 'SENSU_IP', value: String.valueOf(env.SENSU_IP)),
-                //         string(name: 'SONAR_IP', value: String.valueOf(env.SONAR_IP)),
-                //         booleanParam(name: 'Configure Nexus', value: false),
-                //         booleanParam(name: 'Configure AWX', value: false),
-                //         booleanParam(name: 'Configure Docker', value: true),
-                //         booleanParam(name: 'Configure SonarQube', value: false)
-                //     ]
+                if (params['Ansible Configuration'] == true)
+                    build wait: false,
+                    job: 'Ansible-Configuration-AWS-GCP',
+                    parameters: [
+                        string(name: 'WEB_IP', value: String.valueOf(env.WEB_IP)),
+                        string(name: 'NEXUS_IP', value: String.valueOf(env.NEXUS_IP)),
+                        string(name: 'AWX_IP', value: String.valueOf(env.AWX_IP)),
+                        string(name: 'DOCKER_IP', value: String.valueOf(env.DOCKER_IP)),
+                        string(name: 'SENSU_IP', value: String.valueOf(env.SENSU_IP)),
+                        string(name: 'SONAR_IP', value: String.valueOf(env.SONAR_IP)),
+                        string(name: 'MINIKUBE_IP', value: String.valueOf(env.MINIKUBE_IP)),
+                        booleanParam(name: 'Configure Nexus', value: false),
+                        booleanParam(name: 'Configure AWX', value: false),
+                        booleanParam(name: 'Configure Docker', value: true),
+                        booleanParam(name: 'Configure SonarQube', value: false),
+                        booleanParam(name: 'Configure Minikube', value: false),
+                    ]
             }
         }
         failure{
