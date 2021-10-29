@@ -16,5 +16,5 @@ inputs = {
   gcp_proj_name = "my-proj"
   gcp_region = "us-central2"
   gcp_zone = "us-central2-b"
-  trgt_tags = ["mu-ports-4"]
+  trgt_tags = ["my-ports-4"]
 }
