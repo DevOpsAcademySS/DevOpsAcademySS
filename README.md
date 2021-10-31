@@ -35,13 +35,11 @@ terraform apply
 ### Apply AWS stack (or other, GCP)
 ```
 cd aws
-terragrunt init
 terragrunt run-all plan
 terragrunt run-all apply
 ```
 ### Apply all stacks
 ```
-terragrunt init
 terragrunt run-all plan
 terragrunt run-all apply
 ```
