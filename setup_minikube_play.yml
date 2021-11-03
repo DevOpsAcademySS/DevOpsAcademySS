@@ -1,0 +1,7 @@
+---
+- name: Setup Minikube on GCP instance with Ubuntu
+  hosts: GCPMinikube
+  become: yes
+  roles:
+    - DockerOnUbuntu
+    - MinikubeOnUbuntu

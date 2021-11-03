@@ -9,6 +9,8 @@ ansible_ssh_private_key_file=~/.ssh/frankfurt-master-key.pem
 GCPNexus
 GCPDocker
 GCPSonar
+GCPMinikube
+GCPKubernetes
 
 [GCP:vars]
 ansible_user=andre
@@ -21,3 +23,9 @@ ansible_user=andre
 
 [GCPSonar]
 {{ sonar_ip }}
+
+[GCPMinikube]
+{{ minikube_ip }}
+
+[GCPKubernetes]
+{{ kubernetes_ip }}

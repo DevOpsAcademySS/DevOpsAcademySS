@@ -1,0 +1,7 @@
+---
+docker_group: docker
+remote_user: andre
+minikube_deb: minikube_latest_amd64.deb
+manifest_fiels:
+  - sensugo_manifest.yml
+  - sonarqube_manifest.yml

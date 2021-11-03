@@ -1,0 +1,43 @@
+---
+- name: Download minikube
+  get_url:
+    url: "https://storage.googleapis.com/minikube/releases/latest/{{ minikube_deb }}"
+    dest: /tmp
+    mode: "0664"
+
+- name: Install a minikube.deb package
+  apt:
+    deb: "/tmp/{{ minikube_deb }}"
+
+- name: Remove deb package
+  file:
+    path: "/tmp/{{ minikube_deb }}"
+    state: absent
+
+- name: Create "docker" group
+  group:
+    name: "{{ docker_group }}"
+    state: present
+
+- name: Add remote "ubuntu" user to "docker" group
+  user:
+    name: "{{ remote_user }}"
+    group: "{{ docker_group }}"
+    append: yes
+
+- name: Start minikube
+  commnad: minikube start
+
+- name: Copy manifest files
+  copy:
+    src: "{{ item }}"
+    dest: /tmp
+    mode: "0644"
+  with_fileglob: "{{ manifest_fiels }}"
+
+- name: Create allias for "kubectl"
+  commnad: alias kubectl="minikube kubectl --"
+
+- name: Create Deployment and Service for SonarQube ans Sensu Go
+  commnad: "kubectl apply -f /tmp/{{ item }}"
+  loop: "{{ manifest_fiels }}"
