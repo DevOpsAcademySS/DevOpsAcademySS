@@ -45,7 +45,7 @@ metadata:
   name: check_ram_python
   namespace: default
   labels:
-    version: 1.0
+    version: "1.0"
     type: python
 spec:
   builds:

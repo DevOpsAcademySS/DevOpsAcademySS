@@ -44,7 +44,7 @@ metadata:
   name: check_cpu_go
   namespace: default
   labels:
-    version: 1.0
+    version: "1.0"
     type: go
 spec:
   builds:
