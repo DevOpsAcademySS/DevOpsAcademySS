@@ -1,7 +1,0 @@
----
-- name: Converge
-  hosts: all
-  tasks:
-    - name: "Include GeocitizenOnUbuntu"
-      include_role:
-        name: "GeocitizenOnUbuntu"

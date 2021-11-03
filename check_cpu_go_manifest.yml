@@ -1,0 +1,36 @@
+---
+type: Asset
+api_version: core/v2
+metadata:
+  name: check_cpu_go
+  namespace: default
+  labels:
+    version: 1.0
+    type: go
+spec:
+  builds:
+    - url: https://github.com/DevOpsAcademySS/DevOpsAcademySS/tree/IA-265-andre-sensu-go-monitoring-as-code/check_cpu_go_1.0_linux_amd64.tar.gz
+      sha512: 1aa6abed1baf05868baa6cc01158b8193ca5c8fe19a2132eb8333adcee6b065d7f18681f14edb516836917c521bf9f1dabb867f866fa01182c5dded6ae972792
+      filters:
+        - entity.system.os == 'linux'
+        - entity.system.arch == 'amd64'
+    - url: https://github.com/DevOpsAcademySS/DevOpsAcademySS/tree/IA-265-andre-sensu-go-monitoring-as-code/check_cpu_go_1.0_windows_amd64.tar.gz
+      sha512: 1aa6abed1baf05868baa6cc01158b8193ca5c8fe19a2132eb8333adcee6b065d7f18681f14edb516836917c521bf9f1dabb867f866fa01182c5dded6ae972792
+      filters:
+        - entity.system.os == 'windows'
+        - entity.system.arch == 'amd64'
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check_cpu
+  namespace: default
+spec:
+  command: "check_cpu -w=70 -c=90"
+  interval: 10
+  publish: true
+  runtime_assets:
+    - check_cpu_go
+  subscriptions:
+    - system

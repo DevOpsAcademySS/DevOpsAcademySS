@@ -1,0 +1,1 @@
+1aa6abed1baf05868baa6cc01158b8193ca5c8fe19a2132eb8333adcee6b065d7f18681f14edb516836917c521bf9f1dabb867f866fa01182c5dded6ae972792 *check_cpu_go_1.0_windows_amd64.tar.gz

@@ -1,9 +1,0 @@
----
-- name: Start SonarQube container
-  docker_container:
-    image: "{{ sonar_image }}"
-    name: sonarqube
-    state: started
-    detach: yes
-    ports:
-      - "9000:9000"

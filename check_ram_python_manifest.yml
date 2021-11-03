@@ -1,0 +1,31 @@
+---
+type: Asset
+api_version: core/v2
+metadata:
+  name: check_ram_python
+  namespace: default
+  labels:
+    version: 1.0
+    type: python
+spec:
+  builds:
+    - url: https://github.com/DevOpsAcademySS/DevOpsAcademySS/tree/IA-265-andre-sensu-go-monitoring-as-code/check_ram_python_1.0_linux_amd64.tar.gz
+      sha512: 29591dd077d14c941dc8be9ed537a44a815741c12d6bf539a0c27a71de2d9d413c7f03eddef28c81f33f1f4cf5f9c7ce3d7868c2e440b55208f02539ccee6277
+      filters:
+        - entity.system.os == 'linux'
+        - entity.system.arch == 'amd64'
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check_ram
+  namespace: default
+spec:
+  command: "check_ram.py -w 70 -c 90"
+  interval: 10
+  publish: true
+  runtime_assets:
+    - check_ram_python
+  subscriptions:
+    - system

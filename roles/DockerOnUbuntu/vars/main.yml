@@ -1,4 +1,0 @@
----
-# vars file for DockerOnUbuntu
-daemon_path: /etc/docker/
-nexus_url: "{{ lookup('env','NEXUS_IP') }}:8085"

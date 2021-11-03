@@ -1,9 +1,0 @@
----
-# tasks for ContainerizeGeo role
-daemon_path: /etc/docker
-geo_path: /home/andre/geo/
-nexus_url: "{{ lookup('env','NEXUS_IP') }}:8085"
-nexus_usr: "{{ lookup('env','NEXUS_USR') }}"
-nexus_pass: "{{ lookup('env','NEXUS_PASS') }}"
-img_name: /geo-docker
-tag_name: v1

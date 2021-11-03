@@ -1,9 +1,0 @@
-- name: Install Sensu Go Agent
-  docker_container:
-    name: "{{ container_name }}"
-    image: "{{ image_name }}"
-    detach: yes
-    state: started
-    command: "{{ init_command }}"
-    volumes:
-      - "{{ volume }}"

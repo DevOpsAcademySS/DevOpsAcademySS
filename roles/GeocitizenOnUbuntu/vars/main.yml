@@ -1,7 +1,0 @@
----
-container_name: geocitizen
-img_name: /geo-docker
-img_tag: v1
-nexus_url: "{{ lookup('env','NEXUS_IP') }}:8085"
-nexus_usr: "{{ lookup('env','NEXUS_USR') }}"
-nexus_pass: "{{ lookup('env','NEXUS_PASS') }}"
