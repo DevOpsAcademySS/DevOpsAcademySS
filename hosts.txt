@@ -10,7 +10,6 @@ GCPNexus
 GCPDocker
 GCPSonar
 GCPMinikube
-GCPKubernetes
 
 [GCP:vars]
 ansible_user=andre
@@ -26,6 +25,3 @@ ansible_user=andre
 
 [GCPMinikube]
 {{ minikube_ip }}
-
-[GCPKubernetes]
-{{ kubernetes_ip }}
