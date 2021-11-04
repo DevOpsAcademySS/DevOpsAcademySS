@@ -1,5 +1,5 @@
-NEW_VER=$(git log -1 --pretty=%h)
-CURRENT_VER=$(kubectl get service geo-lb -o=jsonpath='{.spec.selector.version}' --namespace=geocitizen)
+NEW_VER=$(shell git log -1 --pretty=%h)
+CURRENT_VER=$(shell kubectl get service geo-lb -o=jsonpath='{.spec.selector.version}' --namespace=geocitizen)
 dockerize:
 	docker image build -t nexus.geocitizen.link:8093/repository/k8s-registry/geocitizen:$(NEW_VER) ./
 
