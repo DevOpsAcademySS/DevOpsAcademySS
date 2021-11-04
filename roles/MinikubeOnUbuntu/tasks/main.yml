@@ -26,7 +26,7 @@
     append: yes
 
 - name: Start minikube
-  commnad: minikube start
+  shell: minikube start
 
 - name: Copy manifest files
   copy:
@@ -36,8 +36,8 @@
   with_fileglob: "{{ manifest_fiels }}"
 
 - name: Create allias for "kubectl"
-  commnad: alias kubectl="minikube kubectl --"
+  shell: alias kubectl="minikube kubectl --"
 
 - name: Create Deployment and Service for SonarQube ans Sensu Go
-  commnad: "kubectl apply -f /tmp/{{ item }}"
+  shell: "kubectl apply -f /tmp/{{ item }}"
   loop: "{{ manifest_fiels }}"
