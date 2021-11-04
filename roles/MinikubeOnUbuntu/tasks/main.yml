@@ -1,5 +1,5 @@
 ---
-  - name: Download minikube
+- name: Download minikube
   get_url:
     url: "https://storage.googleapis.com/minikube/releases/latest/{{ minikube_deb }}"
     dest: /tmp
