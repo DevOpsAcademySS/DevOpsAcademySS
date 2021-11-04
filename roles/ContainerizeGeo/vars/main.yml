@@ -7,3 +7,8 @@ nexus_usr: "{{ lookup('env','NEXUS_USR') }}"
 nexus_pass: "{{ lookup('env','NEXUS_PASS') }}"
 img_name: /geo-docker
 tag_name: v1
+copy_files:
+  - Dockerfile
+  - citizen.war
+  - context.xml
+  - supervisord.conf

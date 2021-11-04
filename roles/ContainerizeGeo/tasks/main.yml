@@ -11,37 +11,22 @@
     state: directory
     owner: andre
     group: andre
-    mode: '0744'
+    mode: "0744"
 
-- name: Copying Dockerfile file
+- name: Copying Dockerfile, citizen.war, context.xml file
   copy:
-    src: Dockerfile
+    src: "{{ item }}"
     dest: "{{ geo_path }}"
     owner: andre
     group: andre
-    mode: '0644'
-
-- name: Copying citizen.war file
-  copy:
-    src: citizen.war
-    dest: "{{ geo_path }}"
-    owner: andre
-    group: andre
-    mode: '0644'
-
-- name: Copying context.xml file
-  copy:
-    src: context.xml
-    dest: "{{ geo_path }}"
-    owner: andre
-    group: andre
-    mode: '0644'
+    mode: "0644"
+  loop: "{{ copy_files }}"
 
 - name: "Template a daemon.json file to {{ daemon_path }}"
   template:
     src: daemon.json.j2
     dest: "{{ daemon_path }}/daemon.json"
-    mode: '0644'
+    mode: "0644"
 
 - name: Restart service Docker
   systemd:
