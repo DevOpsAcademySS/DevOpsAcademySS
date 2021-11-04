@@ -12,3 +12,4 @@ copy_files:
   - citizen.war
   - context.xml
   - supervisord.conf
+  - tomcat.conf
