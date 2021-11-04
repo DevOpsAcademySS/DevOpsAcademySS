@@ -85,10 +85,11 @@ pipeline{
                     parameters: [
                         string(name: 'WEB_IP', value: String.valueOf(params.WEB_IP)),
                         string(name: 'NEXUS_IP', value: String.valueOf(params.NEXUS_IP)),
-                        string(name: 'AWX_IP', value: String.valueOf(env.AWX_IP)),
+                        string(name: 'AWX_IP', value: String.valueOf(params.AWX_IP)),
                         string(name: 'DOCKER_IP', value: String.valueOf(params.DOCKER_IP)),
                         string(name: 'SENSU_IP', value: String.valueOf(params.SENSU_IP)),
-                        string(name: 'SONAR_IP', value: String.valueOf(env.SONAR_IP)),
+                        string(name: 'SONAR_IP', value: String.valueOf(params.SONAR_IP)),
+                        string(name: 'MINIKUBE_IP', value: String.valueOf(params.MINIKUBE_IP)),
                         booleanParam(name: 'Configure Nexus', value: false),
                         booleanParam(name: 'Configure AWX', value: false),
                         booleanParam(name: 'Configure Docker', value: true),
