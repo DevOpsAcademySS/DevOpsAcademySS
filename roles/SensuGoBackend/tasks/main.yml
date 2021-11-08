@@ -1,0 +1,13 @@
+---
+- name: Run Sensu Go Backend in Docker
+  docker_container:
+    name: "{{ container_name }}"
+    image: "{{ image_name }}"
+    detach: yes
+    state: started
+    command: "{{ init_command }}"
+    env: { { env_vars } }
+    ports:
+      - "{{ ports }}"
+    volumes:
+      - "{{ volume }}"

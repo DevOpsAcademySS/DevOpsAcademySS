@@ -1,0 +1,14 @@
+---
+container_name: "sensu-go-backend"
+image_name: "sensu/sensu:latest"
+init_command: "sensu-backend start --state-dir /var/lib/sensu/sensu-backend --log-level debug"
+volume: "/var/lib/sensu:/var/lib/sensu"
+sensu_username: "{{ lookup('env','SENSU_USR') }}"
+sensu_password: "{{ lookup('env','SENSU_PASS') }}"
+env_vars:
+  SENSU_BACKEND_CLUSTER_ADMIN_USERNAME: "{{ sensu_username | string }}"
+  SENSU_BACKEND_CLUSTER_ADMIN_PASSWORD: "{{ sensu_password | string }}"
+ports:
+  - "3000:3000"
+  - "8080:8080"
+  - "8081:8081"
