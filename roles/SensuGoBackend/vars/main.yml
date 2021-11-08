@@ -6,8 +6,8 @@ volume: "/var/lib/sensu:/var/lib/sensu"
 sensu_username: "{{ lookup('env','SENSU_USR') }}"
 sensu_password: "{{ lookup('env','SENSU_PASS') }}"
 env_vars:
-  SENSU_BACKEND_CLUSTER_ADMIN_USERNAME: "{{ sensu_username | string }}"
-  SENSU_BACKEND_CLUSTER_ADMIN_PASSWORD: "{{ sensu_password | string }}"
+  SENSU_BACKEND_CLUSTER_ADMIN_USERNAME: "{{ sensu_username | default('admin') | string }}"
+  SENSU_BACKEND_CLUSTER_ADMIN_PASSWORD: "{{ sensu_password | default('admin') | string }}"
 sensu_ports:
   - "3000:3000"
   - "8080:8080"
