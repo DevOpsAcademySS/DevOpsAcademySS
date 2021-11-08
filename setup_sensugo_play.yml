@@ -1,5 +1,5 @@
 ---
-- name: Install Docker on Ubuntu 20.04
+- name: Install Docker and Run Sensu Go Backend on Ubuntu 20.04
   hosts: GCPSensuGo
   become: true
   roles:

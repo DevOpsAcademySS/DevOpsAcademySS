@@ -8,7 +8,7 @@ sensu_password: "{{ lookup('env','SENSU_PASS') }}"
 env_vars:
   SENSU_BACKEND_CLUSTER_ADMIN_USERNAME: "{{ sensu_username | string }}"
   SENSU_BACKEND_CLUSTER_ADMIN_PASSWORD: "{{ sensu_password | string }}"
-ports:
+sensu_ports:
   - "3000:3000"
   - "8080:8080"
   - "8081:8081"

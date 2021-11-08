@@ -7,7 +7,6 @@
     state: started
     command: "{{ init_command }}"
     env: "{{ env_vars }}"
-    ports:
-      - "{{ ports }}"
+    ports: "{{ sensu_ports }}"
     volumes:
       - "{{ volume }}"
