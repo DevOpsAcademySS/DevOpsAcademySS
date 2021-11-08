@@ -5,4 +5,5 @@
 
   roles: 
     - { role: db, when: ansible_distribution == "Ubuntu" }
-    - { role: ws, when: ansible_distribution == "Amazon" }
+    - { role: ws_doc_mon, when: ansible_distribution == "Amazon" }
+    # - { role: ws, when: ansible_distribution == "Amazon" }
