@@ -6,7 +6,7 @@
     detach: yes
     state: started
     command: "{{ init_command }}"
-    env: { { env_vars } }
+    env: "{{ env_vars }}"
     ports:
       - "{{ ports }}"
     volumes:

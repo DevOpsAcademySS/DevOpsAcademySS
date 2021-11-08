@@ -48,6 +48,7 @@
     src: daemon.json.j2
     dest: "{{ daemon_path }}/daemon.json"
     mode: "0644"
+  when: cp_daemon
 
 - name: Restart service Docker
   systemd:

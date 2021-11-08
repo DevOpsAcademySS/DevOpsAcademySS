@@ -25,3 +25,6 @@ ansible_user=andre
 
 [GCPMinikube]
 {{ minikube_ip }}
+
+[GCPSensuGo]
+{{ sensugo }}

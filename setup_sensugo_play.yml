@@ -1,7 +1,9 @@
 ---
 - name: Install Docker on Ubuntu 20.04
-  hosts: AWSGeocitizen
+  hosts: GCPSensuGo
   become: true
   roles:
-    - DockerOnUbuntu
+    - role: DockerOnUbuntu
+      vars:
+        cp_daemon: false
     - SensuGoBackend
