@@ -27,12 +27,20 @@ resource "aws_instance" "ubuntu" {
 
 resource "aws_security_group" "allow_postgres" {
   name        = "allow_postgres"
-  description = "Allow port 5432 and 22 for DB and ssh inbound traffic"
+  description = "Allow port 5432, 9011 and 22 for DB and ssh inbound traffic"
 
   ingress {
     description = "in 5432 port"
     from_port   = 5432
     to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "in 9100 port"
+    from_port   = 9100
+    to_port     = 9100
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -72,12 +80,28 @@ resource "aws_instance" "aml"{
 }
   resource "aws_security_group" "allow_tomcat" {
   name        = "allow_tomcat"
-  description = "allow port 8080 and 22 for WS and ssh inbound traffic"
+  description = "allow port 8080, 9100 and 22 for WS and ssh inbound traffic"
 
   ingress {
-    description = "in 5432 port"
+    description = "in 8080 port"
     from_port   = 8080
     to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "in 9100 port"
+    from_port   = 9100
+    to_port     = 9100
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "in 8088 port"
+    from_port   = 8088
+    to_port     = 8088
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
