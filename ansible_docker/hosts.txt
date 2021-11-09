@@ -1,0 +1,2 @@
+[ws]
+aml  ansible_host={{ web_ip }}

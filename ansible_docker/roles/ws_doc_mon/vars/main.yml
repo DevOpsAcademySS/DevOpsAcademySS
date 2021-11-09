@@ -1,0 +1,18 @@
+---
+# vars file for ws_doc_mon
+packages_1:
+  - python-pip
+  - yum-utils
+  - device-mapper-persistent-data
+  - lvm2
+  - amazon-linux-extras
+
+packages_2:
+  - python3.8
+  - ansible
+  - docker
+
+packages_3:
+  - boto
+  - boto3
+  - docker-compose

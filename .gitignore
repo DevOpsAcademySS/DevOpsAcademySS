@@ -1,0 +1,12 @@
+/Diagram as code
+#/ansible
+/aws
+/terraform_hc_be
+/terraform_s3_be
+/vagrand
+Presentation  jankins.pptx
+/terraform/.terraform.lock.hcl
+/terraform/.terraform 
+/terraform/main .tf.bk
+/terraform/terraform.log
+/terraform/hosts.txt

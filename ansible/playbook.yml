@@ -1,0 +1,10 @@
+---
+- name: deploy geocitizen
+  hosts: all
+  become: yes
+
+  roles: 
+     - { role: db, when: ansible_distribution == "Ubuntu" }
+     - { role: node-exporter } # , when: ansible_distribution == "Ubuntu"
+     - { role: ws_doc_mon, when: ansible_distribution == "Amazon" }
+    # - { role: ws, when: ansible_distribution == "Amazon" }

@@ -1,0 +1,59 @@
+# Ansible playbook: install Docker on AWS Amazon Linux
+---
+- name: Update all packages
+  yum:
+    name: '*'
+    state: latest
+    update_only: yes
+
+- name: Ensure a list of yum packages are installed
+  yum:
+    name: "{{ packages_1 }}"
+    state: latest
+    update_cache: yes   
+
+- name: Add extras repository
+  shell: yum-config-manager --enable extras
+
+- name: Enable Some packages from amazon-linux-extras packages
+  shell: "amazon-linux-extras enable python3.8 ansible2 docker"
+  
+- name: clean yum metadata cache
+  command: yum clean metadata
+  args:
+    warn: false
+
+- name: Ensure a list of yum packages are installed
+  yum:
+    name: "{{ packages_2 }}"
+    state: latest
+    update_cache: yes
+
+- name: Enable Docker CE service at startup
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Upgrade pip3
+  shell: "python3.8 -m pip install pip --upgrade"
+
+- name: Ensure Python pip packages are installed
+  pip:
+    name: "{{ packages_3 }}"
+    executable: /usr/local/bin/pip3.8
+
+- name: Adding user ec2-user to docker group  
+  user: 
+    name: ec2-user
+    groups: docker
+    append: yes
+  become: yes
+
+- name: Install docker-compose
+  get_url: 
+    url : https://github.com/docker/compose/releases/download/1.25.1-rc1/docker-compose-Linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: 'u+x,g+x'
+  notify:
+    - restart docker

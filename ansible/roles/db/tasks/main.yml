@@ -1,0 +1,35 @@
+---
+# tasks file for db
+
+- name: install dependencies for postgresql
+  apt:
+    name: ['bash', 'openssl', 'libssl-dev', 'libssl-doc', "sudo", "acl"]
+    update_cache: true
+    state: latest
+
+- name: install postgresql
+  apt:
+    name: ['postgresql', 'postgresql-contrib', 'libpq-dev', 'python3-psycopg2']
+    update_cache: true
+    state: present
+
+- name: start postgresql
+  service: name=postgresql state=started enabled=yes
+
+- name: create database 
+  become_user: postgres
+  postgresql_db: name={{ db_name }} template='template0' state=present
+
+- name: grant priv for user
+  become_user: postgres
+  postgresql_user: db={{ db_name }} name={{ db_user }} password={{ db_password }} priv=ALL state=present
+
+- name: allow md5 connection for the db user
+  become_user: postgres
+  postgresql_pg_hba:
+    dest="/etc/postgresql/{{ postgresql_version }}/main/pg_hba.conf" contype=host databases=all method=md5 users=all create=true source="0.0.0.0/0"
+
+- name: replace a localhost entry with our own
+  lineinfile: path=/etc/postgresql/{{ postgresql_version }}/main/postgresql.conf regexp="#listen_addresses='localhost'"  line="listen_addresses='*'"
+  notify:
+  - restart postgresql
