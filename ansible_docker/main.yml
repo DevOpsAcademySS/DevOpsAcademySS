@@ -1,7 +1,0 @@
----
-- name: Deploy Geocitizen and Monitoring
-  hosts: all
-  become: yes
-
-  roles: 
-    - { role: ws_doc_mon, when: ansible_distribution == "Amazon" }

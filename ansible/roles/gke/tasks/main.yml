@@ -1,0 +1,248 @@
+---
+# tasks file for gke
+- name: Create a GKE cluster
+  gcp_container_cluster:
+    name: "{{ cluster_name }}"
+    initial_node_count: "{{ initial_node_count }}"
+    node_config:
+      machine_type: e2-medium
+      disk_size_gb: 50
+    location: "{{ gcp_zone }}"
+    project: "{{ gcp_project }}"
+    auth_kind: serviceaccount
+    service_account_file: "{{ gcp_cred_file }}"
+    state: "{{ cluster_state }}"
+  register: cluster
+
+- name: Create a node pool
+  gcp_container_node_pool:
+    name: pool-sonar
+    initial_node_count: "{{ initial_node_count }}"
+    cluster: "{{ cluster }}" 
+    location: "{{ gcp_zone }}"
+    project: "{{ gcp_project }}"
+    auth_kind: serviceaccount
+    service_account_file: "{{ gcp_cred_file }}"
+    state: "{{ cluster_state }}"
+
+- name: Connect to cluster (update kubeconfig)
+  shell: "gcloud container clusters get-credentials {{ cluster.name }} --zone {{ gcp_zone }} --project {{ gcp_project }}"
+  when: cluster_state == "present"
+
+- name: Deploy with Helm Sonarqube + Postgres
+  community.kubernetes.helm:
+    name: testing
+    chart_ref: oteemocharts/sonarqube
+    release_namespace: sonar
+    create_namespace: true
+
+- name: Deploy with Helm kube-prometheus-stack
+  community.kubernetes.helm:
+    name: monitoring
+    chart_ref: prometheus-community/kube-prometheus-stack
+    chart_version: 19.2.3
+    release_namespace: monitoring
+    create_namespace: true
+
+- name: Create a Deployment prometheusservicelevels from a manifest file
+  community.kubernetes.k8s:
+    state: present
+    namespace: monitoring
+    src: /home/kbob/Desktop/study/sloth/pkg/kubernetes/gen/crd/sloth.slok.dev_prometheusservicelevels.yaml
+
+- name: Create a Deployment prometheus-operator from a manifest file
+  community.kubernetes.k8s:
+    state: present
+    namespace: monitoring
+    src: /home/kbob/Desktop/study/sloth/test/integration/crd/prometheus-operator-crd.yaml
+
+- name: Create a Deployment sloth from a manifest file
+  community.kubernetes.k8s:
+    state: present
+    namespace: monitoring
+    src: /home/kbob/Desktop/study/sloth/deploy/kubernetes/raw/sloth.yaml
+
+- name: Create a Deployment sloth-with-common-plugins from a manifest file
+  community.kubernetes.k8s:
+    state: present
+    namespace: monitoring
+    src: /home/kbob/Desktop/study/sloth/deploy/kubernetes/raw/sloth-with-common-plugins.yaml
+
+####################################################################################################
+
+# - name: Create a k8s namespace
+#   community.kubernetes.k8s:
+#     name: sonar
+#     api_version: v1
+#     kind: Namespace
+#     state: "{{ namespace_state }}"
+
+# - name: Create a PersistentVolume
+#   k8s:
+#     state: "{{ pv_state }}"
+#     definition:
+#       apiVersion: v1
+#       kind: PersistentVolume      
+#       metadata:
+#         name: pv0001
+#         labels:
+#           type: local
+#       spec:
+#         capacity:
+#           storage: 30Gi
+#         accessModes:
+#           - ReadWriteOnce
+#         hostPath:
+#           path: /data/postgresql/
+
+# - name: Create k8s secret 
+#   k8s:
+#     definition:
+#       apiVersion: v1
+#       kind: Secret
+
+#       metadata:
+#         name: postgres-pwd
+#         namespace: sonar
+
+#       type: Opaque
+
+#       data:
+#         # username: YWRtaW4=
+#         password: MWYyZDFlMmU2N2Rm
+#     state: present
+
+# - name: Create a Deployment Sonarqube
+#   k8s:
+#     state: "{{ deploy_sonar_state }}"
+#     definition:
+#       apiVersion: apps/v1
+#       kind: Deployment
+#       metadata:
+#         name: sonar
+#         namespace: sonar
+#       spec:
+#         replicas: 1
+#         selector:
+#           matchLabels:
+#             app: sonar
+#         template:
+#           metadata:
+#             labels:
+#               app: sonar
+#           spec:
+#             containers:
+#               - image: sonarqube:6.5
+#                 args:
+#                   - -Dsonar.web.context=/sonar
+#                 name: sonar
+#                 env:
+#                   - name: SONARQUBE_JDBC_PASSWORD
+#                     valueFrom:
+#                       secretKeyRef:
+#                         name: postgres-pwd
+#                         key: password
+#                   - name: SONARQUBE_JDBC_URL
+#                     value: jdbc:postgresql://sonar-postgres:5432/sonar
+#                 ports:
+#                   - containerPort: 9000
+#                     name: sonar
+
+# - name: Create a Deployment Postgres
+#   k8s:
+#     state: "{{ deploy_posgr_state }}"
+#     definition:
+#       apiVersion: apps/v1
+#       kind: Deployment
+#       metadata:
+#         name: postgres-sonar
+#         namespace: sonar
+#       spec:
+#         replicas: 1
+#         selector:
+#           matchLabels:
+#             app: postgres-sonar
+#         template:
+#           metadata:
+#             labels:
+#               app: postgres-sonar
+#           spec:
+#             containers:
+#               - image: postgres:9.6.5
+#                 name: postgres-sonar
+#                 env:
+#                   - name: POSTGRES_PASSWORD
+#                     valueFrom:
+#                       secretKeyRef:
+#                         name: postgres-pwd
+#                         key: password
+#                   - name: POSTGRES_USER
+#                     value: sonar
+#                   # - name: PGDATA
+#                   #   value: /var/lib/postgresql/data/db-files/
+#                 ports:
+#                   - containerPort: 5432
+#                     name: postgresport
+#                 volumeMounts:
+#                   # This name must match the volumes.name below.
+#                   - name: data-disk
+#                     mountPath: /var/lib/postgresql/data/db-files/
+#             volumes:
+#               - name: data-disk
+#                 persistentVolumeClaim:
+#                   claimName: claim-postgres
+
+# - name: Create a PersistentVolumeClaim
+#   k8s:
+#     state: "{{ pvc_state }}"
+#     definition:
+#       apiVersion: v1
+#       kind: PersistentVolumeClaim
+#       metadata:
+#         name: claim-postgres
+#         namespace: sonar
+#       spec:
+#         accessModes:
+#           - ReadWriteOnce
+#         resources:
+#           requests:
+#             storage: 8Gi
+
+# - name: Create a service for Sonarqube
+#   k8s:
+#     state: "{{ svc_sonar_state }}"
+#     definition:
+#       apiVersion: v1
+#       kind: Service
+#       metadata:
+#         labels:
+#           name: sonar
+#         name: sonar
+#         namespace: sonar
+#       spec:
+#       #  type: NodePort
+#         ports:
+#           - protocol: TCP
+#             port: 9000
+#             targetPort: 9000
+#             # nodePort: 9000
+#             name: sonarport
+#         selector:
+#           name: sonar
+
+# - name: Create a service for Postgres
+#   k8s:
+#     state: "{{ svc_postgr_state }}"
+#     definition:
+#       apiVersion: v1
+#       kind: Service
+#       metadata:
+#         labels:
+#           name: sonar-postgres
+#         name: sonar-postgres
+#         namespace: sonar
+#       spec:
+#         ports:
+#           - port: 5432
+#         selector:
+#           name: sonar-postgres

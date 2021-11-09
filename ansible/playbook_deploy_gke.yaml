@@ -1,0 +1,11 @@
+---
+
+- name: Create GKE Cluster using Ansible cloud Google 
+  hosts: localhost
+  collections:
+    - kubernetes.core
+    - community.kubernetes.k8s
+  gather_facts: no
+
+  roles:
+    - gke

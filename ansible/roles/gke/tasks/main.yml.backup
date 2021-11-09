@@ -1,0 +1,26 @@
+---
+# tasks file for gke
+- name: create a GKE cluster
+  gcp_container_cluster:
+    name: "{{ cluster_name }}"
+    initial_node_count: "{{ initial_node_count }}"
+    node_config:
+      machine_type: e2-medium
+      disk_size_gb: 50
+    location: "{{ gcp_zone }}"
+    project: "{{ gcp_project }}"
+    auth_kind: serviceaccount
+    service_account_file: "{{ gcp_cred_file }}"
+    state: "{{ cluster_state }}"
+  register: cluster
+
+- name: create a node pool
+  gcp_container_node_pool:
+    name: pool-sonar
+    initial_node_count: "{{ initial_node_count }}"
+    cluster: "{{ cluster }}" 
+    location: "{{ gcp_zone }}"
+    project: "{{ gcp_project }}"
+    auth_kind: serviceaccount
+    service_account_file: "{{ gcp_cred_file }}"
+    state: "{{ cluster_state }}"
