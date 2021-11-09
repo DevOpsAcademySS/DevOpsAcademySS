@@ -133,8 +133,8 @@ data "template_file" "dev_hosts" {
     aws_instance.aml,
   ]
   vars = {
-    api_ubuntu = "${aws_instance.ubuntu.public_ip}"
-    api_aml = "${aws_instance.aml.public_ip}"
+    ip_of_ubuntu = "${aws_instance.ubuntu.public_ip}"
+    ip_of_aml = "${aws_instance.aml.public_ip}"
   }
 }
 
@@ -153,7 +153,7 @@ data "template_file" "db_ip" {
     aws_instance.ubuntu
   ]
   vars = {
-    api_ubuntu = "${aws_instance.ubuntu.public_ip}"
+    ip_of_ubuntu = "${aws_instance.ubuntu.public_ip}"
   }
 }
 
@@ -172,7 +172,7 @@ data "template_file" "ws_ip" {
     aws_instance.aml
   ]
   vars = {
-    api_aml = "${aws_instance.aml.public_ip}"
+    ip_of_aml = "${aws_instance.aml.public_ip}"
   }
 }
 
