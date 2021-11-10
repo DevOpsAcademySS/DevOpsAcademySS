@@ -1,0 +1,8 @@
+---
+# tasks file for pull_image
+
+- name: Load image from archive and push to a private registry
+  docker_image:
+    name: 34.107.30.34:8077/tomcat_sv
+    tag: v1.74
+    push: yes

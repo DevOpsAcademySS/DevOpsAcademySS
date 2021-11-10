@@ -1,0 +1,7 @@
+---
+- name: deploy geocitizen
+  hosts: ws
+  become: yes
+
+  roles: 
+     - { role: pull_image, when: ansible_distribution == "Amazon" }
