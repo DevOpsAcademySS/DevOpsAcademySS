@@ -16,7 +16,7 @@
     reauthorize: yes
 
 - name: Go to the folder and execute command
-  command: chdir=/etc/docker/
+  command: chdir=/etc/docker/ ls
 
 - name: Enable Some packages from amazon-linux-extras packages
   shell: "wget https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-188-denis-create-ansible-playbook-for-setup-application-and-database/ansible/daemon.json"
