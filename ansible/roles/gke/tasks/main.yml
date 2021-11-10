@@ -32,6 +32,7 @@
 - name: Deploy with Helm Sonarqube + Postgres
   community.kubernetes.helm:
     name: testing
+    repo_url: https://oteemo.github.io/charts
     chart_ref: oteemocharts/sonarqube
     release_namespace: sonar
     create_namespace: true
@@ -39,6 +40,7 @@
 - name: Deploy with Helm kube-prometheus-stack
   community.kubernetes.helm:
     name: monitoring
+    repo_url: https://oteemo.github.io/charts
     chart_ref: prometheus-community/kube-prometheus-stack
     chart_version: 19.2.3
     release_namespace: monitoring
