@@ -18,12 +18,12 @@
 - name: Go to the folder and execute command
   command: chdir=/etc/docker/ ls
 
-- name: Enable Some packages from amazon-linux-extras packages
+- name: Wget the conf file for Docker
   shell: "wget https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-188-denis-create-ansible-playbook-for-setup-application-and-database/ansible/daemon.json"
 
 - name: Load image from archive and push to a private registry
   docker_image:
 #     repository: 34.107.30.34:8077/tomcat_sv 
-#     name: 34.107.30.34:8077/tomcat_sv
+    name: 34.107.30.34:8077/tomcat_sv
     tag: v1.74
     pull: yes
