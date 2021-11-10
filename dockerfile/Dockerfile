@@ -44,13 +44,15 @@ WORKDIR /usr/local/tomcat/conf/
 COPY ./tomcat-users.xml /usr/local/tomcat/conf/tomcat-users.xml
 WORKDIR /tmp/
 COPY ./context.xml /tmp/context.xml
-WORKDIR /usr/local/tomcat/webapps/
-COPY ./geocitizen-*.war /usr/local/tomcat/webapps/
 
 # backup webapps
 RUN mv /usr/local/tomcat/webapps /usr/local/tomcat/webapps2
 RUN mv /usr/local/tomcat/webapps.dist /usr/local/tomcat/webapps
 RUN cp /tmp/context.xml /usr/local/tomcat/webapps/manager/META-INF/context.xml
+
+# copy war file with geocitizen to webapps directory
+WORKDIR /usr/local/tomcat/webapps/
+COPY ./geocitizen-*.war /usr/local/tomcat/webapps/
 
 # install python3, pip & supervisor
 RUN apt update && apt install -y python3 python3-pip && pip install supervisor 
