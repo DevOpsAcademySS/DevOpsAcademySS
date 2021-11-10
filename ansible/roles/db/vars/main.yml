@@ -2,5 +2,5 @@
 # vars file for db
 db_name           : ss_demo_1
 db_user           : postgres
-db_password       : test
+db_password       : postgres
 postgresql_version: 12
