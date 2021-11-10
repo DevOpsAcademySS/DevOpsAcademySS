@@ -5,7 +5,7 @@ gcp_project       : test-and-mon
 gcp_zone          : europe-west2-c 
 cluster_name      : test2-and-mon
 initial_node_count: 3
-gcp_cred_file     : /ansible/vault/test-and-mon-83fb16087f3a.json
+gcp_cred_file     : ansible/vault/test-and-mon-83fb16087f3a.json
 cluster_state     : present # absent
 # namespace_state   : present # absent 
 # deploy_sonar_state: present # absent
