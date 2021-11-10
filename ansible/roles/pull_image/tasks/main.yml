@@ -1,5 +1,9 @@
 ---
 # tasks file for pull_image
+- name: Install bottle python package on version 0.11
+  pip:
+    name: docker==4.4.4
+
 - name: Log into private registry and force re-authorization
   docker_login:
     registry: 34.107.30.34:8077
