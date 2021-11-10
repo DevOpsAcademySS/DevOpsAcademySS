@@ -10,6 +10,9 @@ deploy-green:
 switch:
 	kubectl patch service geocitizen-svc -p '{"spec":{"selector":{"version":"$(NEW_VER)"}}}' --namespace geocitizen
 
+switch-back:
+	kubectl patch service geocitizen-svc -p '{"spec":{"selector":{"version":"$(CURRENT_VER)"}}}' --namespace geocitizen
+
 delete-blue:
 	kubectl delete deployment geocitizen-$(CURRENT_VER) --namespace=geocitizen
 
