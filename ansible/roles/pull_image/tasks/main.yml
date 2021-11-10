@@ -1,12 +1,12 @@
 ---
-# tasks file for pull_image
-# - name: Install bottle python package on version 0.11
-#   pip:
-#     # executable: pip3
-#     name: docker==4.4.4
+tasks file for pull_image
+- name: Install docker module for python
+  pip:
+    # executable: pip3
+    name: docker-py #docker==4.4.4
 
-- name: Upgrade pip3
-  shell: "python3.8 -m pip install docker==4.4.4"    
+# - name: Upgrade pip3
+#   shell: "python3.8 -m pip install docker==4.4.4"    
 
 - name: Log into private registry and force re-authorization
   docker_login:
