@@ -1,5 +1,5 @@
 ---
-tasks file for pull_image
+# tasks file for pull_image
 - name: Install docker module for python
   pip:
     # executable: pip3
