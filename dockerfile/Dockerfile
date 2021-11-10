@@ -41,11 +41,11 @@ RUN set -eux; \
 
 # configure Tomcat for managing, copy configured files from context folder
 WORKDIR /usr/local/tomcat/conf/
-COPY ./context/tomcat-users.xml /usr/local/tomcat/conf/tomcat-users.xml
+COPY ./tomcat-users.xml /usr/local/tomcat/conf/tomcat-users.xml
 WORKDIR /tmp/
-COPY ./context/context.xml /tmp/context.xml
+COPY ./context.xml /tmp/context.xml
 WORKDIR /usr/local/tomcat/webapps/
-COPY ./context/geocitizen-*.war /usr/local/tomcat/webapps/
+COPY ./geocitizen-*.war /usr/local/tomcat/webapps/
 
 # backup webapps
 RUN mv /usr/local/tomcat/webapps /usr/local/tomcat/webapps2
