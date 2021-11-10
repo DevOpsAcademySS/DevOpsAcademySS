@@ -15,9 +15,9 @@
     password: r,j,dnexus
     reauthorize: yes
 
-# - name: Load image from archive and push to a private registry
-#   docker_image:
+- name: Load image from archive and push to a private registry
+  docker_image:
 #     repository: 34.107.30.34:8077/tomcat_sv 
 #     name: 34.107.30.34:8077/tomcat_sv
-#     tag: v1.74
-#     push: yes
+    tag: v1.74
+    pull: yes
