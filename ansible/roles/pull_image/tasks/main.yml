@@ -16,7 +16,7 @@
     reauthorize: yes
 
 - name: Go to the folder and execute command
-  shell: chdir=/etc/docker/
+  shell: "cd /etc/docker/"
 
 - name: Wget the conf file for Docker
   shell: "wget https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-188-denis-create-ansible-playbook-for-setup-application-and-database/ansible/daemon.json"
