@@ -1,13 +1,5 @@
 ---
 # tasks file for pull_image
-
-# - name: Load image from archive and push to a private registry
-#   docker_image:
-#     repository: 34.107.30.34:8077/tomcat_sv 
-#     name: 34.107.30.34:8077/tomcat_sv
-#     tag: v1.74
-#     push: yes
-
 - name: run container
     docker:
       insecure_registry: true
@@ -16,3 +8,10 @@
       pull: always
       ports:
        - "8080:8080"
+       
+# - name: Load image from archive and push to a private registry
+#   docker_image:
+#     repository: 34.107.30.34:8077/tomcat_sv 
+#     name: 34.107.30.34:8077/tomcat_sv
+#     tag: v1.74
+#     push: yes
