@@ -1,6 +1,6 @@
 ---
 - name: deploy geocitizen
-  hosts: all
+  hosts: aml
   become: yes
 
   roles: 
