@@ -2,8 +2,8 @@
 # tasks file for pull_image
 - name: Install bottle python package on version 0.11
   pip:
-    executable: pip3
-    name: docker==4.4.4
+    # executable: pip3
+    name: docker
     
 
 - name: Log into private registry and force re-authorization
