@@ -1,13 +1,11 @@
 ---
 # tasks file for pull_image
-- name: run container
-    docker_image:
-      insecure_registry: true
-      image: 34.107.30.34:8077/tomcat_sv
-      state: reloaded
-      pull: always
-      ports:
-       - "8080:8080"
+- name: Log into private registry and force re-authorization
+  docker_login:
+    registry: 34.107.30.34:8077
+    username: admin
+    password: r,j,dnexus
+    reauthorize: yes
 
 # - name: Load image from archive and push to a private registry
 #   docker_image:
