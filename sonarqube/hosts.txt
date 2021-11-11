@@ -1,0 +1,5 @@
+[SONARQUBE]
+35.228.138.196
+
+[LOCALHOST]
+localhost

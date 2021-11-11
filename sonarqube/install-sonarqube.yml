@@ -1,0 +1,7 @@
+---
+- name: Install SonarQube in Docker on ubuntu
+  hosts: SONARQUBE
+  become: yes
+  roles:
+    - docker
+    - sonarqube
