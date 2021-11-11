@@ -57,9 +57,9 @@
 #     state: present
 #     force: yes
 
-- name: Load image from archive and push to a private registry
-  docker_image:
-    name: '{{ docker_registry_address }}:8077/tomcat_sv:1.75'
-    # tag: '{{ tag_version }}'
-    state: present
-    # pull: yes
+# - name: Load image from archive and push to a private registry
+#   docker_image:
+#     name: '{{ docker_registry_address }}:8077/tomcat_sv:1.75'
+#     # tag: '{{ tag_version }}'
+#     state: present
+#     # pull: yes
