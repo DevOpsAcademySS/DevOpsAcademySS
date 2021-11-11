@@ -23,6 +23,9 @@
     password: '{{ registry_pass }}'
     reauthorize: yes
 
+- name: pull an image
+  docker_image:
+    name: tomat_sv
 
 # - name: Go to the folder and execute command
 #   shell: "cd /etc/docker/"
@@ -32,12 +35,12 @@
 
 - name: start an image which is NOT present on the host yet but on the private regisrty
   docker_image: #docker:
-    name: tomcat 
-    registry: '{{ docker_registry_address }}:8077'
-    username: '{{ registry_user }}'
-    password: '{{ registry_pass }}'
-    image: '{{ docker_registry_address }}:8077/tomcat_sv'
-    # command: /bin/echo success
+    name: '{{ docker_registry_address }}:8077/tomcat_sv:1.74' 
+#     registry: '{{ docker_registry_address }}:8077'
+#     username: '{{ registry_user }}'
+#     password: '{{ registry_pass }}'
+#     image: '{{ docker_registry_address }}:8077/tomcat_sv'
+#     # command: /bin/echo success
     state: present
 
 # - name: Load image from archive and push to a private registry
