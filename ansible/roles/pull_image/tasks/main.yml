@@ -13,8 +13,13 @@
     dest: /usr/lib/systemd/system/docker.service
     regexp: ^ExecStart=
     line: ExecStart=/usr/bin/docker daemon -H fd:// --insecure-registry {{ docker_registry_address }}:8077
-  notify:
-    - restart docker
+
+- name: restart docker
+  service:
+    name: docker
+    state: restarted
+  # notify:
+  #   - restart docker
 
 - name: Log into private registry and force re-authorization
   docker_login:
