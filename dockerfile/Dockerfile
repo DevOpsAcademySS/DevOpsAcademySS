@@ -52,7 +52,7 @@ RUN cp /tmp/context.xml /usr/local/tomcat/webapps/manager/META-INF/context.xml
 
 # copy war file with geocitizen to webapps directory
 WORKDIR /usr/local/tomcat/webapps/
-COPY ./geocitizen-*.war /usr/local/tomcat/webapps/
+COPY ./geocitizen.war /usr/local/tomcat/webapps/
 
 # install python3, pip & supervisor
 RUN apt update && apt install -y python3 python3-pip && pip install supervisor 
