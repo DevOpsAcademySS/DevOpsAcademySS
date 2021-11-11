@@ -36,9 +36,9 @@
     password: '{{ registry_pass }}'
     reauthorize: yes
 
-- name: pull an image
-  docker_image:
-    name: tomat_sv
+# - name: pull an image
+#   docker_image:
+#     name: tomat_sv
 
 # - name: Go to the folder and execute command
 #   shell: "cd /etc/docker/"
@@ -57,9 +57,9 @@
 #     state: present
 #     force: yes
 
-# - name: Load image from archive and push to a private registry
-#   docker_image:
-# #     repository: 34.107.30.34:8077/tomcat_sv 
-#     name: '{{ docker_registry_address }}:8077/tomcat_sv'
-#     tag: '{{ tag_version }}'
-#     pull: yes
+- name: Load image from archive and push to a private registry
+  docker_image:
+    name: '{{ docker_registry_address }}:8077/tomcat_sv:1.75'
+    # tag: '{{ tag_version }}'
+    state: present
+    # pull: yes
