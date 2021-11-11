@@ -16,7 +16,7 @@
 
 - name: Template a file to /etc/docker/daemon.json
   ansible.builtin.template:
-    src: /templates/daemon.j2
+    src: /var/lib/jenkins/workspace/pull_image_to_geocitizen/ansible/roles/pull_image/templates/daemon.j2
     dest: /etc/docker/daemon.json
     owner: bin
     group: wheel
