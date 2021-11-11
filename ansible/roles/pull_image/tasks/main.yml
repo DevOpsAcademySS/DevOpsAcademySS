@@ -30,9 +30,17 @@
 # - name: Wget the conf file for Docker
 #   shell: "wget https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-188-denis-create-ansible-playbook-for-setup-application-and-database/ansible/daemon.json"
 
-- name: Load image from archive and push to a private registry
-  docker_image:
-#     repository: 34.107.30.34:8077/tomcat_sv 
-    name: '{{ docker_registry_address }}:8077/tomcat_sv'
-    tag: '{{ tag_version }}'
-    pull: yes
+- name: Start Tomcat container
+  docker:
+    image: '{{ docker_registry_address }}:8077/tomcat_sv'
+    name: tomcat
+    # env: "DB_NAME=foo,APP_HOST=foo.foo,NODE_ENV=docker"
+    ports: 8080:8080 #127.0.0.1:1337:1337
+    state: running
+
+# - name: Load image from archive and push to a private registry
+#   docker_image:
+# #     repository: 34.107.30.34:8077/tomcat_sv 
+#     name: '{{ docker_registry_address }}:8077/tomcat_sv'
+#     tag: '{{ tag_version }}'
+#     pull: yes
