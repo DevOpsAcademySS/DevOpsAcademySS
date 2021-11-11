@@ -19,8 +19,8 @@
 - name: Log into private registry and force re-authorization
   docker_login:
     registry: '{{ docker_registry_address }}:8077'
-    username: admin
-    password: r,j,dnexus
+    username: '{{ registry_user }}'
+    password: '{{ registry_pass }}'
     reauthorize: yes
 
 
@@ -31,14 +31,14 @@
 #   shell: "wget https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-188-denis-create-ansible-playbook-for-setup-application-and-database/ansible/daemon.json"
 
 - name: start an image which is NOT present on the host yet but on the private regisrty
-      docker:
-        name: tomcat 
-        registry: '{{ docker_registry_address }}:8077'
-        username: '{{ registry_user }}'
-        password: '{{ registry_pass }}'
-        image: '{{ docker_registry_address }}:8077/tomcat_sv'
-        # command: /bin/echo success
-        state: present
+  docker_image: #docker:
+    name: tomcat 
+    registry: '{{ docker_registry_address }}:8077'
+    username: '{{ registry_user }}'
+    password: '{{ registry_pass }}'
+    image: '{{ docker_registry_address }}:8077/tomcat_sv'
+    # command: /bin/echo success
+    state: present
 
 # - name: Load image from archive and push to a private registry
 #   docker_image:
