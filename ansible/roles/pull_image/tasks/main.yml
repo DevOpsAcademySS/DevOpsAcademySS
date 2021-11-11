@@ -8,11 +8,19 @@
 # - name: Upgrade pip3
 #   shell: "python3.8 -m pip install docker==4.4.4"    
 
-- name: Allow access to insecure registry
-  lineinfile:
-    dest: /usr/lib/systemd/system/docker.service
-    regexp: ^ExecStart=
-    line: ExecStart=/usr/bin/docker daemon -H fd:// --insecure-registry {{ docker_registry_address }}:8077
+# - name: Allow access to insecure registry
+#   lineinfile:
+#     dest: /usr/lib/systemd/system/docker.service
+#     regexp: ^ExecStart=
+#     line: ExecStart=/usr/bin/docker daemon -H fd:// --insecure-registry {{ docker_registry_address }}:8077
+
+- name: Template a file to /etc/docker/daemon.json
+  ansible.builtin.template:
+    src: /templates/daemon.j2
+    dest: /etc/docker/daemon.json
+    owner: bin
+    group: wheel
+    mode: '0644'
 
 - name: restart docker
   service:
