@@ -1,2 +1,7 @@
 ---
 # handlers file for pull_image
+
+- name: restart docker
+  service:
+    name: docker
+    state: restarted

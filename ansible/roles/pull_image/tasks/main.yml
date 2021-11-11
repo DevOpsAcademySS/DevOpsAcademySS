@@ -10,20 +10,29 @@
 
 - name: Log into private registry and force re-authorization
   docker_login:
-    registry: 34.107.30.34:8077
+    registry: '{{ docker_registry_address }}:8077'
     username: admin
     password: r,j,dnexus
     reauthorize: yes
 
-- name: Go to the folder and execute command
-  shell: "cd /etc/docker/"
+- name: Allow access to insecure registry
+  lineinfile:
+    dest: /usr/lib/systemd/system/docker.service
+    regexp: ^ExecStart=
+    line: ExecStart=/usr/bin/docker daemon -H fd:// --insecure-registry {{ docker_registry_address }}:8077
+  notify:
+    - restart docker
 
-- name: Wget the conf file for Docker
-  shell: "wget https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-188-denis-create-ansible-playbook-for-setup-application-and-database/ansible/daemon.json"
+
+# - name: Go to the folder and execute command
+#   shell: "cd /etc/docker/"
+
+# - name: Wget the conf file for Docker
+#   shell: "wget https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-188-denis-create-ansible-playbook-for-setup-application-and-database/ansible/daemon.json"
 
 - name: Load image from archive and push to a private registry
   docker_image:
 #     repository: 34.107.30.34:8077/tomcat_sv 
-    name: 34.107.30.34:8077/tomcat_sv
-    tag: v1.74
+    name: '{{ docker_registry_address }}:8077/tomcat_sv'
+    tag: '{{ tag_version }}'
     pull: yes

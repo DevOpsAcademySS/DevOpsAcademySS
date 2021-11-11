@@ -1,2 +1,4 @@
 ---
 # vars file for pull_image
+docker_registry_address : "34.107.30.34"
+tag_version             : v1.74
