@@ -2,7 +2,7 @@
 terraform {
   backend "s3" {
     bucket = "devopacademyss-geocitizen-tfstate-demo1"
-    key = "AWS/jenkins-ubuntu/terraform.tfstate"
+    key = "AWS-tf_states/ubuntu/terraform.tfstate"
     dynamodb_table = "terraform-state-lock"
     region = "eu-north-1"
     encrypt = true
