@@ -15,6 +15,12 @@ variable "instance_image" {
   description = "Specify image of your GCP instance"
 }
 
+variable "disk_size" {
+  type = number
+  default = 10
+  description = "Specify size of disk"
+}
+
 #==========network==========
 variable "network_name" {
   type = string

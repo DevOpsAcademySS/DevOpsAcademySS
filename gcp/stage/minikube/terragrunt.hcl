@@ -17,4 +17,5 @@ inputs = {
   gcp_region = "us-central1"
   gcp_zone = "us-central1-a"
   trgt_tags = ["my-ports-6"]
+  disk_size = 30
 }
