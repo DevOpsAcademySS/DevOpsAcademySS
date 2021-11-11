@@ -8,13 +8,6 @@
 # - name: Upgrade pip3
 #   shell: "python3.8 -m pip install docker==4.4.4"    
 
-- name: Log into private registry and force re-authorization
-  docker_login:
-    registry: '{{ docker_registry_address }}:8077'
-    username: admin
-    password: r,j,dnexus
-    reauthorize: yes
-
 - name: Allow access to insecure registry
   lineinfile:
     dest: /usr/lib/systemd/system/docker.service
@@ -22,6 +15,13 @@
     line: ExecStart=/usr/bin/docker daemon -H fd:// --insecure-registry {{ docker_registry_address }}:8077
   notify:
     - restart docker
+
+- name: Log into private registry and force re-authorization
+  docker_login:
+    registry: '{{ docker_registry_address }}:8077'
+    username: admin
+    password: r,j,dnexus
+    reauthorize: yes
 
 
 # - name: Go to the folder and execute command
