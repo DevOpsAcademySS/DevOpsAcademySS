@@ -30,13 +30,15 @@
 # - name: Wget the conf file for Docker
 #   shell: "wget https://github.com/DevOpsAcademySS/DevOpsAcademySS/blob/IA-188-denis-create-ansible-playbook-for-setup-application-and-database/ansible/daemon.json"
 
-- name: Start Tomcat container
-  docker:
-    image: '{{ docker_registry_address }}:8077/tomcat_sv'
-    name: tomcat
-    # env: "DB_NAME=foo,APP_HOST=foo.foo,NODE_ENV=docker"
-    ports: 8080:8080 #127.0.0.1:1337:1337
-    state: running
+- name: start an image which is NOT present on the host yet but on the private regisrty
+      docker:
+        name: tomcat 
+        registry: '{{ docker_registry_address }}:8077'
+        username: '{{ registry_user }}'
+        password: '{{ registry_pass }}'
+        image: '{{ docker_registry_address }}:8077/tomcat_sv'
+        # command: /bin/echo success
+        state: present
 
 # - name: Load image from archive and push to a private registry
 #   docker_image:
