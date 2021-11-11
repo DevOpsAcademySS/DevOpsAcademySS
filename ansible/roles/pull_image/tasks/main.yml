@@ -42,6 +42,7 @@
 #     image: '{{ docker_registry_address }}:8077/tomcat_sv'
 #     # command: /bin/echo success
     state: present
+    force: yes
 
 # - name: Load image from archive and push to a private registry
 #   docker_image:
