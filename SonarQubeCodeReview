@@ -1,0 +1,27 @@
+pipeline {
+    agent {
+        label 'master'
+    }
+    stages {
+        stage('Clone Geocitizen'){
+            steps{
+                git branch: 'IA-72-kateryna-manual-deploy-geocitizen', credentialsId: 'git_geo', url: 'git@github.com:DevOpsAcademySS/Geocitizen.git'
+            }
+        }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv(installationName:'SonarQube Server',credentialsId: 'geo') {
+                    bat "mvn clean verify sonar:sonar"
+                }
+            }
+        }
+    }
+    post {
+        success {
+            slackSend color: "ff0000", message: "SONARQUBE SCAN SUCCESS!"
+        }
+        failure{
+            slackSend color: "00ff00", message: "SONARQUBE SCAN FAILED!"
+        }
+    }
+}
