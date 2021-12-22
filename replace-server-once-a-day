@@ -1,0 +1,202 @@
+pipeline{
+    agent {
+        label 'master'
+    }
+    
+    stages {
+
+        /*
+        stage('Git Checkout Terraform') {
+            steps {
+                git branch: 'SS-8-Kateryna-Terraform', credentialsId: 'git_geo', url: 'git@github.com:SS-Onboarding-21/SS-Onboarding-21.git'
+            }
+        }
+        */
+        
+        // Apply
+        
+        stage('Terraform apply firewall') {
+            when {
+                expression { params.apply == true && params.firewall == true }
+            }
+            steps {
+                bat "cd"
+                dir('firewall') {
+                  bat "cd"
+                  //bat 'terraform init -no-color'
+                  bat 'terraform apply --auto-approve -no-color'
+                }
+                bat "cd"
+            }
+        }
+        
+        stage('Terraform apply Jenkins host') {
+            when {
+                expression { params.apply == true && params.jenkins_host == true }
+            }
+            steps {
+                bat "cd"
+                dir('Jenkins-host') {
+                  bat "cd"
+                  //bat 'terraform init -no-color'
+                  bat 'terraform apply --auto-approve -no-color'
+                  bat 'terraform output -raw jenkins_server-ip > jenkins_server-ip.txt'
+                }
+                bat "cd"
+            }
+        }
+        
+        stage('Terraform apply node0') {
+            when {
+                expression { params.apply == true && params.node0 == true }
+            }
+            steps {
+                bat "cd"
+                dir('node0') {
+                  bat "cd"
+                  //bat 'terraform init -no-color'
+                  bat 'terraform apply --auto-approve -no-color'
+                  //bat 'terraform output -raw node_server_0-ip > node_server_0-ip.txt'
+                }
+                bat "cd"
+            }
+        }
+        
+        stage('Terraform apply node1') {
+            when {
+                expression { params.apply == true && params.node1 == true }
+            }
+            steps {
+                bat "cd"
+                dir('node1') {
+                  bat "cd"
+                  //bat 'terraform init -no-color'
+                  bat 'terraform apply --auto-approve -no-color'
+                  //bat 'terraform output -raw node_server_1-ip > node_server_1-ip.txt'
+                }
+                bat "cd"
+            }
+        }
+        
+        // Destroy
+        
+        stage('Terraform Destroy firewall'){
+            when {
+                expression { params.Destroy == true && params.firewall == true }
+            }
+            steps {
+                bat "cd"
+                dir('firewall') {
+                  bat "cd"
+                  bat 'terraform destroy --auto-approve -no-color'
+                }
+                bat "cd"
+            }
+        }
+        
+        stage('Terraform Destroy Jenkins host'){
+            when {
+                expression { params.Destroy == true  && params.jenkins_host == true }
+            }
+            steps {
+                bat "cd"
+                dir('Jenkins-host') {
+                  bat "cd"
+                  bat 'terraform destroy --auto-approve -no-color'
+                }
+                bat "cd"
+            }
+        }
+        
+        stage('Terraform Destroy node0'){
+            when {
+                expression { params.Destroy == true  && params.node0 == true }
+            }
+            steps {
+                bat "cd"
+                dir('node0') {
+                  bat "cd"
+                  bat 'terraform destroy --auto-approve -no-color'
+                }
+                bat "cd"
+            }
+        }
+        
+        stage('Terraform Destroy node1'){
+            when {
+                expression { params.Destroy == true  && params.node1 == true }
+            }
+            steps {
+                bat "cd"
+                dir('node1') {
+                  bat "cd"
+                  bat 'terraform destroy --auto-approve -no-color'
+                }
+                bat "cd"
+            }
+        }
+        
+
+        /*
+        stage("Save IPs to environment variables"){
+            steps{
+                script {
+                    env.JENKINS_IP = readFile('jenkins_server-ip.txt').trim()
+                    env.NODE0_IP = readFile('node_server_0-ip.txt').trim()
+                    env.NODE1_IP = readFile('node_server_1-ip.txt').trim()
+                }
+                echo "JENKINS_IP: ${env.JENKINS_IP}"
+                echo "NODE0_IP: ${env.NODE0_IP}"
+                echo "NODE1_IP: ${env.NODE1_IP}"
+            }
+        }
+        */
+    }
+    post {
+        success {
+            script {
+                // applied
+                if (params.apply == true && params.firewall == true) {
+                    echo "TERRAFORM: inctance(s) replaced!"
+                    slackSend color: "good", message: "TERRAFORM: firewall applied!"
+                }
+                if (params.apply == true && params.jenkins_host == true) {
+                    echo "TERRAFORM: inctance(s) replaced!"
+                    slackSend color: "good", message: "TERRAFORM: jenkins_host applied!"
+                }
+                if (params.apply == true && params.node0 == true) {
+                    echo "TERRAFORM: inctance(s) replaced!"
+                    slackSend color: "good", message: "TERRAFORM: node0 replaced!"
+                }
+                if (params.apply == true && params.node1 == true) {
+                    echo "TERRAFORM: inctance(s) replaced!"
+                    slackSend color: "good", message: "TERRAFORM: node1 replaced!"
+                }
+                // Destroyed
+                if (params.Destroy == true && params.firewall == true) {
+                    echo "TERRAFORM: inctance(s) replaced!"
+                    slackSend color: "good", message: "TERRAFORM: firewall destroyed!"
+                }
+                if (params.Destroy == true && params.jenkins_host == true) {
+                    echo "TERRAFORM: inctance(s) replaced!"
+                    slackSend color: "good", message: "TERRAFORM: jenkins_host destroyed!"
+                }
+                if (params.Destroy == true && params.node0 == true) {
+                    echo "TERRAFORM: inctance(s) replaced!"
+                    slackSend color: "good", message: "TERRAFORM: node0 destroyed!"
+                }
+                if (params.Destroy == true && params.node1 == true) {
+                    echo "TERRAFORM: inctance(s) replaced!"
+                    slackSend color: "good", message: "TERRAFORM: node1 destroyed!"
+                }
+                else {
+                    echo "Nothing performed"
+                }
+            }
+        }
+        failure{
+            echo "TERRAFORM: pipeline failed!"
+            slackSend color: "ff0000", message: "TERRAFORM: pipeline failed!"
+        }
+     }
+}
