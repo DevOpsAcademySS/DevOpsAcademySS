@@ -1,0 +1,104 @@
+pipeline{
+    agent {
+        label 'master'
+    }
+    /*
+    parameters { 
+        booleanParam(name: 'Destroy', defaultValue: false, description: 'Destroy Terraform') 
+        booleanParam(name: 'Backend_init', defaultValue: false, description: 'Create backend services') 
+        booleanParam(name: 'Build_Geocitizen', defaultValue: true, description: 'Build Geocitizen after Terraform apply') 
+    }
+    */
+    stages {
+        
+        stage('Git Checkout Terraform') {
+            steps {
+                git branch: 'IA-167-kateryna-terraform-jenkins-agent', credentialsId: 'git_geo', url: 'git@github.com:DevOpsAcademySS/DevOpsAcademySS.git'
+            }
+        }
+        
+        stage('Backend init') {
+            when {
+                expression { params.Backend_init == true }
+            }
+            steps {
+                bat "cd"
+                dir('backend_init') {
+                  bat "cd"
+                  bat 'terraform init -no-color'
+                  bat 'terraform apply --auto-approve -no-color'
+                }
+                bat "cd"
+            }
+        }
+
+        stage('Terraform init migrate state') {
+            steps {
+                bat 'terraform init -migrate-state -no-color'
+            }
+        }
+        
+        stage('Terraform init') {
+            steps {
+                bat 'terraform init -no-color'
+            }
+        }
+        stage('Terraform apply') {
+            when {
+                expression { params.Destroy == false }
+            }
+            steps {
+                bat 'terraform apply --auto-approve -no-color'
+            }
+        }
+        
+        stage('Terraform Destroy'){
+            when {
+                expression { params.Destroy == true }
+            }
+            steps{
+                bat 'terraform destroy --auto-approve -no-color'
+            }
+        }
+        stage("Save Terraform output in 'ec2ips.txt', 'db_ip.txt' and 'web_ip.txt'"){
+            when {
+                expression { params.Destroy == false }
+            }
+            steps{
+                bat 'terraform output -raw jenkins-agent-ip_address > agent_ip.txt'
+            }
+        }
+        stage("Save IPs to environment variables"){
+            when {
+                expression { params.Destroy == false }
+            }
+            steps{
+                script {
+                    env.AGENT_IP = readFile('agent_ip.txt').trim()
+                }
+                echo "AGENT_IP: ${env.AGENT_IP}"
+            }
+        }
+    }
+    post {
+        success {
+            echo "INSTANCES CREATED! Building Geocitizen..."
+            script {
+                if (params.Destroy == false && params.Build_Geocitizen == true) {
+                    build job: 'Ansible. Configure Geocitizen', parameters: [string(name: 'WEB_IP', value: String.valueOf(env.WEB_IP)), string(name: 'DB_IP', value: String.valueOf(env.DB_IP))], wait: false
+                    slackSend color: "good", message: "INSTANCES CREATED! Building Geocitizen..."
+                }
+                else if (params.Destroy == true) {
+                    slackSend color: "good", message: "INSTANCES SUCCESSFULLY DESTROYED!"
+                }
+                else {
+                    slackSend color: "good", message: "TERRAFORM PIPELINE SUCCESS!"
+                }
+            }
+        }
+        failure{
+            echo "TERRAFORM PIPELINE FAILURE"
+            slackSend color: "ff0000", message: "PIPELINE FAILED!"
+        }
+     }
+}
